@@ -1,0 +1,36 @@
+esercitazione 01:
+Procedura per il calcolo del prodotto vettoriale e dimostrazione delle sue proprietà;
+Procedura per il calcolo della matrice di rotazione e dimostrazione delle sue proprietà.
+
+esercitazione 02:
+Procedura per il calcolo della matrice di rotazione passando in ingresso la coppia di
+valori (asse,angolo).
+
+esercitazione 03:
+Procedura per il calcolo della matrice antisimmetrica dato un vettore;
+Procedura per il calcolo del vettore 'v' data in ingresso la matrice antisimmetrica;
+Procedura per il calcolo della matrice di rotazione utilizzando la matrice antisimmetrica.
+
+esercitazione 04:
+Procedura che calcola la matrice di rotazione, data la coppia di valori (asse,angolo), tramite
+l'uso della formula di Rodriguez (OPERAZIONE DIRETTA);
+Prcedura che calcola la coppia (asse,angolo) data una matrice di rotazione in ingresso, usando
+l'inverso della formula di Rodriguez (OPERAZIONE INVERSA).
+
+esercitazione 05:
+Procedura per il calcolo della matrice di rotazione, dato un vettore generico, usando la
+parametrizzazione di Cayley-Hamilton (OPERAZIONE DIRETTA);
+Procedura per il calcolo della matrice antisimmetrica, data in ingresso la matrice di rotazione,
+tramite l'uso di C-H (OPERAZIONE INVERSA).
+
+esercitazione 06:
+Procedure per il calcolo delle matrici di cinematica diretta totali Q relative ai robot RR, PPP, RPP.
+esercitazione 06 bis:
+Procedure per il calcolo delle matrici di cinematica diretta totali Q relative ai robot
+SCARA, SFERICO DI 1°TIPO, SFERICO DI 2°TIPO, ANTROPOMORFO.
+
+esercitazione 07:
+Procedure per il calcolo della cinematica inversa relative ai robot RR, PPP, RPP.
+esercitazione 07 bis:
+Procedure per il calcolo della cinematica inversa relative ai robot SCARA, SFERICO DI 1°TIPO,
+SFERICO DI 2°TIPO, ANTROPOMORFO.
