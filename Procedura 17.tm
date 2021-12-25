@@ -1828,6 +1828,250 @@
   <\equation*>
     -<math-up|atan2><around*|(|<frac|y|s<rsub|2>*L<rsub|3>*s<rsub|3>-c<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2>*c<rsub|2>>,-<frac|x|s<rsub|2>*L<rsub|3>*s<rsub|3>-c<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2>*c<rsub|2>>|)>
   </equation*>
+
+  \;
+
+  \;
+
+  <with|color|red|Procedura 8: Procedura per il calcolo della cinematica
+  inversa del POLSO SFERICO a partire dalle seguenti equazioni trovate:
+  <math|x=c<rsub|1>*s<rsub|2>*L<rsub|3>>,
+  <math|y=s<rsub|1>*s<rsub|2>*L<rsub|3>>, <math|z=c<rsub|2>*L<rsub|3>>.>
+
+  <\session|maxima|default>
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>1) >
+    <|input>
+      eq1:cos(q[1])*sin(q[2])*L[3]-x$
+    </input>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>2) >
+    <|input>
+      eq1:subst([cos(q[1])=c[1],sin(q[2])=s[2]],eq1)$
+    </input>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>3) >
+    <|unfolded-io>
+      X:solve([eq1],x)[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
+      >>x=c<rsub|1>*s<rsub|2>*L<rsub|3>>>
+    </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>4) >
+    <|input>
+      eq2:sin(q[1])*sin(q[2])*L[3]-y$
+    </input>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>5) >
+    <|input>
+      eq2:subst([sin(q[1])=s[1],sin(q[2])=s[2]],eq2)$
+    </input>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>6) >
+    <|unfolded-io>
+      Y:solve([eq2],y)[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
+      >>y=s<rsub|1>*s<rsub|2>*L<rsub|3>>>
+    </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>7) >
+    <|input>
+      eq3:cos(q[2])*L[3]-z$
+    </input>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>8) >
+    <|input>
+      eq3:subst(cos(q[2])=c[2],eq3)$
+    </input>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>9) >
+    <|unfolded-io>
+      Z:solve([eq3],z)[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
+      >>z=c<rsub|2>*L<rsub|3>>>
+    </unfolded-io>
+
+    \;
+
+    Prendo le prime due equazioni x ed y, da cui posso eliminare la variabile
+    trigonometrica q<rsub|1>:
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>10) >
+    <|unfolded-io>
+      eq4:factor(X^2+Y^2)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
+      >>y<rsup|2>+x<rsup|2>=<around*|(|s<rsub|1><rsup|2>+c<rsub|1><rsup|2>|)>*s<rsub|2><rsup|2>*L<rsub|3><rsup|2>>>
+    </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>11) >
+    <|input>
+      e1:(s[1]^2)+(c[1]^2)-1$
+    </input>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>12) >
+    <|input>
+      e2:(s[2]^2)+(c[2]^2)-1$
+    </input>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>13) >
+    <|input>
+      eq4:subst(x^2+y^2=P,eq4)$
+    </input>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>14) >
+    <|unfolded-io>
+      eq4:eliminate([eq4,e1],[s[1]^2])[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      >>s<rsub|2><rsup|2>*L<rsub|3><rsup|2>-P>>
+    </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>15) >
+    <|input>
+      eq4:solve([eq4],P)[1]$
+    </input>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>16) >
+    <|unfolded-io>
+      eq5:subst(P=x^2+y^2,eq4)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
+      >>y<rsup|2>+x<rsup|2>=s<rsub|2><rsup|2>*L<rsub|3><rsup|2>>>
+    </unfolded-io>
+
+    \;
+
+    Adesso considero la terza equazione z prendendone il quadrato:
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>17) >
+    <|unfolded-io>
+      eq6:Z^2
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
+      >>z<rsup|2>=c<rsub|2><rsup|2>*L<rsub|3><rsup|2>>>
+    </unfolded-io>
+
+    \;
+
+    Considerando ora le equazioni eq5 e eq6 posso eliminare la variabile
+    trigonometrica q<rsub|2> e definire per il polso sperico uno SPAZIO
+    OPERATIVO CANDIDATO:
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>18) >
+    <|unfolded-io>
+      eq7:factor(eq5+eq6)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
+      >>z<rsup|2>+y<rsup|2>+x<rsup|2>=<around*|(|s<rsub|2><rsup|2>+c<rsub|2><rsup|2>|)>*L<rsub|3><rsup|2>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>19) >
+    <|unfolded-io>
+      eq7:eliminate([eq7,e2],[s[2]^2])[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
+      >>-z<rsup|2>-y<rsup|2>-x<rsup|2>+L<rsub|3><rsup|2>>>
+    </unfolded-io>
+
+    \;
+
+    Tale equazione (<math|x<rsup|2>+y<rsup|2>+z<rsup|2>=L<rsup|2><rsub|3>>)
+    permettte di definire uno SPAZIO OPERATIVO CANDIDATO che corrisponde ad
+    una sfera di centro (0,0,0) e raggio L<rsub|3>.
+
+    \;
+
+    Calcolo adesso il valore della <with|color|blue|variabile trigonometrica
+    q<rsub|2>>:
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>20) >
+    <|unfolded-io>
+      C2:solve([Z],c[2])[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
+      >>c<rsub|2>=<frac|z|L<rsub|3>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>21) >
+    <|unfolded-io>
+      S2:solve([eq5],s[2])[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
+      >>s<rsub|2>=-<frac|<sqrt|y<rsup|2>+x<rsup|2>>|L<rsub|3>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>22) >
+    <|unfolded-io>
+      q2:atan2(S2,C2)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
+      ><with|font-family|rm|atan2>><around*|(|s<rsub|2>,c<rsub|2>|)>=<math-up|atan2><around*|(|s<rsub|2>,<frac|z|L<rsub|3>>|)>=<around*|(|-<math-up|atan2><around*|(|<frac|<sqrt|y<rsup|2>+x<rsup|2>>|L<rsub|3>>,c<rsub|2>|)>=-<math-up|atan2><around*|(|<frac|<sqrt|y<rsup|2>+x<rsup|2>>|L<rsub|3>>,<frac|z|L<rsub|3>>|)>|)>>>
+    </unfolded-io>
+
+    \;
+
+    Ora calcolo il valore della <with|color|blue|variabile trigonometrica
+    q<rsub|1>>:
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>23) >
+    <|unfolded-io>
+      C1:solve([X],c[1])[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
+      >>c<rsub|1>=<frac|x|s<rsub|2>*L<rsub|3>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>24) >
+    <|unfolded-io>
+      S1:solve([Y],s[1])[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o24>)
+      >>s<rsub|1>=<frac|y|s<rsub|2>*L<rsub|3>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>25) >
+    <|unfolded-io>
+      q1:atan2(S1,C1)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o25>)
+      ><with|font-family|rm|atan2>><around*|(|s<rsub|1>,c<rsub|1>|)>=<math-up|atan2><around*|(|s<rsub|1>,<frac|x|s<rsub|2>*L<rsub|3>>|)>=<around*|(|<math-up|atan2><around*|(|<frac|y|s<rsub|2>*L<rsub|3>>,c<rsub|1>|)>=<math-up|atan2><around*|(|<frac|y|s<rsub|2>*L<rsub|3>>,<frac|x|s<rsub|2>*L<rsub|3>>|)>|)>>>
+    </unfolded-io>
+  </session>
+
+  \;
+
+  Quindi entrambe le variabili trigonometriche q<rsub|1> e q<rsub|2> hanno 1
+  SOLUZIONE GENERICA, mentre se la lunghezza del terzo link L<rsub|3> è nulla
+  allora le due variabili trigonometriche hanno INFINITE SOLUZIONI poichè la
+  funzione atan2 non è definita.
 </body>
 
 <\initial>
