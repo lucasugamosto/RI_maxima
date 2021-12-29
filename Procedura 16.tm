@@ -8,7 +8,7 @@
 
   <\session|maxima|default>
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>31) >
+      <with|color|red|(<with|math-font-family|rm|%i>1) >
     <|input>
       mat_rotazione(vet,angolo):=block(
 
@@ -41,7 +41,7 @@
     </input>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>32) >
+      <with|color|red|(<with|math-font-family|rm|%i>2) >
     <|input>
       mat_avvitamento(vettore,angolo,spostamento):=block(
 
@@ -62,7 +62,7 @@
     </input>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>33) >
+      <with|color|red|(<with|math-font-family|rm|%i>3) >
     <|input>
       mat_Qi(theta,d,alpha,a):=block(
 
@@ -78,7 +78,7 @@
     </input>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>34) >
+      <with|color|red|(<with|math-font-family|rm|%i>4) >
     <|input>
       semplifica(Q):=block(
 
@@ -132,7 +132,7 @@
     compone (=numero di DOF=numero di lettere R o P).
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>35) >
+      <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|unfolded-io>
       create_tab(theta,d,alpha,a):=block(
 
@@ -156,9 +156,7 @@
 
       )
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o35>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
       >><with|math-font-family|rm|create_tab><around*|(|\<vartheta\>,d,\<alpha\>,a|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|lngth>,<math-up|tab>,<math-up|II>,<math-up|mat>|]>,<math-up|lngth>:<math-up|length><around*|(|\<vartheta\>|)>,<math-up|tab>:<matrix|<tformat|<table|<row|<cell|<math-up|THETA>>|<cell|D>|<cell|<math-up|ALPHA>>|<cell|A>>>>>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em><math-up|lngth><space|0.27em><math-bf|do><space|0.27em><around*|(|<math-up|mat>:<matrix|<tformat|<table|<row|<cell|\<vartheta\><rsub|i>>|<cell|d<rsub|i>>|<cell|\<alpha\><rsub|i>>|<cell|a<rsub|i>>>>>>,<math-up|tab>:<math-up|addrow><around*|(|<math-up|tab>,<math-up|mat>|)>|)>,<around*|[|<math-up|tab>,<math-up|lngth>|]>|)>>>
     </unfolded-io>
 
@@ -170,7 +168,7 @@
     robot generico passando in ingresso la tabella di D-H.
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>36) >
+      <with|color|red|(<with|math-font-family|rm|%i>6) >
     <|unfolded-io>
       create_Q(tab,lngth):=block(
 
@@ -211,125 +209,125 @@
 
       )
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o36>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
       >><with|math-font-family|rm|create_Q><around*|(|<math-up|tab>,<math-up|lngth>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|reduce>,<math-up|prereduce>,<math-up|mat>,<with|math-font-family|rm|mat1>,<with|math-font-family|rm|Q_tot>|]>,<math-up|reduce>:0,<math-up|mat>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em><math-up|lngth><space|0.27em><math-bf|do><space|0.27em><around*|(|Q<rsub|i>:<with|math-font-family|rm|mat_Qi><around*|(|<math-up|tab><rsub|i+1,1>,<math-up|tab><rsub|i+1,2>,<math-up|tab><rsub|i+1,3>,<math-up|tab><rsub|i+1,4>|)>,<math-bf|if><space|0.27em><math-up|tab><rsub|i,1>\<neq\>0\<wedge\><math-up|tab><rsub|i,3>=0<space|0.27em><math-bf|then><space|0.27em><math-up|reduce>:1<space|0.27em><math-bf|else><space|0.27em><math-up|reduce>:0,<math-bf|if><space|0.27em><math-up|tab><rsub|i,1>=0\<wedge\><math-up|tab><rsub|i,3>=0\<wedge\><math-up|tab><rsub|i-1,1>\<neq\>0\<wedge\><math-up|tab><rsub|i-1,3>=0<space|0.27em><math-bf|then><space|0.27em><math-up|reduce>:1,<math-bf|if><space|0.27em>i\<gtr\>2\<wedge\><math-up|prereduce>=0\<wedge\><math-up|reduce>=1<space|0.27em><math-bf|then><space|0.27em><around*|(|<with|math-font-family|rm|mat1>:<math-up|trigreduce><around*|(|Q<rsub|i-1>\<cdot\>Q<rsub|i>|)>,<math-up|mat>:<math-up|trigsimp><around*|(|Q<rsub|i-2>\<cdot\><with|math-font-family|rm|mat1>|)>|)><space|0.27em><math-bf|else><space|0.27em><around*|(|<math-bf|if><space|0.27em><math-up|reduce>=1<space|0.27em><math-bf|then><space|0.27em><math-up|mat>:<math-up|trigreduce><around*|(|<math-up|mat>\<cdot\>Q<rsub|i>|)><space|0.27em><math-bf|else><space|0.27em><math-up|mat>:<math-up|trigsimp><around*|(|<math-up|mat>\<cdot\>Q<rsub|i>|)>|)>,<math-up|prereduce>:<math-up|reduce>|)>,<with|math-font-family|rm|Q_tot>:<math-up|fullratsimp><around*|(|<math-up|semplifica><around*|(|<math-up|mat>|)>|)>|)>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>37) >
+      <with|color|red|(<with|math-font-family|rm|%i>7) >
     <|unfolded-io>
       DH_RR:create_tab([q[1],q[2]],[0,0],[0,0],[L[1],L[2]])
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o37>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|<math-up|THETA>>|<cell|D>|<cell|<math-up|ALPHA>>|<cell|A>>|<row|<cell|q<rsub|1>>|<cell|0>|<cell|0>|<cell|L<rsub|1>>>|<row|<cell|q<rsub|2>>|<cell|0>|<cell|0>|<cell|L<rsub|2>>>>>>,2|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>38) >
+      <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|unfolded-io>
       Q_RR:create_Q(DH_RR[1],DH_RR[2])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o38>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
       >><matrix|<tformat|<table|<row|<cell|c<rsub|12>>|<cell|-s<rsub|12>>|<cell|0>|<cell|L<rsub|2>*c<rsub|12>+L<rsub|1>*c<rsub|1>>>|<row|<cell|s<rsub|12>>|<cell|c<rsub|12>>|<cell|0>|<cell|L<rsub|2>*s<rsub|12>+L<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>39) >
+      <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|unfolded-io>
       DH_PPP:create_tab([0,-%pi/2,0],[q[1],q[2],q[3]],[-%pi/2,-%pi/2,0],[0,0,0])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o39>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|<math-up|THETA>>|<cell|D>|<cell|<math-up|ALPHA>>|<cell|A>>|<row|<cell|0>|<cell|q<rsub|1>>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|-<frac|\<pi\>|2>>|<cell|q<rsub|2>>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|0>>>>>,3|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>40) >
+      <with|color|red|(<with|math-font-family|rm|%i>10) >
     <|unfolded-io>
       Q_PPP:create_Q(DH_PPP[1],DH_PPP[2])
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o40>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|1>|<cell|q<rsub|3>>>|<row|<cell|0>|<cell|-1>|<cell|0>|<cell|q<rsub|2>>>|<row|<cell|1>|<cell|0>|<cell|0>|<cell|q<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>41) >
+      <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|unfolded-io>
       DH_RPP:create_tab([q[1],0,0],[L[1],q[2],q[3]],[0,-%pi/2,0],[0,0,0])
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o41>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|<math-up|THETA>>|<cell|D>|<cell|<math-up|ALPHA>>|<cell|A>>|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|q<rsub|2>>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|0>>>>>,3|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>42) >
+      <with|color|red|(<with|math-font-family|rm|%i>12) >
     <|unfolded-io>
       Q_RPP:create_Q(DH_RPP[1],DH_RPP[2])
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o42>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
       >><matrix|<tformat|<table|<row|<cell|c<rsub|1>>|<cell|0>|<cell|-s<rsub|1>>|<cell|-s<rsub|1>*q<rsub|3>>>|<row|<cell|s<rsub|1>>|<cell|0>|<cell|c<rsub|1>>|<cell|c<rsub|1>*q<rsub|3>>>|<row|<cell|0>|<cell|-1>|<cell|0>|<cell|q<rsub|2>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>43) >
+      <with|color|red|(<with|math-font-family|rm|%i>13) >
     <|unfolded-io>
       DH_SCARA:create_tab([q[1],q[2],0,q[4],q[5],q[6]],[L[1],L[2],q[3],0,0,L[6]],[0,0,0,-%pi/2,-%pi/2,0],[D[1],D[2],0,0,0,0])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o43>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|<math-up|THETA>>|<cell|D>|<cell|<math-up|ALPHA>>|<cell|A>>|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|0>|<cell|D<rsub|1>>>|<row|<cell|q<rsub|2>>|<cell|L<rsub|2>>|<cell|0>|<cell|D<rsub|2>>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|0>>|<row|<cell|q<rsub|4>>|<cell|0>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|5>>|<cell|0>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|6>>|<cell|L<rsub|6>>|<cell|0>|<cell|0>>>>>,6|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>44) >
+      <with|color|red|(<with|math-font-family|rm|%i>14) >
     <|unfolded-io>
       Q_SCARA:create_Q(DH_SCARA[1],DH_SCARA[2])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o44>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
       >><matrix|<tformat|<table|<row|<cell|s<rsub|6>*s<rsub|124>+c<rsub|5>*c<rsub|6>*c<rsub|124>>|<cell|c<rsub|6>*s<rsub|124>-c<rsub|5>*s<rsub|6>*c<rsub|124>>|<cell|-s<rsub|5>*c<rsub|124>>|<cell|-s<rsub|5>*L<rsub|6>*c<rsub|124>+D<rsub|2>*c<rsub|12>+D<rsub|1>*c<rsub|1>>>|<row|<cell|c<rsub|5>*c<rsub|6>*s<rsub|124>-s<rsub|6>*c<rsub|124>>|<cell|-c<rsub|5>*s<rsub|6>*s<rsub|124>-c<rsub|6>*c<rsub|124>>|<cell|-s<rsub|5>*s<rsub|124>>|<cell|-s<rsub|5>*L<rsub|6>*s<rsub|124>+D<rsub|2>*s<rsub|12>+D<rsub|1>*s<rsub|1>>>|<row|<cell|-s<rsub|5>*c<rsub|6>>|<cell|s<rsub|5>*s<rsub|6>>|<cell|-c<rsub|5>>|<cell|-c<rsub|5>*L<rsub|6>+q<rsub|3>+L<rsub|2>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>45) >
+      <with|color|red|(<with|math-font-family|rm|%i>15) >
     <|unfolded-io>
       DH_SCARA_STRUTTURA:create_tab([q[1],q[2],0],[L[1],L[2],q[3]],[0,0,0],[D[1],D[2],0])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o45>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|<math-up|THETA>>|<cell|D>|<cell|<math-up|ALPHA>>|<cell|A>>|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|0>|<cell|D<rsub|1>>>|<row|<cell|q<rsub|2>>|<cell|L<rsub|2>>|<cell|0>|<cell|D<rsub|2>>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|0>>>>>,3|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>46) >
+      <with|color|red|(<with|math-font-family|rm|%i>16) >
     <|unfolded-io>
       Q_SCARA_STRUTTURA:create_Q(DH_SCARA_STRUTTURA[1],DH_SCARA_STRUTTURA[2])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o46>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
       >><matrix|<tformat|<table|<row|<cell|c<rsub|12>>|<cell|-s<rsub|12>>|<cell|0>|<cell|D<rsub|2>*c<rsub|12>+D<rsub|1>*c<rsub|1>>>|<row|<cell|s<rsub|12>>|<cell|c<rsub|12>>|<cell|0>|<cell|D<rsub|2>*s<rsub|12>+D<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|q<rsub|3>+L<rsub|2>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>47) >
+      <with|color|red|(<with|math-font-family|rm|%i>17) >
     <|unfolded-io>
       DH_SFERICO1:create_tab([q[1],q[2],0,q[4],q[5],q[6]],[L[1],0,q[3],0,0,L[6]],[%pi/2,%pi/2,0,%pi/2,-%pi/2,0],[0,L[2],0,0,0,0])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o47>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|<math-up|THETA>>|<cell|D>|<cell|<math-up|ALPHA>>|<cell|A>>|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|2>>|<cell|0>|<cell|<frac|\<pi\>|2>>|<cell|L<rsub|2>>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|0>>|<row|<cell|q<rsub|4>>|<cell|0>|<cell|<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|5>>|<cell|0>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|6>>|<cell|L<rsub|6>>|<cell|0>|<cell|0>>>>>,6|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>48) >
+      <with|color|red|(<with|math-font-family|rm|%i>18) >
     <|unfolded-io>
       Q_SFERICO1:create_Q(DH_SFERICO1[1],DH_SFERICO1[2])
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o48>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
       >><matrix|<tformat|<table|<row|<cell|<around*|(|s<rsub|1>*c<rsub|4>-c<rsub|1>*c<rsub|2>*s<rsub|4>|)>*s<rsub|6>+<around*|(|c<rsub|1>*s<rsub|2>*s<rsub|5>+<around*|(|s<rsub|1>*s<rsub|4>+c<rsub|1>*c<rsub|2>*c<rsub|4>|)>*c<rsub|5>|)>*c<rsub|6>>|<cell|<around*|(|<around*|(|-s<rsub|1>*s<rsub|4>-c<rsub|1>*c<rsub|2>*c<rsub|4>|)>*c<rsub|5>-c<rsub|1>*s<rsub|2>*s<rsub|5>|)>*s<rsub|6>+<around*|(|s<rsub|1>*c<rsub|4>-c<rsub|1>*c<rsub|2>*s<rsub|4>|)>*c<rsub|6>>|<cell|<around*|(|-s<rsub|1>*s<rsub|4>-c<rsub|1>*c<rsub|2>*c<rsub|4>|)>*s<rsub|5>+c<rsub|1>*s<rsub|2>*c<rsub|5>>|<cell|<around*|(|<around*|(|-s<rsub|1>*s<rsub|4>-c<rsub|1>*c<rsub|2>*c<rsub|4>|)>*s<rsub|5>+c<rsub|1>*s<rsub|2>*c<rsub|5>|)>*L<rsub|6>+c<rsub|1>*s<rsub|2>*q<rsub|3>+c<rsub|1>*L<rsub|2>*c<rsub|2>>>|<row|<cell|<around*|(|-s<rsub|1>*c<rsub|2>*s<rsub|4>-c<rsub|1>*c<rsub|4>|)>*s<rsub|6>+<around*|(|s<rsub|1>*s<rsub|2>*s<rsub|5>+<around*|(|s<rsub|1>*c<rsub|2>*c<rsub|4>-c<rsub|1>*s<rsub|4>|)>*c<rsub|5>|)>*c<rsub|6>>|<cell|<around*|(|<around*|(|c<rsub|1>*s<rsub|4>-s<rsub|1>*c<rsub|2>*c<rsub|4>|)>*c<rsub|5>-s<rsub|1>*s<rsub|2>*s<rsub|5>|)>*s<rsub|6>+<around*|(|-s<rsub|1>*c<rsub|2>*s<rsub|4>-c<rsub|1>*c<rsub|4>|)>*c<rsub|6>>|<cell|<around*|(|c<rsub|1>*s<rsub|4>-s<rsub|1>*c<rsub|2>*c<rsub|4>|)>*s<rsub|5>+s<rsub|1>*s<rsub|2>*c<rsub|5>>|<cell|<around*|(|<around*|(|c<rsub|1>*s<rsub|4>-s<rsub|1>*c<rsub|2>*c<rsub|4>|)>*s<rsub|5>+s<rsub|1>*s<rsub|2>*c<rsub|5>|)>*L<rsub|6>+s<rsub|1>*s<rsub|2>*q<rsub|3>+s<rsub|1>*L<rsub|2>*c<rsub|2>>>|<row|<cell|<around*|(|s<rsub|2>*c<rsub|4>*c<rsub|5>-c<rsub|2>*s<rsub|5>|)>*c<rsub|6>-s<rsub|2>*s<rsub|4>*s<rsub|6>>|<cell|<around*|(|c<rsub|2>*s<rsub|5>-s<rsub|2>*c<rsub|4>*c<rsub|5>|)>*s<rsub|6>-s<rsub|2>*s<rsub|4>*c<rsub|6>>|<cell|-s<rsub|2>*c<rsub|4>*s<rsub|5>-c<rsub|2>*c<rsub|5>>|<cell|<around*|(|-s<rsub|2>*c<rsub|4>*s<rsub|5>-c<rsub|2>*c<rsub|5>|)>*L<rsub|6>-c<rsub|2>*q<rsub|3>+L<rsub|2>*s<rsub|2>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
@@ -344,42 +342,42 @@
     \;
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>49) >
+      <with|color|red|(<with|math-font-family|rm|%i>19) >
     <|unfolded-io>
       DH_SFERICO1_STRUTTURA:create_tab([q[1],q[2],0],[L[1],0,q[3]],[%pi/2,%pi/2,0],[0,L[2],0])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o49>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|<math-up|THETA>>|<cell|D>|<cell|<math-up|ALPHA>>|<cell|A>>|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|2>>|<cell|0>|<cell|<frac|\<pi\>|2>>|<cell|L<rsub|2>>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|0>>>>>,3|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>50) >
+      <with|color|red|(<with|math-font-family|rm|%i>20) >
     <|unfolded-io>
       Q_SFERICO1_STRUTTURA:create_Q(DH_SFERICO1_STRUTTURA[1],DH_SFERICO1_STRUTTURA[2])
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o50>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
       >><matrix|<tformat|<table|<row|<cell|c<rsub|1>*c<rsub|2>>|<cell|s<rsub|1>>|<cell|c<rsub|1>*s<rsub|2>>|<cell|c<rsub|1>*s<rsub|2>*q<rsub|3>+c<rsub|1>*L<rsub|2>*c<rsub|2>>>|<row|<cell|s<rsub|1>*c<rsub|2>>|<cell|-c<rsub|1>>|<cell|s<rsub|1>*s<rsub|2>>|<cell|s<rsub|1>*s<rsub|2>*q<rsub|3>+s<rsub|1>*L<rsub|2>*c<rsub|2>>>|<row|<cell|s<rsub|2>>|<cell|0>|<cell|-c<rsub|2>>|<cell|-c<rsub|2>*q<rsub|3>+L<rsub|2>*s<rsub|2>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>51) >
+      <with|color|red|(<with|math-font-family|rm|%i>21) >
     <|unfolded-io>
       DH_SFERICO2:create_tab([q[1],q[2],0,q[4],q[5],q[6]],[L[1],L[2],q[3],0,0,L[6]],[-%pi/2,-%pi/2,0,%pi/2,-%pi/2,0],[0,0,0,0,0,0])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o51>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|<math-up|THETA>>|<cell|D>|<cell|<math-up|ALPHA>>|<cell|A>>|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|2>>|<cell|L<rsub|2>>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|0>>|<row|<cell|q<rsub|4>>|<cell|0>|<cell|<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|5>>|<cell|0>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|6>>|<cell|L<rsub|6>>|<cell|0>|<cell|0>>>>>,6|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>52) >
+      <with|color|red|(<with|math-font-family|rm|%i>22) >
     <|unfolded-io>
       Q_SFERICO2:create_Q(DH_SFERICO2[1],DH_SFERICO2[2])
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o52>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
       >><matrix|<tformat|<table|<row|<cell|<around*|(|s<rsub|1>*c<rsub|4>-c<rsub|1>*c<rsub|2>*s<rsub|4>|)>*s<rsub|6>+<around*|(|<around*|(|s<rsub|1>*s<rsub|4>+c<rsub|1>*c<rsub|2>*c<rsub|4>|)>*c<rsub|5>-c<rsub|1>*s<rsub|2>*s<rsub|5>|)>*c<rsub|6>>|<cell|<around*|(|c<rsub|1>*s<rsub|2>*s<rsub|5>+<around*|(|-s<rsub|1>*s<rsub|4>-c<rsub|1>*c<rsub|2>*c<rsub|4>|)>*c<rsub|5>|)>*s<rsub|6>+<around*|(|s<rsub|1>*c<rsub|4>-c<rsub|1>*c<rsub|2>*s<rsub|4>|)>*c<rsub|6>>|<cell|<around*|(|-s<rsub|1>*s<rsub|4>-c<rsub|1>*c<rsub|2>*c<rsub|4>|)>*s<rsub|5>-c<rsub|1>*s<rsub|2>*c<rsub|5>>|<cell|<around*|(|<around*|(|-s<rsub|1>*s<rsub|4>-c<rsub|1>*c<rsub|2>*c<rsub|4>|)>*s<rsub|5>-c<rsub|1>*s<rsub|2>*c<rsub|5>|)>*L<rsub|6>-c<rsub|1>*s<rsub|2>*q<rsub|3>-s<rsub|1>*L<rsub|2>>>|<row|<cell|<around*|(|-s<rsub|1>*c<rsub|2>*s<rsub|4>-c<rsub|1>*c<rsub|4>|)>*s<rsub|6>+<around*|(|<around*|(|s<rsub|1>*c<rsub|2>*c<rsub|4>-c<rsub|1>*s<rsub|4>|)>*c<rsub|5>-s<rsub|1>*s<rsub|2>*s<rsub|5>|)>*c<rsub|6>>|<cell|<around*|(|s<rsub|1>*s<rsub|2>*s<rsub|5>+<around*|(|c<rsub|1>*s<rsub|4>-s<rsub|1>*c<rsub|2>*c<rsub|4>|)>*c<rsub|5>|)>*s<rsub|6>+<around*|(|-s<rsub|1>*c<rsub|2>*s<rsub|4>-c<rsub|1>*c<rsub|4>|)>*c<rsub|6>>|<cell|<around*|(|c<rsub|1>*s<rsub|4>-s<rsub|1>*c<rsub|2>*c<rsub|4>|)>*s<rsub|5>-s<rsub|1>*s<rsub|2>*c<rsub|5>>|<cell|<around*|(|<around*|(|c<rsub|1>*s<rsub|4>-s<rsub|1>*c<rsub|2>*c<rsub|4>|)>*s<rsub|5>-s<rsub|1>*s<rsub|2>*c<rsub|5>|)>*L<rsub|6>-s<rsub|1>*s<rsub|2>*q<rsub|3>+c<rsub|1>*L<rsub|2>>>|<row|<cell|s<rsub|2>*s<rsub|4>*s<rsub|6>+<around*|(|-c<rsub|2>*s<rsub|5>-s<rsub|2>*c<rsub|4>*c<rsub|5>|)>*c<rsub|6>>|<cell|<around*|(|c<rsub|2>*s<rsub|5>+s<rsub|2>*c<rsub|4>*c<rsub|5>|)>*s<rsub|6>+s<rsub|2>*s<rsub|4>*c<rsub|6>>|<cell|s<rsub|2>*c<rsub|4>*s<rsub|5>-c<rsub|2>*c<rsub|5>>|<cell|<around*|(|s<rsub|2>*c<rsub|4>*s<rsub|5>-c<rsub|2>*c<rsub|5>|)>*L<rsub|6>-c<rsub|2>*q<rsub|3>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
@@ -388,42 +386,42 @@
     <math|<matrix|<tformat|<table|<row|<cell|<around*|(|s<rsub|1>*c<rsub|4>-c<rsub|1>*c<rsub|2>*s<rsub|4>|)>*s<rsub|6>+<around*|(|<around*|(|s<rsub|1>*s<rsub|4>+c<rsub|1>*c<rsub|2>*c<rsub|4>|)>*c<rsub|5>-c<rsub|1>*s<rsub|2>*s<rsub|5>|)>*c<rsub|6>>|<cell|<around*|(|c<rsub|1>*s<rsub|2>*s<rsub|5>+<around*|(|-s<rsub|1>*s<rsub|4>-c<rsub|1>*c<rsub|2>*c<rsub|4>|)>*c<rsub|5>|)>*s<rsub|6>+<around*|(|s<rsub|1>*c<rsub|4>-c<rsub|1>*c<rsub|2>*s<rsub|4>|)>*c<rsub|6>>|<cell|<around*|(|-s<rsub|1>*s<rsub|4>-c<rsub|1>*c<rsub|2>*c<rsub|4>|)>*s<rsub|5>-c<rsub|1>*s<rsub|2>*c<rsub|5>>|<cell|<around*|(|<around*|(|-s<rsub|1>*s<rsub|4>-c<rsub|1>*c<rsub|2>*c<rsub|4>|)>*s<rsub|5>-c<rsub|1>*s<rsub|2>*c<rsub|5>|)>*L<rsub|6>-c<rsub|1>*s<rsub|2>*q<rsub|3>-s<rsub|1>*L<rsub|2>>>|<row|<cell|<around*|(|-s<rsub|1>*c<rsub|2>*s<rsub|4>-c<rsub|1>*c<rsub|4>|)>*s<rsub|6>+<around*|(|<around*|(|s<rsub|1>*c<rsub|2>*c<rsub|4>-c<rsub|1>*s<rsub|4>|)>*c<rsub|5>-s<rsub|1>*s<rsub|2>*s<rsub|5>|)>*c<rsub|6>>|<cell|<around*|(|s<rsub|1>*s<rsub|2>*s<rsub|5>+<around*|(|c<rsub|1>*s<rsub|4>-s<rsub|1>*c<rsub|2>*c<rsub|4>|)>*c<rsub|5>|)>*s<rsub|6>+<around*|(|-s<rsub|1>*c<rsub|2>*s<rsub|4>-c<rsub|1>*c<rsub|4>|)>*c<rsub|6>>|<cell|<around*|(|c<rsub|1>*s<rsub|4>-s<rsub|1>*c<rsub|2>*c<rsub|4>|)>*s<rsub|5>-s<rsub|1>*s<rsub|2>*c<rsub|5>>|<cell|<around*|(|<around*|(|c<rsub|1>*s<rsub|4>-s<rsub|1>*c<rsub|2>*c<rsub|4>|)>*s<rsub|5>-s<rsub|1>*s<rsub|2>*c<rsub|5>|)>*L<rsub|6>-s<rsub|1>*s<rsub|2>*q<rsub|3>+c<rsub|1>*L<rsub|2>>>|<row|<cell|s<rsub|2>*s<rsub|4>*s<rsub|6>+<around*|(|-c<rsub|2>*s<rsub|5>-s<rsub|2>*c<rsub|4>*c<rsub|5>|)>*c<rsub|6>>|<cell|<around*|(|c<rsub|2>*s<rsub|5>+s<rsub|2>*c<rsub|4>*c<rsub|5>|)>*s<rsub|6>+s<rsub|2>*s<rsub|4>*c<rsub|6>>|<cell|s<rsub|2>*c<rsub|4>*s<rsub|5>-c<rsub|2>*c<rsub|5>>|<cell|<around*|(|s<rsub|2>*c<rsub|4>*s<rsub|5>-c<rsub|2>*c<rsub|5>|)>*L<rsub|6>-c<rsub|2>*q<rsub|3>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>53) >
+      <with|color|red|(<with|math-font-family|rm|%i>23) >
     <|unfolded-io>
       DH_SFERICO2_STRUTTURA:create_tab([q[1],q[2],0],[L[1],L[2],q[3]],[-%pi/2,%pi/2,0],[0,0,0])
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o53>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|<math-up|THETA>>|<cell|D>|<cell|<math-up|ALPHA>>|<cell|A>>|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|2>>|<cell|L<rsub|2>>|<cell|<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|0>>>>>,3|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>54) >
+      <with|color|red|(<with|math-font-family|rm|%i>24) >
     <|unfolded-io>
       Q_SFERICO2_STRUTTURA:create_Q(DH_SFERICO2_STRUTTURA[1],DH_SFERICO2_STRUTTURA[2])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o54>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o24>)
       >><matrix|<tformat|<table|<row|<cell|c<rsub|1>*c<rsub|2>>|<cell|-s<rsub|1>>|<cell|c<rsub|1>*s<rsub|2>>|<cell|c<rsub|1>*s<rsub|2>*q<rsub|3>-s<rsub|1>*L<rsub|2>>>|<row|<cell|s<rsub|1>*c<rsub|2>>|<cell|c<rsub|1>>|<cell|s<rsub|1>*s<rsub|2>>|<cell|s<rsub|1>*s<rsub|2>*q<rsub|3>+c<rsub|1>*L<rsub|2>>>|<row|<cell|-s<rsub|2>>|<cell|0>|<cell|c<rsub|2>>|<cell|c<rsub|2>*q<rsub|3>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>55) >
+      <with|color|red|(<with|math-font-family|rm|%i>25) >
     <|unfolded-io>
       DH_ANTROPOMORFO:create_tab([q[1],q[2],q[3],q[4],q[5],q[6]],[L[1],0,0,0,0,L[6]],[%pi/2,0,%pi/2,%pi/2,-%pi/2,0],[0,L[2],0,0,0,0])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o55>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o25>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|<math-up|THETA>>|<cell|D>|<cell|<math-up|ALPHA>>|<cell|A>>|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|2>>|<cell|0>|<cell|0>|<cell|L<rsub|2>>>|<row|<cell|q<rsub|3>>|<cell|0>|<cell|<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|4>>|<cell|0>|<cell|<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|5>>|<cell|0>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|6>>|<cell|L<rsub|6>>|<cell|0>|<cell|0>>>>>,6|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>56) >
+      <with|color|red|(<with|math-font-family|rm|%i>26) >
     <|unfolded-io>
       Q_ANTROPOMORFO:create_Q(DH_ANTROPOMORFO[1],DH_ANTROPOMORFO[2])
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o56>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o26>)
       >><matrix|<tformat|<table|<row|<cell|c<rsub|1>*s<rsub|5>*c<rsub|6>*s<rsub|23>+<around*|(|c<rsub|1>*c<rsub|4>*c<rsub|5>*c<rsub|6>-c<rsub|1>*s<rsub|4>*s<rsub|6>|)>*c<rsub|23>+s<rsub|1>*c<rsub|4>*s<rsub|6>+s<rsub|1>*s<rsub|4>*c<rsub|5>*c<rsub|6>>|<cell|-c<rsub|1>*s<rsub|5>*s<rsub|6>*s<rsub|23>+<around*|(|-c<rsub|1>*c<rsub|4>*c<rsub|5>*s<rsub|6>-c<rsub|1>*s<rsub|4>*c<rsub|6>|)>*c<rsub|23>-s<rsub|1>*s<rsub|4>*c<rsub|5>*s<rsub|6>+s<rsub|1>*c<rsub|4>*c<rsub|6>>|<cell|c<rsub|1>*c<rsub|5>*s<rsub|23>-c<rsub|1>*c<rsub|4>*s<rsub|5>*c<rsub|23>-s<rsub|1>*s<rsub|4>*s<rsub|5>>|<cell|c<rsub|1>*c<rsub|5>*L<rsub|6>*s<rsub|23>-c<rsub|1>*c<rsub|4>*s<rsub|5>*L<rsub|6>*c<rsub|23>-s<rsub|1>*s<rsub|4>*s<rsub|5>*L<rsub|6>+c<rsub|1>*L<rsub|2>*c<rsub|2>>>|<row|<cell|s<rsub|1>*s<rsub|5>*c<rsub|6>*s<rsub|23>+<around*|(|s<rsub|1>*c<rsub|4>*c<rsub|5>*c<rsub|6>-s<rsub|1>*s<rsub|4>*s<rsub|6>|)>*c<rsub|23>-c<rsub|1>*c<rsub|4>*s<rsub|6>-c<rsub|1>*s<rsub|4>*c<rsub|5>*c<rsub|6>>|<cell|-s<rsub|1>*s<rsub|5>*s<rsub|6>*s<rsub|23>+<around*|(|-s<rsub|1>*c<rsub|4>*c<rsub|5>*s<rsub|6>-s<rsub|1>*s<rsub|4>*c<rsub|6>|)>*c<rsub|23>+c<rsub|1>*s<rsub|4>*c<rsub|5>*s<rsub|6>-c<rsub|1>*c<rsub|4>*c<rsub|6>>|<cell|s<rsub|1>*c<rsub|5>*s<rsub|23>-s<rsub|1>*c<rsub|4>*s<rsub|5>*c<rsub|23>+c<rsub|1>*s<rsub|4>*s<rsub|5>>|<cell|s<rsub|1>*c<rsub|5>*L<rsub|6>*s<rsub|23>-s<rsub|1>*c<rsub|4>*s<rsub|5>*L<rsub|6>*c<rsub|23>+c<rsub|1>*s<rsub|4>*s<rsub|5>*L<rsub|6>+s<rsub|1>*L<rsub|2>*c<rsub|2>>>|<row|<cell|<around*|(|c<rsub|4>*c<rsub|5>*c<rsub|6>-s<rsub|4>*s<rsub|6>|)>*s<rsub|23>-s<rsub|5>*c<rsub|6>*c<rsub|23>>|<cell|<around*|(|-c<rsub|4>*c<rsub|5>*s<rsub|6>-s<rsub|4>*c<rsub|6>|)>*s<rsub|23>+s<rsub|5>*s<rsub|6>*c<rsub|23>>|<cell|-c<rsub|4>*s<rsub|5>*s<rsub|23>-c<rsub|5>*c<rsub|23>>|<cell|-c<rsub|4>*s<rsub|5>*L<rsub|6>*s<rsub|23>-c<rsub|5>*L<rsub|6>*c<rsub|23>+L<rsub|2>*s<rsub|2>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
@@ -434,42 +432,42 @@
 
   <\session|maxima|default>
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>57) >
+      <with|color|red|(<with|math-font-family|rm|%i>27) >
     <|unfolded-io>
       DH_ANTROPOMORFO_STRUTTURA:create_tab([q[1],q[2],q[3]],[L[1],0,0],[%pi/2,0,0],[0,L[2],L[3]])
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o57>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o27>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|<math-up|THETA>>|<cell|D>|<cell|<math-up|ALPHA>>|<cell|A>>|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|2>>|<cell|0>|<cell|0>|<cell|L<rsub|2>>>|<row|<cell|q<rsub|3>>|<cell|0>|<cell|0>|<cell|L<rsub|3>>>>>>,3|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>58) >
+      <with|color|red|(<with|math-font-family|rm|%i>28) >
     <|unfolded-io>
       Q_ANTROPOMORFO_STRUTTURA:create_Q(DH_ANTROPOMORFO_STRUTTURA[1],DH_ANTROPOMORFO_STRUTTURA[2])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o58>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o28>)
       >><matrix|<tformat|<table|<row|<cell|c<rsub|1>*c<rsub|23>>|<cell|-c<rsub|1>*s<rsub|23>>|<cell|s<rsub|1>>|<cell|c<rsub|1>*L<rsub|3>*c<rsub|23>+c<rsub|1>*L<rsub|2>*c<rsub|2>>>|<row|<cell|s<rsub|1>*c<rsub|23>>|<cell|-s<rsub|1>*s<rsub|23>>|<cell|-c<rsub|1>>|<cell|s<rsub|1>*L<rsub|3>*c<rsub|23>+s<rsub|1>*L<rsub|2>*c<rsub|2>>>|<row|<cell|s<rsub|23>>|<cell|c<rsub|23>>|<cell|0>|<cell|L<rsub|3>*s<rsub|23>+L<rsub|2>*s<rsub|2>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>59) >
+      <with|color|red|(<with|math-font-family|rm|%i>29) >
     <|unfolded-io>
       DH_POLSO_SFERICO:create_tab([q[1],q[2],q[3]],[0,0,L[3]],[-%pi/2,%pi/2,0],[0,0,0])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o59>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o29>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|<math-up|THETA>>|<cell|D>|<cell|<math-up|ALPHA>>|<cell|A>>|<row|<cell|q<rsub|1>>|<cell|0>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|2>>|<cell|0>|<cell|<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|3>>|<cell|L<rsub|3>>|<cell|0>|<cell|0>>>>>,3|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>60) >
+      <with|color|red|(<with|math-font-family|rm|%i>30) >
     <|unfolded-io>
       Q_POLSO_SFERICO:create_Q(DH_POLSO_SFERICO[1],DH_POLSO_SFERICO[2])
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o60>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o30>)
       >><matrix|<tformat|<table|<row|<cell|c<rsub|1>*c<rsub|2>*c<rsub|3>-s<rsub|1>*s<rsub|3>>|<cell|-c<rsub|1>*c<rsub|2>*s<rsub|3>-s<rsub|1>*c<rsub|3>>|<cell|c<rsub|1>*s<rsub|2>>|<cell|c<rsub|1>*s<rsub|2>*L<rsub|3>>>|<row|<cell|c<rsub|1>*s<rsub|3>+s<rsub|1>*c<rsub|2>*c<rsub|3>>|<cell|c<rsub|1>*c<rsub|3>-s<rsub|1>*c<rsub|2>*s<rsub|3>>|<cell|s<rsub|1>*s<rsub|2>>|<cell|s<rsub|1>*s<rsub|2>*L<rsub|3>>>|<row|<cell|-s<rsub|2>*c<rsub|3>>|<cell|s<rsub|2>*s<rsub|3>>|<cell|c<rsub|2>>|<cell|c<rsub|2>*L<rsub|3>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
   </session>
