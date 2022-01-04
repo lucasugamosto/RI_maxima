@@ -203,7 +203,7 @@
     riferimento dei baricentri.>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>27) >
+      <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|unfolded-io>
       main_func(DH_tab,bc):=block(
 
@@ -260,53 +260,51 @@
 
       )
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o27>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
       >><with|math-font-family|rm|main_func><around*|(|<with|math-font-family|rm|DH_tab>,<math-up|bc>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|U,<with|math-font-family|rm|G_T>|]>,U:<math-up|zeromatrix><around*|(|<with|math-font-family|rm|DH_tab><rsub|2>,1|)>,<math-bf|if><space|0.27em><around*|(|<with|math-font-family|rm|DH_tab><rsub|1>|)><rsub|2,1>=q<rsub|1>\<wedge\><around*|(|<with|math-font-family|rm|DH_tab><rsub|1>|)><rsub|2,2>=L<rsub|1><space|0.27em><math-bf|then><space|0.27em><with|math-font-family|rm|G_T>:<matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|-g>>>>>,<math-bf|if><space|0.27em><around*|(|<with|math-font-family|rm|DH_tab><rsub|1>|)><rsub|2,1>=q<rsub|1>\<wedge\><around*|(|<with|math-font-family|rm|DH_tab><rsub|1>|)><rsub|2,2>=0<space|0.27em><math-bf|then><space|0.27em><with|math-font-family|rm|G_T>:<matrix|<tformat|<table|<row|<cell|0>|<cell|-g>|<cell|0>>>>>,<math-bf|if><space|0.27em><around*|(|<with|math-font-family|rm|DH_tab><rsub|1>|)><rsub|2,2>=q<rsub|1><space|0.27em><math-bf|then><space|0.27em><with|math-font-family|rm|G_T>:<matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|-g>>>>>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em><with|math-font-family|rm|DH_tab><rsub|2><space|0.27em><math-bf|do><space|0.27em><around*|(|Q<rsub|i>:<with|math-font-family|rm|create_Q><around*|(|<with|math-font-family|rm|DH_tab><rsub|1>,i|)>,<math-bf|if><space|0.27em><math-up|bc><rsub|i,1>\<neq\>0<space|0.27em><math-bf|then><space|0.27em>Q<rsub|i>:Q<rsub|i>\<cdot\><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>|<cell|-<math-up|bc><rsub|i,1>>>|<row|<cell|0>|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<math-bf|if><space|0.27em><math-up|bc><rsub|i,2>\<neq\>0<space|0.27em><math-bf|then><space|0.27em>Q<rsub|i>:Q<rsub|i>\<cdot\><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>|<cell|-<math-up|bc><rsub|i,2>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<math-bf|if><space|0.27em><math-up|bc><rsub|i,3>\<neq\>0<space|0.27em><math-bf|then><space|0.27em>Q<rsub|i>:Q<rsub|i>\<cdot\><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|-<math-up|bc><rsub|i,3>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,d:<matrix|<tformat|<table|<row|<cell|<around*|(|Q<rsub|i>|)><rsub|1,4>>>|<row|<cell|<around*|(|Q<rsub|i>|)><rsub|2,4>>>|<row|<cell|<around*|(|Q<rsub|i>|)><rsub|3,4>>>>>>,U<rsub|i,1>:<around*|(|-M<rsub|i>|)>*<with|math-font-family|rm|G_T>\<cdot\>d,U<rsub|i,1>:<math-up|semplifica><around*|(|U<rsub|i,1>|)>|)>,<with|math-font-family|rm|U_tot>:0,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em><with|math-font-family|rm|DH_tab><rsub|2><space|0.27em><math-bf|do><space|0.27em><with|math-font-family|rm|U_tot>:<with|math-font-family|rm|U_tot>+U<rsub|i,1>,<with|math-font-family|rm|U_tot>:<math-up|fullratsimp><around*|(|<with|math-font-family|rm|U_tot>|)>,<math-up|return><around*|(|<with|math-font-family|rm|U_tot>|)>|)>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>28) >
+      <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|unfolded-io>
       RR_tab:create_tab([%pi/2,q[2]],[q[1],0],[%pi/2,0],[0,L[2]])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o28>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|<math-up|THETA>>|<cell|D>|<cell|<math-up|ALPHA>>|<cell|A>>|<row|<cell|<frac|\<pi\>|2>>|<cell|q<rsub|1>>|<cell|<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|2>>|<cell|0>|<cell|0>|<cell|L<rsub|2>>>>>>,2|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>29) >
+      <with|color|red|(<with|math-font-family|rm|%i>10) >
     <|unfolded-io>
       RR:main_func(RR_tab,matrix([0,0,0],[0,0,0]))
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o29>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
       >><around*|(|L<rsub|2>*M<rsub|2>*s<rsub|2>+q<rsub|1>*M<rsub|2>+M<rsub|1>*q<rsub|1>|)>*g>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>30) >
+      <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|unfolded-io>
       RPP_tab:create_tab([q[1],0,0],[L[1],q[2],q[3]],[0,-%pi/2,0],[0,0,0])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o30>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|<math-up|THETA>>|<cell|D>|<cell|<math-up|ALPHA>>|<cell|A>>|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|q<rsub|2>>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|0>>>>>,3|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>31) >
+      <with|color|red|(<with|math-font-family|rm|%i>12) >
     <|unfolded-io>
       RPP:main_func(RPP_tab,matrix([0,0,0],[0,0,0],[0,0,0]))
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o31>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
       >><around*|(|<around*|(|q<rsub|2>+L<rsub|1>|)>*M<rsub|3>+M<rsub|2>*q<rsub|2>+L<rsub|1>*M<rsub|2>+L<rsub|1>*M<rsub|1>|)>*g>>
     </unfolded-io>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>32) >
-    <|input>
-      \;
-    </input>
   </session>
 </body>
 
