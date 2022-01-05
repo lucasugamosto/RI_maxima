@@ -3,6 +3,9 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
+  PROCEDURA CHE IMPLEMENTA LA PARAMETRIZZAZIONE DI CAYLEY PER IL CALCOLO
+  DELLA MATRICE DI ROTAZIONE E PER IL CALCOLO DELLA MATRICE ANTISIMMETRICA.
+
   <with|color|red|Procedura 1: Procedura che prende un vettore generico \Pa\Q
   in input e genera la matrice di rotazione R tramite la parametrizzazione di
   Cayley-Hamilton, se possibile (quindi controllare se la matrice I-S(a) è o
@@ -183,8 +186,8 @@
 
   \;
 
-  <with|color|red|ESERCITAZIONE 2: Procedura che prende in ingresso una
-  matrice di rotazione R e genera una matrice anti-simmetrica S.>
+  <with|color|red|Procedura 2: Procedura che prende in ingresso una matrice
+  di rotazione R e genera una matrice anti-simmetrica S.>
 
   <\session|maxima|default>
     <\unfolded-io>

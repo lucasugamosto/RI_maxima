@@ -3,6 +3,9 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
+  PROCEDURA CHE DIMOSTRA LA NON VALIDITA' DELLA PROPRIETA' COMMUTATIVA
+  RISPETTO ALLA MOLTIPLICAZIONE PER LE MATRICI DI ROTAZIONE.
+
   <with|color|red|Procedura 1: Procedura che prende in ingresso i valori di
   due angoli generici \<alpha\> e \<beta\>, calcola le matrici di rotazioni
   intorno a due assi diversi rispettivamente di angolo \<alpha\> e \<beta\> e

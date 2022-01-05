@@ -3,6 +3,10 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
+  PROCEDURA PER IL CALCOLO DELL'ENERGIA CINETICA DOVUTA ALLA TRASLAZIONE O
+  ALLA ROTAZIONE, DELL'ENERGIA CINETICA TOTALE E DELLE MATRICI DELLE INERZIE
+  GENERALIZZATE PER TUTTI I ROBOT VISTI A LEZIONE.
+
   <with|color|red|Procedura 1: Procedura che crea la tabella di DH a partire
   dai valori inseriti dall'utente:>
 
@@ -32,6 +36,8 @@
 
       )$
     </input>
+
+    \;
 
     \;
 
@@ -225,6 +231,10 @@
     calcola la matrice delle inerzie generalizzate legate alla traslazione a
     partire dalle informazioni di 'd' e dell'indice 'i' che indica il link
     associato.
+
+    -matrice_delle_inerzie_rotazione: funzione che calcola la matrice delle
+    inerzie generalizzate legate alla rotazione a partire dalle informazioni
+    di 'R' e dell'indice 'i' che indica il link associato.
 
     -matrice_delle_inerzie_rotazione: funzione che calcola la matrice delle
     inerzie generalizzate legate alla rotazione a partire dalle informazioni

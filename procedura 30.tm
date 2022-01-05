@@ -3,6 +3,9 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
+  PROCEDURA PER IL CALCOLO DELL'EQUAZIONI DI EULERO-LAGRANGE ASSOCIATE AL
+  ROBOT PRESO IN ESAME.
+
   <with|color|red|Procedura 1: Procedura per il calcolo dell'equazione delle
   equazioni di Eulero-Lagrange, passando in ingresso la tabella di D-H e i
   sistemi di riferimento dei baricentri dei links.>

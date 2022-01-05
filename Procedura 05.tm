@@ -3,6 +3,9 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
+  PROCEDURA CHE CALCOLA LA MATRICE DI ROTAZIONE UTILIZZANDO LA MATRICE
+  ANTISIMMETRICA E LA TRASFORMATA DI LAPLACE.
+
   <with|color|red|Procedura 1: Procedura che prende in input un vettore e
   associa a quel vettore la corrispondente matrice anti-simmetrica.>
 

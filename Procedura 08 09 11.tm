@@ -3,6 +3,10 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
+  PROCEDURA PER IL CALCOLO DIRETTO (DA ASSE,ANGOLO A MATRICE DI ROTAZIONE) ED
+  INVERSO (DA MATRICE DI ROTAZIONE AD ASSE,ANGOLO) TRAMITE LA FORMULA DI
+  RODRIGUEZ.
+
   <with|color|red|Procedura 1: Procedura che data una coppia di valori in
   input (asse,angolo), verifica se l'asse è un versore e non un vettore. Se
   l'asse è un versore allora viene usata la FORMULA DI RODRIGUEZ per il

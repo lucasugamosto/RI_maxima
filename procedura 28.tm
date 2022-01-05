@@ -3,6 +3,9 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
+  PROCEDURE PER IL CALCOLO DELLE MATRICE DI INERZIA RELATIVE A VARIE FIGURE
+  GEOMETRICHE COME SFERA,CILINDRO,PARALLELEPIPEDO, CAVI E NON.
+
   <with|color|red|Procedura 1: Procedura per il calcolo della matrice
   d'inerzia di un PARALLELEPIPEDO DI LATI A, B, C.>
 

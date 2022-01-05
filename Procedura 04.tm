@@ -3,6 +3,10 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
+  PROCEDURA CHE DIMOSTRA COME CALCOLARE LA MATRICE DI ROTAZIONE RISPETTO
+  ALL'ASSE Y DI UN ANGOLO \<gamma\> CONSIDERANDO IL PRODOTTO TRA MATRICI DI
+  ROTAZIONE RISPETTO AGLI ALTRI DUE ASSI E DETERMINATI ANGOLI.
+
   <with|color|red|Procedura 1: Procedura che permette di dimostrare la
   possibilità di calcolare la matrice di rotazione intorno ad un determinato
   asse di un angolo \<theta\> tramite il prodotto di altre matrici espresse

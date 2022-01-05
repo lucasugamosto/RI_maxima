@@ -3,6 +3,9 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
+  PROCEDURA CHE CALCOLA IL PRODOTTO VETTORIALE COME UN PRODOTTO MATRICIALE
+  CONSIDERANDO LA MATRICE ANTISIMMETRICA.
+
   <with|color|red|Procedura 1: Procedura che dimostra come poter calcolare il
   prodotto vettoriale tra due vettori generici usando la matrice
   antisimmetrica associata ad uno dei due vettori, infatti deve valere che

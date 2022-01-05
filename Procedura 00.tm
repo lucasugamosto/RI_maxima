@@ -3,6 +3,9 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
+  PROCEDURA PER IL CALCOLO DEL PRODOTTO VETTORIALE E DELLA MATRICE DI
+  ROTAZIONE.
+
   <with|color|red|Procedura 1: Calcolo del prodotto vettoriale e
   dimostrazione delle sue proprietà>
 

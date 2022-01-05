@@ -3,6 +3,9 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
+  PROCEDURA PER IL CALCOLO DELL'ORIENTAMENTO INVERSO PER TUTTE LE STRUTTURE
+  PORTANTI, AVENDP SCELTO COME CASO DI STUDIO LA TERNA DI EULERO X,Y,X.
+
   <\with|color|red>
     Procedura che, considerando una delle 6 terne di Eulero, risolve il
     problema dell'orientamento inverso su tutte le strutture portanti

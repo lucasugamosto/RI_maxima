@@ -3,6 +3,9 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
+  PROCEDURE CHE CALCOLANO LA MATRICE DI AVVITAMENTO LUNGO L'ASSE X E L'ASSE Z
+  ED INFINE CALCANO LA MATRICE DELLA CINEMATICA DIRETTA i-ESIMA.
+
   <with|color|red|Proedura 1: Procedura che riceve in ingresso asse, angolo,
   spostamento e genera ma matrice di avvitamento corrispondente.>
 
