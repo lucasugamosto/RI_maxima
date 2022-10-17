@@ -114,6 +114,35 @@
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
       >>0>>
     </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>6) >
+    <|unfolded-io>
+      matrice_rotazione(matrix([1],[0],[0]),45)
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
+      >><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|1|<sqrt|2>>>|<cell|-<frac|1|<sqrt|2>>>>|<row|<cell|0>|<cell|<frac|1|<sqrt|2>>>|<cell|<frac|1|<sqrt|2>>>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>7) >
+    <|unfolded-io>
+      matrice_rotazione(matrix([0],[1],[0]),30)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+      >><matrix|<tformat|<table|<row|<cell|<frac|<sqrt|3>|2>>|<cell|0>|<cell|<frac|1|2>>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|-<frac|1|2>>|<cell|0>|<cell|<frac|<sqrt|3>|2>>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>8) >
+    <|unfolded-io>
+      matrice_rotazione(matrix([0],[0],[1]),270)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
+      >><matrix|<tformat|<table|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|-1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>>>
+    </unfolded-io>
   </session>
 </body>
 

@@ -94,10 +94,6 @@
 
       final_sum:result2+result3,
 
-      fullratsimp(result1),
-
-      fullratsimp(final_sum),
-
       [result1,final_sum]
 
       )
@@ -105,7 +101,7 @@
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
-      >><with|math-font-family|rm|proprieta_distributiva><around*|(|u,v,w|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|sum>,<with|math-font-family|rm|result1>|]>,<math-up|sum>:u+w,<with|math-font-family|rm|result1>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|v,<math-up|sum>|)>,<with|math-font-family|rm|result2>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|v,u|)>,<with|math-font-family|rm|result3>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|v,w|)>,<with|math-font-family|rm|final_sum>:<with|math-font-family|rm|result2>+<with|math-font-family|rm|result3>,<math-up|fullratsimp><around*|(|<with|math-font-family|rm|result1>|)>,<math-up|fullratsimp><around*|(|<with|math-font-family|rm|final_sum>|)>,<around*|[|<with|math-font-family|rm|result1>,<with|math-font-family|rm|final_sum>|]>|)>>>
+      >><with|math-font-family|rm|proprieta_distributiva><around*|(|u,v,w|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|sum>,<with|math-font-family|rm|result1>|]>,<math-up|sum>:u+w,<with|math-font-family|rm|result1>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|v,<math-up|sum>|)>,<with|math-font-family|rm|result2>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|v,u|)>,<with|math-font-family|rm|result3>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|v,w|)>,<with|math-font-family|rm|final_sum>:<with|math-font-family|rm|result2>+<with|math-font-family|rm|result3>,<around*|[|<with|math-font-family|rm|result1>,<with|math-font-family|rm|final_sum>|]>|)>>>
     </unfolded-io>
 
     <\input>
@@ -116,8 +112,21 @@
 
     \;
 
-    <math|<around*|(|\<gamma\><rsub|1>*<around*|(|\<delta\><rsub|2>+\<alpha\><rsub|2>|)>-<around*|(|\<delta\><rsub|1>+\<alpha\><rsub|1>|)>*\<gamma\><rsub|2>|)>*e<rsub|z>-<around*|(|\<gamma\><rsub|1>*<around*|(|\<delta\><rsub|3>+\<alpha\><rsub|3>|)>-<around*|(|\<delta\><rsub|1>+\<alpha\><rsub|1>|)>*\<gamma\><rsub|3>|)>*e<rsub|y>+<around*|(|\<gamma\><rsub|2>*<around*|(|\<delta\><rsub|3>+\<alpha\><rsub|3>|)>-<around*|(|\<delta\><rsub|2>+\<alpha\><rsub|2>|)>*\<gamma\><rsub|3>|)>*e<rsub|x>>
-    <math|<around*|(|\<gamma\><rsub|1>*\<delta\><rsub|2>-\<delta\><rsub|1>*\<gamma\><rsub|2>|)>*e<rsub|z>+<around*|(|\<gamma\><rsub|1>*\<alpha\><rsub|2>-\<alpha\><rsub|1>*\<gamma\><rsub|2>|)>*e<rsub|z>-<around*|(|\<gamma\><rsub|1>*\<delta\><rsub|3>-\<delta\><rsub|1>*\<gamma\><rsub|3>|)>*e<rsub|y>-<around*|(|\<gamma\><rsub|1>*\<alpha\><rsub|3>-\<alpha\><rsub|1>*\<gamma\><rsub|3>|)>*e<rsub|y>+<around*|(|\<gamma\><rsub|2>*\<delta\><rsub|3>-\<delta\><rsub|2>*\<gamma\><rsub|3>|)>*e<rsub|x>+<around*|(|\<gamma\><rsub|2>*\<alpha\><rsub|3>-\<alpha\><rsub|2>*\<gamma\><rsub|3>|)>*e<rsub|x>>
+    <math|<around*|[|<around*|(|\<gamma\><rsub|1>*<around*|(|\<delta\><rsub|2>+\<alpha\><rsub|2>|)>-<around*|(|\<delta\><rsub|1>+\<alpha\><rsub|1>|)>*\<gamma\><rsub|2>|)>*e<rsub|z>-<around*|(|\<gamma\><rsub|1>*<around*|(|\<delta\><rsub|3>+\<alpha\><rsub|3>|)>-<around*|(|\<delta\><rsub|1>+\<alpha\><rsub|1>|)>*\<gamma\><rsub|3>|)>*e<rsub|y>+<around*|(|\<gamma\><rsub|2>*<around*|(|\<delta\><rsub|3>+\<alpha\><rsub|3>|)>-<around*|(|\<delta\><rsub|2>+\<alpha\><rsub|2>|)>*\<gamma\><rsub|3>|)>*e<rsub|x>|]>>,
+
+    \;
+
+    <math|<around*|[|<around*|(|\<gamma\><rsub|1>*\<delta\><rsub|2>-\<delta\><rsub|1>*\<gamma\><rsub|2>|)>*e<rsub|z>+<around*|(|\<gamma\><rsub|1>*\<alpha\><rsub|2>-\<alpha\><rsub|1>*\<gamma\><rsub|2>|)>*e<rsub|z>-<around*|(|\<gamma\><rsub|1>*\<delta\><rsub|3>-\<delta\><rsub|1>*\<gamma\><rsub|3>|)>*e<rsub|y>-<around*|(|\<gamma\><rsub|1>*\<alpha\><rsub|3>-\<alpha\><rsub|1>*\<gamma\><rsub|3>|)>*e<rsub|y>+<around*|(|\<gamma\><rsub|2>*\<delta\><rsub|3>-\<delta\><rsub|2>*\<gamma\><rsub|3>|)>*e<rsub|x>+<around*|(|\<gamma\><rsub|2>*\<alpha\><rsub|3>-\<alpha\><rsub|2>*\<gamma\><rsub|3>|)>*e<rsub|x>|]>>
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
 
     \;
 
@@ -151,10 +160,6 @@
 
       result2:prodotto_vettoriale(v,u),
 
-      fullratsimp(result1),
-
-      fullratsimp(result2),
-
       [result1,result2]
 
       )
@@ -162,7 +167,7 @@
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
-      >><with|math-font-family|rm|proprieta_antisimmetria><around*|(|u,v|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|result1>,<with|math-font-family|rm|result2>|]>,<with|math-font-family|rm|result1>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|u,v|)>,<with|math-font-family|rm|result2>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|v,u|)>,<math-up|fullratsimp><around*|(|<with|math-font-family|rm|result1>|)>,<math-up|fullratsimp><around*|(|<with|math-font-family|rm|result2>|)>,<around*|[|<with|math-font-family|rm|result1>,<with|math-font-family|rm|result2>|]>|)>>>
+      >><with|math-font-family|rm|proprieta_antisimmetria><around*|(|u,v|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|result1>,<with|math-font-family|rm|result2>|]>,<with|math-font-family|rm|result1>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|u,v|)>,<with|math-font-family|rm|result2>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|v,u|)>,<around*|[|<with|math-font-family|rm|result1>,<with|math-font-family|rm|result2>|]>|)>>>
     </unfolded-io>
 
     <\input>
@@ -172,13 +177,19 @@
     </input>
   </session>
 
-  <math|<around*|(|\<alpha\><rsub|1>*\<gamma\><rsub|2>-\<gamma\><rsub|1>*\<alpha\><rsub|2>|)>*e<rsub|z>-<around*|(|\<alpha\><rsub|1>*\<gamma\><rsub|3>-\<gamma\><rsub|1>*\<alpha\><rsub|3>|)>*e<rsub|y>+<around*|(|\<alpha\><rsub|2>*\<gamma\><rsub|3>-\<gamma\><rsub|2>*\<alpha\><rsub|3>|)>*e<rsub|x>>
+  <math|<around*|[|<around*|(|\<alpha\><rsub|1>*\<gamma\><rsub|2>-\<gamma\><rsub|1>*\<alpha\><rsub|2>|)>*e<rsub|z>-<around*|(|\<alpha\><rsub|1>*\<gamma\><rsub|3>-\<gamma\><rsub|1>*\<alpha\><rsub|3>|)>*e<rsub|y>+<around*|(|\<alpha\><rsub|2>*\<gamma\><rsub|3>-\<gamma\><rsub|2>*\<alpha\><rsub|3>|)>*e<rsub|x>|]>>
 
-  <math|<around*|(|\<gamma\><rsub|1>*\<alpha\><rsub|2>-\<alpha\><rsub|1>*\<gamma\><rsub|2>|)>*e<rsub|z>-<around*|(|\<gamma\><rsub|1>*\<alpha\><rsub|3>-\<alpha\><rsub|1>*\<gamma\><rsub|3>|)>*e<rsub|y>+<around*|(|\<gamma\><rsub|2>*\<alpha\><rsub|3>-\<alpha\><rsub|2>*\<gamma\><rsub|3>|)>*e<rsub|x>>
+  <math|<around*|[|<around*|(|\<gamma\><rsub|1>*\<alpha\><rsub|2>-\<alpha\><rsub|1>*\<gamma\><rsub|2>|)>*e<rsub|z>-<around*|(|\<gamma\><rsub|1>*\<alpha\><rsub|3>-\<alpha\><rsub|1>*\<gamma\><rsub|3>|)>*e<rsub|y>+<around*|(|\<gamma\><rsub|2>*\<alpha\><rsub|3>-\<alpha\><rsub|2>*\<gamma\><rsub|3>|)>*e<rsub|x>|]>>
 
   \;
 
   <\with|color|red>
+    \;
+
+    \;
+
+    \;
+
     \;
 
     Procedura 2: Calcolo della matrice di rotazione e dimostrazione delle sue
@@ -190,7 +201,7 @@
 
   <\session|maxima|default>
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>1) >
+      <with|color|red|(<with|math-font-family|rm|%i>14) >
     <|unfolded-io>
       matrice_rotazione(theta):=block(
 
@@ -200,7 +211,7 @@
 
       )
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o1>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
       >><with|math-font-family|rm|matrice_rotazione><around*|(|\<vartheta\>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|result>|]>,<math-up|result>:<matrix|<tformat|<table|<row|<cell|cos
       <around*|(|\<vartheta\>|)>>|<cell|-sin
       <around*|(|\<vartheta\>|)>>>|<row|<cell|sin
@@ -209,13 +220,13 @@
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>2) >
+      <with|color|red|(<with|math-font-family|rm|%i>15) >
     <|unfolded-io>
       matrice_rotazione(gamma)
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
       >><matrix|<tformat|<table|<row|<cell|cos
       <around*|(|\<gamma\>|)>>|<cell|-sin
       <around*|(|\<gamma\>|)>>>|<row|<cell|sin
@@ -224,14 +235,38 @@
 
     \;
 
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
     Dimostrazione che la matrice di rotazione è una matrice isometrica:
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>3) >
+      <with|color|red|(<with|math-font-family|rm|%i>16) >
     <|unfolded-io>
-      proprieta_mat_rotazione(mat):=block(
+      proprieta_mat_rotazione(theta):=block(
 
-      [mat_trasp,result1,result2],
+      [mat,mat_trasp,result1,result2],
+
+      mat:matrice_rotazione(theta),
 
       mat_trasp:transpose(mat),
 
@@ -239,7 +274,7 @@
 
       \;
 
-      II:matrix([1,0,0],[0,1,0],[0,0,1]),
+      II:matrix([1,0],[0,1]),
 
       if result1 # II then return(0),
 
@@ -253,44 +288,26 @@
 
       \;
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
-      >><with|math-font-family|rm|proprieta_mat_rotazione><around*|(|<math-up|mat>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|mat_trasp>,<with|math-font-family|rm|result1>,<with|math-font-family|rm|result2>|]>,<with|math-font-family|rm|mat_trasp>:<math-up|transpose><around*|(|<math-up|mat>|)>,<with|math-font-family|rm|result1>:<math-up|trigsimp><around*|(|<math-up|mat>\<cdot\><with|math-font-family|rm|mat_trasp>|)>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|result1>\<neq\><math-up|II><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<with|math-font-family|rm|result2>:<math-up|determinant><around*|(|<math-up|mat>|)>,<math-bf|if><space|0.27em><with|math-font-family|rm|result2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|return><around*|(|1|)>|)>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
+      >><with|math-font-family|rm|proprieta_mat_rotazione><around*|(|\<vartheta\>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|mat>,<with|math-font-family|rm|mat_trasp>,<with|math-font-family|rm|result1>,<with|math-font-family|rm|result2>|]>,<math-up|mat>:<with|math-font-family|rm|matrice_rotazione><around*|(|\<vartheta\>|)>,<with|math-font-family|rm|mat_trasp>:<math-up|transpose><around*|(|<math-up|mat>|)>,<with|math-font-family|rm|result1>:<math-up|trigsimp><around*|(|<math-up|mat>\<cdot\><with|math-font-family|rm|mat_trasp>|)>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|1>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|result1>\<neq\><math-up|II><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<with|math-font-family|rm|result2>:<math-up|determinant><around*|(|<math-up|mat>|)>,<math-bf|if><space|0.27em><with|math-font-family|rm|result2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|return><around*|(|1|)>|)>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>4) >
+      <with|color|red|(<with|math-font-family|rm|%i>17) >
     <|unfolded-io>
-      mat:matrix([1,0,0],[0,1,0],[0,0,1])
+      proprieta_mat_rotazione(%pi/6)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
-      >><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>5) >
-    <|unfolded-io>
-      proprieta_mat_rotazione(mat)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
       >>1>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>6) >
+      <with|color|red|(<with|math-font-family|rm|%i>18) >
     <|unfolded-io>
-      mat:matrix([1,0,0],[0,1,0],[2,0,1])
+      proprieta_mat_rotazione(%pi/4)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
-      >><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|2>|<cell|0>|<cell|1>>>>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>7) >
-    <|unfolded-io>
-      proprieta_mat_rotazione(mat)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
-      >>0>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
+      >>1>>
     </unfolded-io>
   </session>
 </body>
