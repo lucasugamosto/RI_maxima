@@ -11,6 +11,8 @@
   verifica che l'angolo sia uno scalare e deve restituire la matrice di
   rotazione corrispondente, o un messaggio di errore.>
 
+  (La variabile \Pangolo\Q deve avere come unità di misura i gradi).
+
   <\session|maxima|default>
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>1) >
@@ -29,7 +31,9 @@
 
       if asse # x and asse # y and asse # z then return(0),
 
-      theta:%pi.(angolo/180),
+      if listp(angolo) = true or matrixp(angolo) = true then return(0),
+
+      theta:%pi*(angolo/180),
 
       \;
 
@@ -50,7 +54,7 @@
       )
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o1>)
-      >><with|math-font-family|rm|matrice_rotazione><around*|(|<math-up|asse>,<math-up|angolo>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|x,y,z,\<vartheta\>,<with|math-font-family|rm|mat_x>,<with|math-font-family|rm|mat_y>,<with|math-font-family|rm|mat_z>|]>,x:<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,y:<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|1>>|<row|<cell|0>>>>>,z:<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|1>>>>>,<math-bf|if><space|0.27em><math-up|asse>\<neq\>x\<wedge\><math-up|asse>\<neq\>y\<wedge\><math-up|asse>\<neq\>z<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,\<vartheta\>:\<pi\>\<cdot\><around*|(|<frac|<math-up|angolo>|180>|)>,<with|math-font-family|rm|mat_x>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|cos
+      >><with|math-font-family|rm|matrice_rotazione><around*|(|<math-up|asse>,<math-up|angolo>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|x,y,z,\<vartheta\>,<with|math-font-family|rm|mat_x>,<with|math-font-family|rm|mat_y>,<with|math-font-family|rm|mat_z>|]>,x:<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,y:<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|1>>|<row|<cell|0>>>>>,z:<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|1>>>>>,<math-bf|if><space|0.27em><math-up|asse>\<neq\>x\<wedge\><math-up|asse>\<neq\>y\<wedge\><math-up|asse>\<neq\>z<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-bf|if><space|0.27em><math-up|listp><around*|(|<math-up|angolo>|)>=<math-bf|true>\<vee\><math-up|matrixp><around*|(|<math-up|angolo>|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,\<vartheta\>:\<pi\>*<around*|(|<frac|<math-up|angolo>|180>|)>,<with|math-font-family|rm|mat_x>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|cos
       <around*|(|\<vartheta\>|)>>|<cell|-sin
       <around*|(|\<vartheta\>|)>>>|<row|<cell|0>|<cell|sin
       <around*|(|\<vartheta\>|)>>|<cell|cos
@@ -81,27 +85,19 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
     <|unfolded-io>
-      matrice_rotazione(matrix([0],[1],[0]),beta)
+      matrice_rotazione(matrix([0],[1],[0]),45)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
-      >><matrix|<tformat|<table|<row|<cell|cos
-      <around*|(|<frac|\<pi\>*\<beta\>|180>|)>>|<cell|0>|<cell|sin
-      <around*|(|<frac|\<pi\>*\<beta\>|180>|)>>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|-sin
-      <around*|(|<frac|\<pi\>*\<beta\>|180>|)>>|<cell|0>|<cell|cos
-      <around*|(|<frac|\<pi\>*\<beta\>|180>|)>>>>>>>>
+      >><matrix|<tformat|<table|<row|<cell|<frac|1|<sqrt|2>>>|<cell|0>|<cell|<frac|1|<sqrt|2>>>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|-<frac|1|<sqrt|2>>>|<cell|0>|<cell|<frac|1|<sqrt|2>>>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>4) >
     <|unfolded-io>
-      matrice_rotazione(matrix([0],[0],[1]),gamma)
+      matrice_rotazione(matrix([0],[0],[1]),30)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
-      >><matrix|<tformat|<table|<row|<cell|cos
-      <around*|(|<frac|\<pi\>*\<gamma\>|180>|)>>|<cell|-sin
-      <around*|(|<frac|\<pi\>*\<gamma\>|180>|)>>|<cell|0>>|<row|<cell|sin
-      <around*|(|<frac|\<pi\>*\<gamma\>|180>|)>>|<cell|cos
-      <around*|(|<frac|\<pi\>*\<gamma\>|180>|)>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>>>
+      >><matrix|<tformat|<table|<row|<cell|<frac|<sqrt|3>|2>>|<cell|-<frac|1|2>>|<cell|0>>|<row|<cell|<frac|1|2>>|<cell|<frac|<sqrt|3>|2>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -109,39 +105,19 @@
     <|unfolded-io>
       matrice_rotazione(matrix([1],[0],[1]),omega)
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
       >>0>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>6) >
     <|unfolded-io>
-      matrice_rotazione(matrix([1],[0],[0]),45)
+      matrice_rotazione(matrix([1],[0],[0]),[45,gamma])
     <|unfolded-io>
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
-      >><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|1|<sqrt|2>>>|<cell|-<frac|1|<sqrt|2>>>>|<row|<cell|0>|<cell|<frac|1|<sqrt|2>>>|<cell|<frac|1|<sqrt|2>>>>>>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>7) >
-    <|unfolded-io>
-      matrice_rotazione(matrix([0],[1],[0]),30)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|<sqrt|3>|2>>|<cell|0>|<cell|<frac|1|2>>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|-<frac|1|2>>|<cell|0>|<cell|<frac|<sqrt|3>|2>>>>>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>8) >
-    <|unfolded-io>
-      matrice_rotazione(matrix([0],[0],[1]),270)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
-      >><matrix|<tformat|<table|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|-1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>>>
+      >>0>>
     </unfolded-io>
   </session>
 </body>
