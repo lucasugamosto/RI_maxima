@@ -5,7 +5,7 @@
 <\body>
   PROCEDURA: SCRIVERE UNA PROCEDURA CHE UTILIZZANDO GLI
   AUTOVALORI/AUTOVETTORI CALCOLI LA MATRICE DI ROTAZIONE INTORNO ALL'ASSE
-  RAPPRESENTATO DAL VERSORE v, DI UN ANGOLO \<theta\>.
+  DESIDERATO, RAPPRESENTATO DAL VERSORE v, DI UN ANGOLO \<theta\>.
 
   <\session|maxima|default>
     <\unfolded-io>
@@ -38,6 +38,8 @@
 
       e:calcolo_versore(v),
 
+      if e = 0 then return(0),
+
       S:matrix([0,-e[3,1],e[2,1]],[e[3,1],0,-e[1,1]],[-e[2,1],e[1,1],0]),
 
       return(factor(S))
@@ -45,7 +47,7 @@
       )
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
-      >><with|math-font-family|rm|mat_antisimmetricaS><around*|(|v|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|e,S|]>,e:<with|math-font-family|rm|calcolo_versore><around*|(|v|)>,S:<matrix|<tformat|<table|<row|<cell|0>|<cell|-e<rsub|3,1>>|<cell|e<rsub|2,1>>>|<row|<cell|e<rsub|3,1>>|<cell|0>|<cell|-e<rsub|1,1>>>|<row|<cell|-e<rsub|2,1>>|<cell|e<rsub|1,1>>|<cell|0>>>>>,<math-up|return><around*|(|<math-up|factor><around*|(|S|)>|)>|)>>>
+      >><with|math-font-family|rm|mat_antisimmetricaS><around*|(|v|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|e,S|]>,e:<with|math-font-family|rm|calcolo_versore><around*|(|v|)>,<math-bf|if><space|0.27em>e=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,S:<matrix|<tformat|<table|<row|<cell|0>|<cell|-e<rsub|3,1>>|<cell|e<rsub|2,1>>>|<row|<cell|e<rsub|3,1>>|<cell|0>|<cell|-e<rsub|1,1>>>|<row|<cell|-e<rsub|2,1>>|<cell|e<rsub|1,1>>|<cell|0>>>>>,<math-up|return><around*|(|<math-up|factor><around*|(|S|)>|)>|)>>>
     </unfolded-io>
 
     \;
@@ -117,6 +119,8 @@
 
       [II,sII,sIImS,pS,autovalori,adj,adj1,adj2,adj3,aut1,aut2,aut3,mat_autovettori],
 
+      if scalarp(S) = true or listp(S) = true then return(0),
+
       II:matrix([1,0,0],[0,1,0],[0,0,1]),
 
       sII:s*II,
@@ -135,9 +139,9 @@
 
       adj3:subst(autovalori[3],adj),
 
-      aut0:matrix([0],[0],[0]),
-
       \;
+
+      aut0:matrix([0],[0],[0]),
 
       for i:1 thru 3 do (
 
@@ -176,7 +180,7 @@
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
-      >><with|math-font-family|rm|calcolo_autovettore><around*|(|S|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|II>,<math-up|sII>,<math-up|sIImS>,<math-up|pS>,<math-up|autovalori>,<math-up|adj>,<with|math-font-family|rm|adj1>,<with|math-font-family|rm|adj2>,<with|math-font-family|rm|adj3>,<with|math-font-family|rm|aut1>,<with|math-font-family|rm|aut2>,<with|math-font-family|rm|aut3>,<with|math-font-family|rm|mat_autovettori>|]>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<math-up|sII>:s*<math-up|II>,<math-up|sIImS>:<math-up|sII>-S,<math-up|pS>:<math-up|determinant><around*|(|<math-up|sIImS>|)>,<math-up|autovalori>:<math-up|solve><around*|(|<math-up|pS>,s|)>,<math-up|adj>:<math-up|adjoint><around*|(|<math-up|sIImS>|)>,<with|math-font-family|rm|adj1>:<math-up|subst><around*|(|<math-up|autovalori><rsub|1>,<math-up|adj>|)>,<with|math-font-family|rm|adj2>:<math-up|subst><around*|(|<math-up|autovalori><rsub|2>,<math-up|adj>|)>,<with|math-font-family|rm|adj3>:<math-up|subst><around*|(|<math-up|autovalori><rsub|3>,<math-up|adj>|)>,<with|math-font-family|rm|aut0>:<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<with|math-font-family|rm|aut1>:<matrix|<tformat|<table|<row|<cell|<with|math-font-family|rm|adj1><rsub|1,i>>>|<row|<cell|<with|math-font-family|rm|adj1><rsub|2,i>>>|<row|<cell|<with|math-font-family|rm|adj1><rsub|3,i>>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|aut1>\<neq\><with|math-font-family|rm|aut0><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|<with|math-font-family|rm|aut1>|)>|)>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<with|math-font-family|rm|aut2>:<matrix|<tformat|<table|<row|<cell|<with|math-font-family|rm|adj2><rsub|1,i>>>|<row|<cell|<with|math-font-family|rm|adj2><rsub|2,i>>>|<row|<cell|<with|math-font-family|rm|adj2><rsub|3,i>>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|aut2>\<neq\><with|math-font-family|rm|aut0><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|<with|math-font-family|rm|aut2>|)>|)>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<with|math-font-family|rm|aut3>:<matrix|<tformat|<table|<row|<cell|<with|math-font-family|rm|adj3><rsub|1,i>>>|<row|<cell|<with|math-font-family|rm|adj3><rsub|2,i>>>|<row|<cell|<with|math-font-family|rm|adj3><rsub|3,i>>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|aut3>\<neq\><with|math-font-family|rm|aut0><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|<with|math-font-family|rm|aut3>|)>|)>,<with|math-font-family|rm|mat_autovettori>:<matrix|<tformat|<table|<row|<cell|<with|math-font-family|rm|aut1><rsub|1,1>>|<cell|<with|math-font-family|rm|aut2><rsub|1,1>>|<cell|<with|math-font-family|rm|aut3><rsub|1,1>>>|<row|<cell|<with|math-font-family|rm|aut1><rsub|2,1>>|<cell|<with|math-font-family|rm|aut2><rsub|2,1>>|<cell|<with|math-font-family|rm|aut3><rsub|2,1>>>|<row|<cell|<with|math-font-family|rm|aut1><rsub|3,1>>|<cell|<with|math-font-family|rm|aut2><rsub|3,1>>|<cell|<with|math-font-family|rm|aut3><rsub|3,1>>>>>>,<math-up|return><around*|(|<math-up|trigsimp><around*|(|<math-up|factor><around*|(|<with|math-font-family|rm|mat_autovettori>|)>|)>|)>|)>>>
+      >><with|math-font-family|rm|calcolo_autovettore><around*|(|S|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|II>,<math-up|sII>,<math-up|sIImS>,<math-up|pS>,<math-up|autovalori>,<math-up|adj>,<with|math-font-family|rm|adj1>,<with|math-font-family|rm|adj2>,<with|math-font-family|rm|adj3>,<with|math-font-family|rm|aut1>,<with|math-font-family|rm|aut2>,<with|math-font-family|rm|aut3>,<with|math-font-family|rm|mat_autovettori>|]>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|S|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|S|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<math-up|sII>:s*<math-up|II>,<math-up|sIImS>:<math-up|sII>-S,<math-up|pS>:<math-up|determinant><around*|(|<math-up|sIImS>|)>,<math-up|autovalori>:<math-up|solve><around*|(|<math-up|pS>,s|)>,<math-up|adj>:<math-up|adjoint><around*|(|<math-up|sIImS>|)>,<with|math-font-family|rm|adj1>:<math-up|subst><around*|(|<math-up|autovalori><rsub|1>,<math-up|adj>|)>,<with|math-font-family|rm|adj2>:<math-up|subst><around*|(|<math-up|autovalori><rsub|2>,<math-up|adj>|)>,<with|math-font-family|rm|adj3>:<math-up|subst><around*|(|<math-up|autovalori><rsub|3>,<math-up|adj>|)>,<with|math-font-family|rm|aut0>:<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<with|math-font-family|rm|aut1>:<matrix|<tformat|<table|<row|<cell|<with|math-font-family|rm|adj1><rsub|1,i>>>|<row|<cell|<with|math-font-family|rm|adj1><rsub|2,i>>>|<row|<cell|<with|math-font-family|rm|adj1><rsub|3,i>>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|aut1>\<neq\><with|math-font-family|rm|aut0><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|<with|math-font-family|rm|aut1>|)>|)>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<with|math-font-family|rm|aut2>:<matrix|<tformat|<table|<row|<cell|<with|math-font-family|rm|adj2><rsub|1,i>>>|<row|<cell|<with|math-font-family|rm|adj2><rsub|2,i>>>|<row|<cell|<with|math-font-family|rm|adj2><rsub|3,i>>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|aut2>\<neq\><with|math-font-family|rm|aut0><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|<with|math-font-family|rm|aut2>|)>|)>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<with|math-font-family|rm|aut3>:<matrix|<tformat|<table|<row|<cell|<with|math-font-family|rm|adj3><rsub|1,i>>>|<row|<cell|<with|math-font-family|rm|adj3><rsub|2,i>>>|<row|<cell|<with|math-font-family|rm|adj3><rsub|3,i>>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|aut3>\<neq\><with|math-font-family|rm|aut0><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|<with|math-font-family|rm|aut3>|)>|)>,<with|math-font-family|rm|mat_autovettori>:<matrix|<tformat|<table|<row|<cell|<with|math-font-family|rm|aut1><rsub|1,1>>|<cell|<with|math-font-family|rm|aut2><rsub|1,1>>|<cell|<with|math-font-family|rm|aut3><rsub|1,1>>>|<row|<cell|<with|math-font-family|rm|aut1><rsub|2,1>>|<cell|<with|math-font-family|rm|aut2><rsub|2,1>>|<cell|<with|math-font-family|rm|aut3><rsub|2,1>>>|<row|<cell|<with|math-font-family|rm|aut1><rsub|3,1>>|<cell|<with|math-font-family|rm|aut2><rsub|3,1>>|<cell|<with|math-font-family|rm|aut3><rsub|3,1>>>>>>,<math-up|return><around*|(|<math-up|trigsimp><around*|(|<math-up|factor><around*|(|<with|math-font-family|rm|mat_autovettori>|)>|)>|)>|)>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -185,6 +189,8 @@
       calcolo_autovalore(S):=block(
 
       [II,sII,sIImS,pS,autovalori,mat1,mat2,mat3,mat_autovalori],
+
+      if scalarp(S) = true or listp(S) = true then return(0),
 
       II:matrix([1,0,0],[0,1,0],[0,0,1]),
 
@@ -215,7 +221,7 @@
       )
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
-      >><with|math-font-family|rm|calcolo_autovalore><around*|(|S|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|II>,<math-up|sII>,<math-up|sIImS>,<math-up|pS>,<math-up|autovalori>,<with|math-font-family|rm|mat1>,<with|math-font-family|rm|mat2>,<with|math-font-family|rm|mat3>,<with|math-font-family|rm|mat_autovalori>|]>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<math-up|sII>:s*<math-up|II>,<math-up|sIImS>:<math-up|sII>-S,<math-up|pS>:<math-up|determinant><around*|(|<math-up|sIImS>|)>,<math-up|autovalori>:<math-up|solve><around*|(|<math-up|pS>,s|)>,<with|math-font-family|rm|mat1>:<matrix|<tformat|<table|<row|<cell|s>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>,<with|math-font-family|rm|mat2>:<matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|s>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>,<with|math-font-family|rm|mat3>:<matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|s>>>>>,<with|math-font-family|rm|mat1>:<math-up|subst><around*|(|<math-up|autovalori><rsub|1>,<with|math-font-family|rm|mat1>|)>,<with|math-font-family|rm|mat2>:<math-up|subst><around*|(|<math-up|autovalori><rsub|2>,<with|math-font-family|rm|mat2>|)>,<with|math-font-family|rm|mat3>:<math-up|subst><around*|(|<math-up|autovalori><rsub|3>,<with|math-font-family|rm|mat3>|)>,<with|math-font-family|rm|mat_autovalori>:<with|math-font-family|rm|mat1>+<with|math-font-family|rm|mat2>+<with|math-font-family|rm|mat3>,<math-up|return><around*|(|<with|math-font-family|rm|mat_autovalori>|)>|)>>>
+      >><with|math-font-family|rm|calcolo_autovalore><around*|(|S|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|II>,<math-up|sII>,<math-up|sIImS>,<math-up|pS>,<math-up|autovalori>,<with|math-font-family|rm|mat1>,<with|math-font-family|rm|mat2>,<with|math-font-family|rm|mat3>,<with|math-font-family|rm|mat_autovalori>|]>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|S|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|S|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<math-up|sII>:s*<math-up|II>,<math-up|sIImS>:<math-up|sII>-S,<math-up|pS>:<math-up|determinant><around*|(|<math-up|sIImS>|)>,<math-up|autovalori>:<math-up|solve><around*|(|<math-up|pS>,s|)>,<with|math-font-family|rm|mat1>:<matrix|<tformat|<table|<row|<cell|s>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>,<with|math-font-family|rm|mat2>:<matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|s>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>,<with|math-font-family|rm|mat3>:<matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|s>>>>>,<with|math-font-family|rm|mat1>:<math-up|subst><around*|(|<math-up|autovalori><rsub|1>,<with|math-font-family|rm|mat1>|)>,<with|math-font-family|rm|mat2>:<math-up|subst><around*|(|<math-up|autovalori><rsub|2>,<with|math-font-family|rm|mat2>|)>,<with|math-font-family|rm|mat3>:<math-up|subst><around*|(|<math-up|autovalori><rsub|3>,<with|math-font-family|rm|mat3>|)>,<with|math-font-family|rm|mat_autovalori>:<with|math-font-family|rm|mat1>+<with|math-font-family|rm|mat2>+<with|math-font-family|rm|mat3>,<math-up|return><around*|(|<with|math-font-family|rm|mat_autovalori>|)>|)>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -223,7 +229,7 @@
     <|unfolded-io>
       calcolo_matriceR(asse,angolo):=block(
 
-      [e,norma2,S,matAutovettori,matAutovettoriInversa,matAutovalori,matEsponenziale,R],
+      [e,norma2,S,matAutovettori,matAutovettoriInv,matAutovalori,matEsponenziale,R],
 
       e:calcolo_versore(asse),
 
@@ -239,27 +245,25 @@
 
       matAutovettori:calcolo_autovettore(S),
 
-      matAutovettoriInversa:trigsimp(invert(matAutovettori)),
+      matAutovettoriInv:trigsimp(invert(matAutovettori)),
 
       matAutovalori:calcolo_autovalore(S),
 
       matEsponenziale:matrix([exp(matAutovalori[1,1]*theta),0,0],[0,exp(matAutovalori[2,2]*theta),0],[0,0,exp(matAutovalori[3,3]*theta)]),
 
-      mat[1]:trigsimp(factor(matEsponenziale.matAutovettoriInversa)),
+      mat[1]:trigsimp(factor(matEsponenziale.matAutovettoriInv)),
 
       R:trigsimp(factor(matAutovettori.mat[1])),
 
-      return(R)
+      R:trigsimp(trigreduce(factor(demoivre(R))))
 
       )
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
-      >><with|math-font-family|rm|calcolo_matriceR><around*|(|<math-up|asse>,<math-up|angolo>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|e,<with|math-font-family|rm|norma2>,S,<math-up|matAutovettori>,<math-up|matAutovettoriInversa>,<math-up|matAutovalori>,<math-up|matEsponenziale>,R|]>,e:<with|math-font-family|rm|calcolo_versore><around*|(|<math-up|asse>|)>,<math-bf|if><space|0.27em>e=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<with|math-font-family|rm|norma2>:<sqrt|<math-up|asse><rsub|1,1><rsup|2>+<math-up|asse><rsub|2,1><rsup|2>+<math-up|asse><rsub|3,1><rsup|2>>,S:<with|math-font-family|rm|mat_antisimmetricaS><around*|(|e|)>,\<vartheta\>:\<pi\>*<around*|(|<frac|<math-up|angolo>|180>|)>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em>\<vartheta\>:<with|math-font-family|rm|norma2>*\<vartheta\>,<math-up|matAutovettori>:<with|math-font-family|rm|calcolo_autovettore><around*|(|S|)>,<math-up|matAutovettoriInversa>:<math-up|trigsimp><around*|(|<math-up|invert><around*|(|<math-up|matAutovettori>|)>|)>,<math-up|matAutovalori>:<with|math-font-family|rm|calcolo_autovalore><around*|(|S|)>,<math-up|matEsponenziale>:<matrix|<tformat|<table|<row|<cell|exp
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      >><with|math-font-family|rm|calcolo_matriceR><around*|(|<math-up|asse>,<math-up|angolo>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|e,<with|math-font-family|rm|norma2>,S,<math-up|matAutovettori>,<math-up|matAutovettoriInv>,<math-up|matAutovalori>,<math-up|matEsponenziale>,R|]>,e:<with|math-font-family|rm|calcolo_versore><around*|(|<math-up|asse>|)>,<math-bf|if><space|0.27em>e=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<with|math-font-family|rm|norma2>:<sqrt|<math-up|asse><rsub|1,1><rsup|2>+<math-up|asse><rsub|2,1><rsup|2>+<math-up|asse><rsub|3,1><rsup|2>>,S:<with|math-font-family|rm|mat_antisimmetricaS><around*|(|e|)>,\<vartheta\>:\<pi\>*<around*|(|<frac|<math-up|angolo>|180>|)>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em>\<vartheta\>:<with|math-font-family|rm|norma2>*\<vartheta\>,<math-up|matAutovettori>:<with|math-font-family|rm|calcolo_autovettore><around*|(|S|)>,<math-up|matAutovettoriInv>:<math-up|trigsimp><around*|(|<math-up|invert><around*|(|<math-up|matAutovettori>|)>|)>,<math-up|matAutovalori>:<with|math-font-family|rm|calcolo_autovalore><around*|(|S|)>,<math-up|matEsponenziale>:<matrix|<tformat|<table|<row|<cell|exp
       <around*|(|<math-up|matAutovalori><rsub|1,1>*\<vartheta\>|)>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|exp
       <around*|(|<math-up|matAutovalori><rsub|2,2>*\<vartheta\>|)>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|exp
-      <around*|(|<math-up|matAutovalori><rsub|3,3>*\<vartheta\>|)>>>>>>,<math-up|mat><rsub|1>:<math-up|trigsimp><around*|(|<math-up|factor><around*|(|<math-up|matEsponenziale>\<cdot\><math-up|matAutovettoriInversa>|)>|)>,R:<math-up|trigsimp><around*|(|<math-up|factor><around*|(|<math-up|matAutovettori>\<cdot\><math-up|mat><rsub|1>|)>|)>,<math-up|return><around*|(|R|)>|)>>>
+      <around*|(|<math-up|matAutovalori><rsub|3,3>*\<vartheta\>|)>>>>>>,<math-up|mat><rsub|1>:<math-up|trigsimp><around*|(|<math-up|factor><around*|(|<math-up|matEsponenziale>\<cdot\><math-up|matAutovettoriInv>|)>|)>,R:<math-up|trigsimp><around*|(|<math-up|factor><around*|(|<math-up|matAutovettori>\<cdot\><math-up|mat><rsub|1>|)>|)>,R:<math-up|trigsimp><around*|(|<math-up|trigreduce><around*|(|<math-up|factor><around*|(|<math-up|demoivre><around*|(|R|)>|)>|)>|)>|)>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -267,9 +271,7 @@
     <|unfolded-io>
       R:calcolo_matriceR(matrix([0],[1],[0]),90)
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|1>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|-1>|<cell|0>|<cell|0>>>>>>>
     </unfolded-io>
 
@@ -287,8 +289,19 @@
     <|unfolded-io>
       R:calcolo_matriceR(matrix([1],[2],[0]),90)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|\<mathe\><rsup|-<frac|<sqrt|5>*\<mathi\>*\<pi\>|2>>*<around*|(|2*\<mathe\><rsup|<sqrt|5>*\<mathi\>*\<pi\>>+\<mathe\><rsup|<frac|<sqrt|5>*\<mathi\>*\<pi\>|2>>+2|)>|5>>|<cell|-<frac|\<mathe\><rsup|-<frac|<sqrt|5>*\<mathi\>*\<pi\>|2>>*<around*|(|\<mathe\><rsup|<sqrt|5>*\<mathi\>*\<pi\>>-2*\<mathe\><rsup|<frac|<sqrt|5>*\<mathi\>*\<pi\>|2>>+1|)>|5>>|<cell|-<frac|\<mathe\><rsup|-<frac|<sqrt|5>*\<mathi\>*\<pi\>|2>>*<around*|(|\<mathi\>*\<mathe\><rsup|<sqrt|5>*\<mathi\>*\<pi\>>-\<mathi\>|)>|<sqrt|5>>>>|<row|<cell|-<frac|\<mathe\><rsup|-<frac|<sqrt|5>*\<mathi\>*\<pi\>|2>>*<around*|(|\<mathe\><rsup|<sqrt|5>*\<mathi\>*\<pi\>>-2*\<mathe\><rsup|<frac|<sqrt|5>*\<mathi\>*\<pi\>|2>>+1|)>|5>>|<cell|<frac|\<mathe\><rsup|-<frac|<sqrt|5>*\<mathi\>*\<pi\>|2>>*<around*|(|\<mathe\><rsup|<sqrt|5>*\<mathi\>*\<pi\>>+8*\<mathe\><rsup|<frac|<sqrt|5>*\<mathi\>*\<pi\>|2>>+1|)>|10>>|<cell|<frac|\<mathe\><rsup|-<frac|<sqrt|5>*\<mathi\>*\<pi\>|2>>*<around*|(|\<mathi\>*\<mathe\><rsup|<sqrt|5>*\<mathi\>*\<pi\>>-\<mathi\>|)>|2*<sqrt|5>>>>|<row|<cell|<frac|\<mathe\><rsup|-<frac|<sqrt|5>*\<mathi\>*\<pi\>|2>>*<around*|(|\<mathi\>*\<mathe\><rsup|<sqrt|5>*\<mathi\>*\<pi\>>-\<mathi\>|)>|<sqrt|5>>>|<cell|-<frac|\<mathe\><rsup|-<frac|<sqrt|5>*\<mathi\>*\<pi\>|2>>*<around*|(|\<mathi\>*\<mathe\><rsup|<sqrt|5>*\<mathi\>*\<pi\>>-\<mathi\>|)>|2*<sqrt|5>>>|<cell|<frac|\<mathe\><rsup|-<frac|<sqrt|5>*\<mathi\>*\<pi\>|2>>*<around*|(|\<mathe\><rsup|<sqrt|5>*\<mathi\>*\<pi\>>+1|)>|2>>>>>>>>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
+      >><matrix|<tformat|<table|<row|<cell|<frac|4*cos
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>+1|5>>|<cell|-<frac|2*cos
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>-2|5>>|<cell|<frac|2*sin
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>>|<row|<cell|-<frac|2*cos
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>-2|5>>|<cell|<frac|cos
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>+4|5>>|<cell|-<frac|sin
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>>|<row|<cell|-<frac|2*sin
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>|<cell|<frac|sin
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>|<cell|cos
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>>>>>>>>
     </unfolded-io>
   </session>
 
@@ -301,6 +314,9 @@
   anche della matrice e^(At) per cui una volta trovati posso usare le formule
   R(\<theta\>)=<math|V*e<rsup|A\<theta\>>*V<rsup|-1>> per calcolare la
   matrice di rotazione intorno al vettore \Pv\Q di un certo angolo \<theta\>.
+
+  La funzione DEMOIVRE permette di sostituire la funzione esponenziale in
+  funzione con seno e coseno.
 </body>
 
 <\initial>
