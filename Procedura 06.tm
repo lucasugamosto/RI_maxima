@@ -269,19 +269,34 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>6) >
     <|unfolded-io>
-      R:calcolo_matriceR(matrix([0],[1],[0]),90)
+      R:calcolo_matriceR(matrix([1],[1],[-1]),120)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
-      >><matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|1>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|-1>|<cell|0>|<cell|0>>>>>>>
+      >><matrix|<tformat|<table|<row|<cell|<frac|2*cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|<frac|<sqrt|3>*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|<frac|<sqrt|3>*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-1|3>>>|<row|<cell|-<frac|3*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+<sqrt|3>*cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-<sqrt|3>|3<rsup|<frac|3|2>>>>|<cell|<frac|2*cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|-<frac|3*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-<sqrt|3>*cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+<sqrt|3>|3<rsup|<frac|3|2>>>>>|<row|<cell|-<frac|3*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-<sqrt|3>*cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+<sqrt|3>|3<rsup|<frac|3|2>>>>|<cell|<frac|3*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+<sqrt|3>*cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-<sqrt|3>|3<rsup|<frac|3|2>>>>|<cell|<frac|2*cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>7) >
     <|unfolded-io>
-      R:calcolo_matriceR(matrix([1],[0],[0]),45)
+      R:calcolo_matriceR(matrix([1/sqrt(3)],[1/sqrt(3)],[-1/sqrt(3)]),120)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
-      >><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|1|<sqrt|2>>>|<cell|-<frac|1|<sqrt|2>>>>|<row|<cell|0>|<cell|<frac|1|<sqrt|2>>>|<cell|<frac|1|<sqrt|2>>>>>>>>>
+      >><matrix|<tformat|<table|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-1>>|<row|<cell|-1>|<cell|0>|<cell|0>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -289,9 +304,7 @@
     <|unfolded-io>
       R:calcolo_matriceR(matrix([1],[2],[0]),90)
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
       >><matrix|<tformat|<table|<row|<cell|<frac|4*cos
       <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>+1|5>>|<cell|-<frac|2*cos
       <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>-2|5>>|<cell|<frac|2*sin
