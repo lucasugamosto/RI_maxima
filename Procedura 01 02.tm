@@ -11,7 +11,8 @@
   verifica che l'angolo sia uno scalare e deve restituire la matrice di
   rotazione corrispondente, o un messaggio di errore.>
 
-  (La variabile \Pangolo\Q deve avere come unità di misura i gradi).
+  (La variabile \Pangolo\Q deve avere come unità di misura i gradi, poichè
+  viene convertita in radianti all'interno del programma).
 
   <\session|maxima|default>
     <\unfolded-io>
@@ -85,34 +86,44 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
     <|unfolded-io>
-      matrice_rotazione(matrix([0],[1],[0]),45)
+      matrice_rotazione(matrix([0],[1],[0]),beta)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|1|<sqrt|2>>>|<cell|0>|<cell|<frac|1|<sqrt|2>>>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|-<frac|1|<sqrt|2>>>|<cell|0>|<cell|<frac|1|<sqrt|2>>>>>>>>>
+      >><matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|<frac|\<pi\>*\<beta\>|180>|)>>|<cell|0>|<cell|sin
+      <around*|(|<frac|\<pi\>*\<beta\>|180>|)>>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|-sin
+      <around*|(|<frac|\<pi\>*\<beta\>|180>|)>>|<cell|0>|<cell|cos
+      <around*|(|<frac|\<pi\>*\<beta\>|180>|)>>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>4) >
     <|unfolded-io>
-      matrice_rotazione(matrix([0],[0],[1]),30)
+      matrice_rotazione(matrix([0],[0],[1]),gamma)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|<sqrt|3>|2>>|<cell|-<frac|1|2>>|<cell|0>>|<row|<cell|<frac|1|2>>|<cell|<frac|<sqrt|3>|2>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>>>
+      >><matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|<frac|\<pi\>*\<gamma\>|180>|)>>|<cell|-sin
+      <around*|(|<frac|\<pi\>*\<gamma\>|180>|)>>|<cell|0>>|<row|<cell|sin
+      <around*|(|<frac|\<pi\>*\<gamma\>|180>|)>>|<cell|cos
+      <around*|(|<frac|\<pi\>*\<gamma\>|180>|)>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|unfolded-io>
-      matrice_rotazione(matrix([1],[0],[1]),omega)
+      matrice_rotazione(matrix([1],[0],[1]),alpha)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
       >>0>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>6) >
     <|unfolded-io>
-      matrice_rotazione(matrix([1],[0],[0]),[45,gamma])
+      matrice_rotazione(matrix([1],[0],[0]),[45,alpha])
     <|unfolded-io>
       \;
 

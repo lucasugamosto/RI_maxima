@@ -4,15 +4,11 @@
 
 <\body>
   PROCEDURA CHE DIMOSTRA COME CALCOLARE LA MATRICE DI ROTAZIONE RISPETTO
-  ALL'ASSE y DI UN ANGOLO \<gamma\> CONSIDERANDO IL PRODOTTO TRA MATRICI DI
-  ROTAZIONE RISPETTO AGLI ALTRI DUE ASSI E ANGOLI DI VALORI \<pi\>/2.
+  ALL'ASSE z DI UN ANGOLO \<gamma\> CONSIDERANDO IL PRODOTTO TRA MATRICI DI
+  ROTAZIONE RISPETTO AGLI ALTRI DUE ASSI x,y E ANGOLI DI VALORI
+  \<pi\>/2,\<gamma\>.
 
-  <with|color|red|Procedura 1: Procedura dimostra la possibilità di calcolare
-  la matrice di rotazione intorno ad un determinato asse tra x,y,z di un
-  angolo \<theta\> tramite il prodotto di più matrici espresse nella
-  notazione di Eulero.>
-
-  Sotto-funzione per il calcolo di una matrice di rotazione nello spazio
+  Sotto-funzione per il calcolo di una matrice di rotazione nello spazio,
   intorno ad un certo asse di un dato angolo:
 
   <\session|maxima|default>
@@ -81,6 +77,8 @@
 
       mat_fin:trigsimp(mat.mat_T),
 
+      \;
+
       II:matrix([1,0,0],[0,1,0],[0,0,1]),
 
       if mat_fin # II then return(0),
@@ -103,22 +101,26 @@
 
     \;
 
-    Funzione principale in cui si dimostra che
+    <with|color|red|Funzione principale in cui si dimostra che
     <math|R<rsub|z><around*|(|\<gamma\>|)>=R<rsub|x><around*|(|\<pm\>\<pi\>/2|)>.R<rsub|y><around*|(|\<pm\>\<gamma\>|)>.R<rsub|x><around*|(|\<mp\>\<pi\>/2|)>>,
-    per ogni \<gamma\>:
+    per ogni \<gamma\>:>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
     <|unfolded-io>
-      prod_eulero(alpha,gamma):=block(
+      prod_eulero(gamma):=block(
 
       [Rx,Ry,Rz,val,mat_tot,res],
 
-      Rx[1]:create_R(matrix([1],[0],[0]),alpha),
+      if listp(gamma) = true or matrixp(gamma) = true then return(0),
+
+      \;
+
+      Rx[1]:create_R(matrix([1],[0],[0]),%pi/2),
 
       if Rx[1] = 0 then return(0),
 
-      Rx[2]:create_R(matrix([1],[0],[0]),-alpha),
+      Rx[2]:create_R(matrix([1],[0],[0]),-%pi/2),
 
       if Rx[2] = 0 then return(0),
 
@@ -172,6 +174,8 @@
 
       \ ),
 
+      \ 
+
       for i:1 thru 3 do (
 
       \ for j:1 thru 3 do (
@@ -191,28 +195,36 @@
       )
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
-      >><with|math-font-family|rm|prod_eulero><around*|(|\<alpha\>,\<gamma\>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|Rx>,<math-up|Ry>,<math-up|Rz>,<math-up|val>,<with|math-font-family|rm|mat_tot>,<math-up|res>|]>,<math-up|Rx><rsub|1>:<with|math-font-family|rm|create_R><around*|(|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,\<alpha\>|)>,<math-bf|if><space|0.27em><math-up|Rx><rsub|1>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|Rx><rsub|2>:<with|math-font-family|rm|create_R><around*|(|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,-\<alpha\>|)>,<math-bf|if><space|0.27em><math-up|Rx><rsub|2>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|Ry><rsub|1>:<with|math-font-family|rm|create_R><around*|(|<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|1>>|<row|<cell|0>>>>>,\<gamma\>|)>,<math-bf|if><space|0.27em><math-up|Ry><rsub|1>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|Ry><rsub|2>:<with|math-font-family|rm|create_R><around*|(|<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|1>>|<row|<cell|0>>>>>,-\<gamma\>|)>,<math-bf|if><space|0.27em><math-up|Ry><rsub|2>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|Rz>:<with|math-font-family|rm|create_R><around*|(|<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|1>>>>>,\<gamma\>|)>,<math-bf|if><space|0.27em><math-up|Rz>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|val>:<with|math-font-family|rm|control_R><around*|(|<math-up|Rx><rsub|1>|)>,<math-bf|if><space|0.27em><math-up|val>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|-1|)>,<math-up|val>:<with|math-font-family|rm|control_R><around*|(|<math-up|Rx><rsub|2>|)>,<math-bf|if><space|0.27em><math-up|val>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|-1|)>,<math-up|val>:<with|math-font-family|rm|control_R><around*|(|<math-up|Ry><rsub|1>|)>,<math-bf|if><space|0.27em><math-up|val>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|-1|)>,<math-up|val>:<with|math-font-family|rm|control_R><around*|(|<math-up|Rz>|)>,<math-bf|if><space|0.27em><math-up|val>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|-1|)>,<with|math-font-family|rm|mat_tot><rsub|1>:<math-up|trigsimp><around*|(|<math-up|Rx><rsub|1>\<cdot\><math-up|Ry><rsub|1>\<cdot\><math-up|Rx><rsub|2>|)>,<with|math-font-family|rm|mat_tot><rsub|2>:<math-up|trigsimp><around*|(|<math-up|Rx><rsub|2>\<cdot\><math-up|Ry><rsub|2>\<cdot\><math-up|Rx><rsub|1>|)>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<math-bf|for><space|0.27em>j<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<math-bf|if><space|0.27em><around*|(|<with|math-font-family|rm|mat_tot><rsub|1>|)><rsub|i,j>\<neq\><math-up|Rz><rsub|i,j><space|0.27em><math-bf|then><space|0.27em><math-up|res>:0<space|0.27em><math-bf|else><space|0.27em><math-up|res>:1,<math-bf|if><space|0.27em><math-up|res>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>|)>,<math-bf|if><space|0.27em><math-up|res>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>|)>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<math-bf|for><space|0.27em>j<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<math-bf|if><space|0.27em><around*|(|<with|math-font-family|rm|mat_tot><rsub|2>|)><rsub|i,j>\<neq\><math-up|Rz><rsub|i,j><space|0.27em><math-bf|then><space|0.27em><math-up|res>:0<space|0.27em><math-bf|else><space|0.27em><math-up|res>:1,<math-bf|if><space|0.27em><math-up|res>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>|)>,<math-bf|if><space|0.27em><math-up|res>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>|)>,<math-bf|if><space|0.27em><math-up|res>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)><space|0.27em><math-bf|else><space|0.27em><math-up|return><around*|(|1|)>|)>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>4) >
-    <|unfolded-io>
-      prod_eulero(%pi/2,gamma)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
-      >>1>>
+      >><with|math-font-family|rm|prod_eulero><around*|(|\<gamma\>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|Rx>,<math-up|Ry>,<math-up|Rz>,<math-up|val>,<with|math-font-family|rm|mat_tot>,<math-up|res>|]>,<math-bf|if><space|0.27em><math-up|listp><around*|(|\<gamma\>|)>=<math-bf|true>\<vee\><math-up|matrixp><around*|(|\<gamma\>|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|Rx><rsub|1>:<with|math-font-family|rm|create_R><around*|(|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,<frac|\<pi\>|2>|)>,<math-bf|if><space|0.27em><math-up|Rx><rsub|1>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|Rx><rsub|2>:<with|math-font-family|rm|create_R><around*|(|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,<frac|-\<pi\>|2>|)>,<math-bf|if><space|0.27em><math-up|Rx><rsub|2>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|Ry><rsub|1>:<with|math-font-family|rm|create_R><around*|(|<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|1>>|<row|<cell|0>>>>>,\<gamma\>|)>,<math-bf|if><space|0.27em><math-up|Ry><rsub|1>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|Ry><rsub|2>:<with|math-font-family|rm|create_R><around*|(|<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|1>>|<row|<cell|0>>>>>,-\<gamma\>|)>,<math-bf|if><space|0.27em><math-up|Ry><rsub|2>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|Rz>:<with|math-font-family|rm|create_R><around*|(|<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|1>>>>>,\<gamma\>|)>,<math-bf|if><space|0.27em><math-up|Rz>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|val>:<with|math-font-family|rm|control_R><around*|(|<math-up|Rx><rsub|1>|)>,<math-bf|if><space|0.27em><math-up|val>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|-1|)>,<math-up|val>:<with|math-font-family|rm|control_R><around*|(|<math-up|Rx><rsub|2>|)>,<math-bf|if><space|0.27em><math-up|val>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|-1|)>,<math-up|val>:<with|math-font-family|rm|control_R><around*|(|<math-up|Ry><rsub|1>|)>,<math-bf|if><space|0.27em><math-up|val>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|-1|)>,<math-up|val>:<with|math-font-family|rm|control_R><around*|(|<math-up|Rz>|)>,<math-bf|if><space|0.27em><math-up|val>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|-1|)>,<with|math-font-family|rm|mat_tot><rsub|1>:<math-up|trigsimp><around*|(|<math-up|Rx><rsub|1>\<cdot\><math-up|Ry><rsub|1>\<cdot\><math-up|Rx><rsub|2>|)>,<with|math-font-family|rm|mat_tot><rsub|2>:<math-up|trigsimp><around*|(|<math-up|Rx><rsub|2>\<cdot\><math-up|Ry><rsub|2>\<cdot\><math-up|Rx><rsub|1>|)>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<math-bf|for><space|0.27em>j<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<math-bf|if><space|0.27em><around*|(|<with|math-font-family|rm|mat_tot><rsub|1>|)><rsub|i,j>\<neq\><math-up|Rz><rsub|i,j><space|0.27em><math-bf|then><space|0.27em><math-up|res>:0<space|0.27em><math-bf|else><space|0.27em><math-up|res>:1,<math-bf|if><space|0.27em><math-up|res>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>|)>,<math-bf|if><space|0.27em><math-up|res>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>|)>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<math-bf|for><space|0.27em>j<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<math-bf|if><space|0.27em><around*|(|<with|math-font-family|rm|mat_tot><rsub|2>|)><rsub|i,j>\<neq\><math-up|Rz><rsub|i,j><space|0.27em><math-bf|then><space|0.27em><math-up|res>:0<space|0.27em><math-bf|else><space|0.27em><math-up|res>:1,<math-bf|if><space|0.27em><math-up|res>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>|)>,<math-bf|if><space|0.27em><math-up|res>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>|)>,<math-bf|if><space|0.27em><math-up|res>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)><space|0.27em><math-bf|else><space|0.27em><math-up|return><around*|(|1|)>|)>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|unfolded-io>
-      prod_eulero([a,b],gamma)
+      prod_eulero(gamma)
     <|unfolded-io>
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      >>1>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>6) >
+    <|unfolded-io>
+      prod_eulero([gamma,0])
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
       >>0>>
     </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>7) >
+    <|input>
+      \;
+    </input>
   </session>
 </body>
 

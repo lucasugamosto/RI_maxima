@@ -4,15 +4,13 @@
 
 <\body>
   PROCEDURA CHE DIMOSTRA LA NON VALIDITA' DELLA PROPRIETA' COMMUTATIVA
-  RISPETTO ALLA MOLTIPLICAZIONE PER LE MATRICI DI ROTAZIONE NELLO SPAZIO.
+  RISPETTO ALLA MOLTIPLICAZIONE PER LE MATRICI DI ROTAZIONE (NELLO SPAZIO).
+  Questa proprietà vale invece nel piano.
 
-  <with|color|red|Procedura 1: Procedura che prende in ingresso i valori di
-  due angoli generici \<alpha\> e \<beta\>, calcola le matrici di rotazioni
-  intorno a due assi diversi rispettivamente di angolo \<alpha\> e \<beta\> e
-  dimostra che per esse non vale la PROPRIETA' COMMUTATIVA rispetto al
-  prodotto.>
-
-  \;
+  <with|color|red|Procedura 1: Procedura che prende in ingresso due angoli
+  generici \<alpha\> e \<beta\>, calcola le matrici di rotazioni intorno a
+  due assi diversi rispettivamente di angolo \<alpha\> e \<beta\> e dimostra
+  che non vale la PROPRIETA' COMMUTATIVA rispetto alla moltiplicazione.>
 
   Sotto-funzione che controlla se la matrice inserita in ingresso è o meno di
   rotazione:
@@ -29,9 +27,9 @@
 
       mat_fin:trigsimp(mat.mat_T),
 
-      II:matrix([1,0,0],[0,1,0],[0,0,1]),
-
       \;
+
+      II:matrix([1,0,0],[0,1,0],[0,0,1]),
 
       if mat_fin # II then return(0),
 
@@ -60,6 +58,12 @@
       prop_commutativa(alpha,beta):=block(
 
       [Rx,Ry,val,mat1,mat2,res],
+
+      if listp(alpha) = true or matrixp(alpha) = true then return(0),
+
+      if listp(beta) = true or matrixp(beta) = true then return(0),
+
+      \;
 
       Rx:matrix([1,0,0],[0,cos(alpha),-sin(alpha)],[0,sin(alpha),cos(alpha)]),
 
@@ -100,7 +104,7 @@
       )
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
-      >><with|math-font-family|rm|prop_commutativa><around*|(|\<alpha\>,\<beta\>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|Rx>,<math-up|Ry>,<math-up|val>,<with|math-font-family|rm|mat1>,<with|math-font-family|rm|mat2>,<math-up|res>|]>,<math-up|Rx>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|cos
+      >><with|math-font-family|rm|prop_commutativa><around*|(|\<alpha\>,\<beta\>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|Rx>,<math-up|Ry>,<math-up|val>,<with|math-font-family|rm|mat1>,<with|math-font-family|rm|mat2>,<math-up|res>|]>,<math-bf|if><space|0.27em><math-up|listp><around*|(|\<alpha\>|)>=<math-bf|true>\<vee\><math-up|matrixp><around*|(|\<alpha\>|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-bf|if><space|0.27em><math-up|listp><around*|(|\<beta\>|)>=<math-bf|true>\<vee\><math-up|matrixp><around*|(|\<beta\>|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|Rx>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|cos
       <around*|(|\<alpha\>|)>>|<cell|-sin
       <around*|(|\<alpha\>|)>>>|<row|<cell|0>|<cell|sin
       <around*|(|\<alpha\>|)>>|<cell|cos <around*|(|\<alpha\>|)>>>>>>,<math-up|Ry>:<matrix|<tformat|<table|<row|<cell|cos
@@ -127,8 +131,9 @@
 
     \;
 
-    La proprietà COMMUTATIVA rispetto al prodotto vale invece se ci si trova
-    nel piano e non nello spazio, qui di seguito la dimostrazione:
+    <with|color|red|La proprietà COMMUTATIVA rispetto alla moltiplicazione
+    vale invece se ci si trova nel piano e non nello spazio, qui di seguito
+    la dimostrazione:>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>4) >
@@ -136,6 +141,8 @@
       matrice_rotazione(theta):=block(
 
       [res],
+
+      if listp(theta) = true or matrixp(theta) = true then return(0),
 
       res:matrix([cos(theta),-sin(theta)],[sin(theta),cos(theta)]),
 
@@ -146,7 +153,7 @@
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
-      >><with|math-font-family|rm|matrice_rotazione><around*|(|\<vartheta\>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|res>|]>,<math-up|res>:<matrix|<tformat|<table|<row|<cell|cos
+      >><with|math-font-family|rm|matrice_rotazione><around*|(|\<vartheta\>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|res>|]>,<math-bf|if><space|0.27em><math-up|listp><around*|(|\<vartheta\>|)>=<math-bf|true>\<vee\><math-up|matrixp><around*|(|\<vartheta\>|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|res>:<matrix|<tformat|<table|<row|<cell|cos
       <around*|(|\<vartheta\>|)>>|<cell|-sin
       <around*|(|\<vartheta\>|)>>>|<row|<cell|sin
       <around*|(|\<vartheta\>|)>>|<cell|cos
@@ -159,6 +166,12 @@
       prop_commutativaR2(alpha,beta):=block(
 
       [mat1,mat2,mat3,mat4,res],
+
+      if listp(alpha) = true or matrixp(alpha) = true then return(0),
+
+      if listp(beta) = true or matrixp(beta) = true then return(0),
+
+      \;
 
       mat1:matrice_rotazione(alpha),
 
@@ -189,15 +202,15 @@
       )
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
-      >><with|math-font-family|rm|prop_commutativaR2><around*|(|\<alpha\>,\<beta\>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|mat1>,<with|math-font-family|rm|mat2>,<with|math-font-family|rm|mat3>,<with|math-font-family|rm|mat4>,<math-up|res>|]>,<with|math-font-family|rm|mat1>:<with|math-font-family|rm|matrice_rotazione><around*|(|\<alpha\>|)>,<with|math-font-family|rm|mat2>:<with|math-font-family|rm|matrice_rotazione><around*|(|\<beta\>|)>,<with|math-font-family|rm|mat3>:<math-up|trigsimp><around*|(|<with|math-font-family|rm|mat1>\<cdot\><with|math-font-family|rm|mat2>|)>,<with|math-font-family|rm|mat4>:<math-up|trigsimp><around*|(|<with|math-font-family|rm|mat2>\<cdot\><with|math-font-family|rm|mat1>|)>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>2<space|0.27em><math-bf|do><space|0.27em><around*|(|<math-bf|for><space|0.27em>j<space|0.27em><math-bf|thru><space|0.27em>2<space|0.27em><math-bf|do><space|0.27em><around*|(|<math-bf|if><space|0.27em><with|math-font-family|rm|mat3><rsub|i,j>\<neq\><with|math-font-family|rm|mat4><rsub|i,j><space|0.27em><math-bf|then><space|0.27em><math-up|res>:0<space|0.27em><math-bf|else><space|0.27em><math-up|res>:1,<math-bf|if><space|0.27em><math-up|res>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>|)>,<math-bf|if><space|0.27em><math-up|res>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>|)>,<math-bf|if><space|0.27em><math-up|res>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)><space|0.27em><math-bf|else><space|0.27em><math-up|return><around*|(|1|)>|)>>>
+      >><with|math-font-family|rm|prop_commutativaR2><around*|(|\<alpha\>,\<beta\>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|mat1>,<with|math-font-family|rm|mat2>,<with|math-font-family|rm|mat3>,<with|math-font-family|rm|mat4>,<math-up|res>|]>,<math-bf|if><space|0.27em><math-up|listp><around*|(|\<alpha\>|)>=<math-bf|true>\<vee\><math-up|matrixp><around*|(|\<alpha\>|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-bf|if><space|0.27em><math-up|listp><around*|(|\<beta\>|)>=<math-bf|true>\<vee\><math-up|matrixp><around*|(|\<beta\>|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<with|math-font-family|rm|mat1>:<with|math-font-family|rm|matrice_rotazione><around*|(|\<alpha\>|)>,<with|math-font-family|rm|mat2>:<with|math-font-family|rm|matrice_rotazione><around*|(|\<beta\>|)>,<with|math-font-family|rm|mat3>:<math-up|trigsimp><around*|(|<with|math-font-family|rm|mat1>\<cdot\><with|math-font-family|rm|mat2>|)>,<with|math-font-family|rm|mat4>:<math-up|trigsimp><around*|(|<with|math-font-family|rm|mat2>\<cdot\><with|math-font-family|rm|mat1>|)>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>2<space|0.27em><math-bf|do><space|0.27em><around*|(|<math-bf|for><space|0.27em>j<space|0.27em><math-bf|thru><space|0.27em>2<space|0.27em><math-bf|do><space|0.27em><around*|(|<math-bf|if><space|0.27em><with|math-font-family|rm|mat3><rsub|i,j>\<neq\><with|math-font-family|rm|mat4><rsub|i,j><space|0.27em><math-bf|then><space|0.27em><math-up|res>:0<space|0.27em><math-bf|else><space|0.27em><math-up|res>:1,<math-bf|if><space|0.27em><math-up|res>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>|)>,<math-bf|if><space|0.27em><math-up|res>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>|)>,<math-bf|if><space|0.27em><math-up|res>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)><space|0.27em><math-bf|else><space|0.27em><math-up|return><around*|(|1|)>|)>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>7) >
+      <with|color|red|(<with|math-font-family|rm|%i>6) >
     <|unfolded-io>
-      prop_commutativaR2(gamma,omega)
+      prop_commutativaR2(alpha,beta)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
       >>1>>
     </unfolded-io>
   </session>
