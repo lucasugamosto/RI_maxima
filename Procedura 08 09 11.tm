@@ -22,6 +22,10 @@
 
       [norma2,e],
 
+      if scalarp(vettore) = true or listp(vettore) = true then return(0),
+
+      \;
+
       norma2:sqrt((vettore[1,1])^2+(vettore[2,1])^2+(vettore[3,1])^2),
 
       if norma2 = 0 then return(0),
@@ -33,7 +37,7 @@
       )
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o1>)
-      >><with|math-font-family|rm|calcolo_versore><around*|(|<math-up|vettore>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|norma2>,e|]>,<with|math-font-family|rm|norma2>:<sqrt|<math-up|vettore><rsub|1,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|3,1><rsup|2>>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em>e:<frac|1|<with|math-font-family|rm|norma2>>*<math-up|vettore><space|0.27em><math-bf|else><space|0.27em>e:<math-up|vettore>,<math-up|return><around*|(|e|)>|)>>>
+      >><with|math-font-family|rm|calcolo_versore><around*|(|<math-up|vettore>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|norma2>,e|]>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|<math-up|vettore>|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|<math-up|vettore>|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<with|math-font-family|rm|norma2>:<sqrt|<math-up|vettore><rsub|1,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|3,1><rsup|2>>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em>e:<frac|1|<with|math-font-family|rm|norma2>>*<math-up|vettore><space|0.27em><math-bf|else><space|0.27em>e:<math-up|vettore>,<math-up|return><around*|(|e|)>|)>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -45,9 +49,20 @@
 
       e:calcolo_versore(asse),
 
+      \;
+
+      /*La funzione precedente ritorna 0 in caso l'asse passato non è un
+      vettore o se è identicamente nullo*/
+
       if e = 0 then return(0),
 
+      \;
+
       S:matrix([0,-e[3,1],e[2,1]],[e[3,1],0,-e[1,1]],[-e[2,1],e[1,1],0]),
+
+      \;
+
+      /*Controllo che l'angolo sia uno scalare*/
 
       if listp(angolo) = true or matrixp(angolo) = true then return(0),
 
@@ -94,30 +109,27 @@
       >><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|<sqrt|3>|2>>|<cell|-<frac|1|2>>>|<row|<cell|0>|<cell|<frac|1|2>>|<cell|<frac|<sqrt|3>|2>>>>>>>>
     </unfolded-io>
 
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>4) >
-    <|input>
-      mat2:mat_rotazioneR(matrix([1],[1],[-1]),90)$
-    </input>
+    <|unfolded-io>
+      mat2:mat_rotazioneR(matrix([1],[1],[0]),90)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
+      >><matrix|<tformat|<table|<row|<cell|<frac|cos
+      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>+1|2>>|<cell|-<frac|cos
+      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>-1|2>>|<cell|<frac|sin
+      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>|<sqrt|2>>>>|<row|<cell|-<frac|cos
+      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>-1|2>>|<cell|<frac|cos
+      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>+1|2>>|<cell|-<frac|sin
+      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>|<sqrt|2>>>>|<row|<cell|-<frac|sin
+      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>|<sqrt|2>>>|<cell|<frac|sin
+      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>|<sqrt|2>>>|<cell|cos
+      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>>>>>>>>
+    </unfolded-io>
 
     \;
 
-    <math|<matrix|<tformat|<table|<row|<cell|<frac|2*cos
-    <around*|(|<frac|<sqrt|3>*\<pi\>|2>|)>+1|3>>|<cell|<frac|3*sin
-    <around*|(|<frac|<sqrt|3>*\<pi\>|2>|)>-<sqrt|3>*cos
-    <around*|(|<frac|<sqrt|3>*\<pi\>|2>|)>+<sqrt|3>|3<rsup|<frac|3|2>>>>|<cell|<frac|3*sin
-    <around*|(|<frac|<sqrt|3>*\<pi\>|2>|)>+<sqrt|3>*cos
-    <around*|(|<frac|<sqrt|3>*\<pi\>|2>|)>-<sqrt|3>|3<rsup|<frac|3|2>>>>>|<row|<cell|-<frac|3*sin
-    <around*|(|<frac|<sqrt|3>*\<pi\>|2>|)>+<sqrt|3>*cos
-    <around*|(|<frac|<sqrt|3>*\<pi\>|2>|)>-<sqrt|3>|3<rsup|<frac|3|2>>>>|<cell|<frac|2*cos
-    <around*|(|<frac|<sqrt|3>*\<pi\>|2>|)>+1|3>>|<cell|-<frac|3*sin
-    <around*|(|<frac|<sqrt|3>*\<pi\>|2>|)>-<sqrt|3>*cos
-    <around*|(|<frac|<sqrt|3>*\<pi\>|2>|)>+<sqrt|3>|3<rsup|<frac|3|2>>>>>|<row|<cell|-<frac|3*sin
-    <around*|(|<frac|<sqrt|3>*\<pi\>|2>|)>-<sqrt|3>*cos
-    <around*|(|<frac|<sqrt|3>*\<pi\>|2>|)>+<sqrt|3>|3<rsup|<frac|3|2>>>>|<cell|<frac|3*sin
-    <around*|(|<frac|<sqrt|3>*\<pi\>|2>|)>+<sqrt|3>*cos
-    <around*|(|<frac|<sqrt|3>*\<pi\>|2>|)>-<sqrt|3>|3<rsup|<frac|3|2>>>>|<cell|<frac|2*cos
-    <around*|(|<frac|<sqrt|3>*\<pi\>|2>|)>+1|3>>>>>>>
+    \;
 
     <\with|color|red>
       \;
@@ -172,29 +184,8 @@
 
       \;
 
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      ESERCITAZIONE 2: Calcolo dell'asse di rotazione e dell'angolo di
-      rotazione data una matrice di rotazione. Effettuare i relativi
-      controlli.
+      Procedura 2: Calcolo dell'asse di rotazione e dell'angolo di rotazione
+      data una matrice di rotazione. Effettuare prima i relativi controlli.
 
       Tramite la sottofunzione \Pcalcolo_val(mat1,mat2)\Q vengono calcolati
       gli indici in cui il valore presente è NON NULLO, il tutto per
@@ -210,6 +201,11 @@
       calcolo_val(mat1,mat2):=block(
 
       [val,i,j,x,y],
+
+      /*Tramite questa funzione si scorrono gli elementi delle matrici fino a
+      trovarne uno diverso da zero in entrambe*/
+
+      \;
 
       for i:1 thru 3 do (
 
@@ -231,7 +227,9 @@
 
       )
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
       >><with|math-font-family|rm|calcolo_val><around*|(|<with|math-font-family|rm|mat1>,<with|math-font-family|rm|mat2>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|val>,i,j,x,y|]>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<math-bf|for><space|0.27em>j<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|y:j,<math-bf|if><space|0.27em><with|math-font-family|rm|mat1><rsub|i,j>\<neq\>0\<wedge\><with|math-font-family|rm|mat2><rsub|i,j>\<neq\>0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|1|)>|)>,x:i,<math-bf|if><space|0.27em><math-up|mat><rsub|i,y>\<neq\>0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|1|)>|)>,<math-up|return><around*|(|<around*|[|x,y|]>|)>|)>>>
     </unfolded-io>
 
@@ -241,6 +239,8 @@
       calcolo_asseRotazione(R):=block(
 
       [mat_T,mat_fin,II,det,RmII,adj,aut0,aut1,norma2,e],
+
+      /*Controllo che la matrice inserita in input sia di rotazione*/
 
       mat_T:transpose(R),
 
@@ -256,21 +256,26 @@
 
       \;
 
+      /*Calcolo l'asse di rotazione tramite la definizione dell'aggiunta e di
+      un autovettore associato all'autovalore unitario*/
+
       RmII:R-II,
 
       adj:adjoint(RmII),
 
       aut0:matrix([0],[0],[0]),
 
+      aut1:matrix([0],[0],[0]),
+
       for i:1 thru 3 do (
 
       \ aut1:matrix([adj[1,i]],[adj[2,i]],[adj[3,i]]),
 
-      if aut1 # aut0 then return(aut1)
+      \ if aut1 # aut0 then return(aut1)
 
       ),
 
-      \ 
+      \;
 
       norma2:sqrt((aut1[1,1]^2)+(aut1[2,1]^2)+(aut1[3,1]^2)),
 
@@ -281,7 +286,7 @@
       )
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
-      >><with|math-font-family|rm|calcolo_asseRotazione><around*|(|R|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|mat_T>,<with|math-font-family|rm|mat_fin>,<math-up|II>,<math-up|det>,<math-up|RmII>,<math-up|adj>,<with|math-font-family|rm|aut0>,<with|math-font-family|rm|aut1>,<with|math-font-family|rm|norma2>,e|]>,<with|math-font-family|rm|mat_T>:<math-up|transpose><around*|(|R|)>,<with|math-font-family|rm|mat_fin>:<math-up|trigsimp><around*|(|R\<cdot\><with|math-font-family|rm|mat_T>|)>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|mat_fin>\<neq\><math-up|II><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|det>:<math-up|trigsimp><around*|(|<math-up|determinant><around*|(|R|)>|)>,<math-bf|if><space|0.27em><math-up|det>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|RmII>:R-<math-up|II>,<math-up|adj>:<math-up|adjoint><around*|(|<math-up|RmII>|)>,<with|math-font-family|rm|aut0>:<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<with|math-font-family|rm|aut1>:<matrix|<tformat|<table|<row|<cell|<math-up|adj><rsub|1,i>>>|<row|<cell|<math-up|adj><rsub|2,i>>>|<row|<cell|<math-up|adj><rsub|3,i>>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|aut1>\<neq\><with|math-font-family|rm|aut0><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|<with|math-font-family|rm|aut1>|)>|)>,<with|math-font-family|rm|norma2>:<sqrt|<with|math-font-family|rm|aut1><rsub|1,1><rsup|2>+<with|math-font-family|rm|aut1><rsub|2,1><rsup|2>+<with|math-font-family|rm|aut1><rsub|3,1><rsup|2>>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em>e:<frac|1|<with|math-font-family|rm|norma2>>*<with|math-font-family|rm|aut1><space|0.27em><math-bf|else><space|0.27em>e:<with|math-font-family|rm|aut1>,<math-up|return><around*|(|e|)>|)>>>
+      >><with|math-font-family|rm|calcolo_asseRotazione><around*|(|R|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|mat_T>,<with|math-font-family|rm|mat_fin>,<math-up|II>,<math-up|det>,<math-up|RmII>,<math-up|adj>,<with|math-font-family|rm|aut0>,<with|math-font-family|rm|aut1>,<with|math-font-family|rm|norma2>,e|]>,<with|math-font-family|rm|mat_T>:<math-up|transpose><around*|(|R|)>,<with|math-font-family|rm|mat_fin>:<math-up|trigsimp><around*|(|R\<cdot\><with|math-font-family|rm|mat_T>|)>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|mat_fin>\<neq\><math-up|II><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|det>:<math-up|trigsimp><around*|(|<math-up|determinant><around*|(|R|)>|)>,<math-bf|if><space|0.27em><math-up|det>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|RmII>:R-<math-up|II>,<math-up|adj>:<math-up|adjoint><around*|(|<math-up|RmII>|)>,<with|math-font-family|rm|aut0>:<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<with|math-font-family|rm|aut1>:<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<with|math-font-family|rm|aut1>:<matrix|<tformat|<table|<row|<cell|<math-up|adj><rsub|1,i>>>|<row|<cell|<math-up|adj><rsub|2,i>>>|<row|<cell|<math-up|adj><rsub|3,i>>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|aut1>\<neq\><with|math-font-family|rm|aut0><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|<with|math-font-family|rm|aut1>|)>|)>,<with|math-font-family|rm|norma2>:<sqrt|<with|math-font-family|rm|aut1><rsub|1,1><rsup|2>+<with|math-font-family|rm|aut1><rsub|2,1><rsup|2>+<with|math-font-family|rm|aut1><rsub|3,1><rsup|2>>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em>e:<frac|1|<with|math-font-family|rm|norma2>>*<with|math-font-family|rm|aut1><space|0.27em><math-bf|else><space|0.27em>e:<with|math-font-family|rm|aut1>,<math-up|return><around*|(|e|)>|)>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -289,7 +294,9 @@
     <|unfolded-io>
       R:matrix([0,1,0],[0,0,-1],[-1,0,0])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-1>>|<row|<cell|-1>|<cell|0>|<cell|0>>>>>>>
     </unfolded-io>
 
@@ -320,11 +327,15 @@
 
       [e,RT,S,mat,val1,val2,seno,S2,res,coseno,theta],
 
+      /*Calcolo asse di rotazione*/
+
       e:calcolo_asseRotazione(R),
 
       if e = 0 then return(0),
 
       \;
+
+      /*Calcolo angolo di rotazione*/
 
       S:matrix([0,-e[3,1],e[2,1]],[e[3,1],0,-e[1,1]],[-e[2,1],e[1,1],0]),
 
@@ -367,22 +378,29 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|unfolded-io>
-      calcolo_asse_angolo(mat1)
+      mat1
     <|unfolded-io>
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,<frac|\<pi\>|6>|]>>>
+      >><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|<sqrt|3>|2>>|<cell|-<frac|1|2>>>|<row|<cell|0>|<cell|<frac|1|2>>|<cell|<frac|<sqrt|3>|2>>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>12) >
     <|unfolded-io>
+      calcolo_asse_angolo(mat1)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,<frac|\<pi\>|6>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>13) >
+    <|unfolded-io>
       calcolo_asse_angolo(R)
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|1|<sqrt|3>>>>|<row|<cell|<frac|1|<sqrt|3>>>>|<row|<cell|-<frac|1|<sqrt|3>>>>>>>,<frac|2*\<pi\>|3>|]>>>
     </unfolded-io>
   </session>
