@@ -31,14 +31,20 @@
 
       [mat,result],
 
+      if scalarp(a) = true or listp(a) = true then return(0),
+
+      if scalarp(b) = true or listp(b) = true then return(0),
+
+      \;
+
       mat:matrix([e[x],e[y],e[z]],[a[1],a[2],a[3]],[b[1],b[2],b[3]]),
 
-      result:determinant(mat)
+      result:trigsimp(determinant(mat))
 
       )
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
-      >><with|math-font-family|rm|prodotto_vettoriale><around*|(|a,b|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|mat>,<math-up|result>|]>,<math-up|mat>:<matrix|<tformat|<table|<row|<cell|e<rsub|x>>|<cell|e<rsub|y>>|<cell|e<rsub|z>>>|<row|<cell|a<rsub|1>>|<cell|a<rsub|2>>|<cell|a<rsub|3>>>|<row|<cell|b<rsub|1>>|<cell|b<rsub|2>>|<cell|b<rsub|3>>>>>>,<math-up|result>:<math-up|determinant><around*|(|<math-up|mat>|)>|)>>>
+      >><with|math-font-family|rm|prodotto_vettoriale><around*|(|a,b|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|mat>,<math-up|result>|]>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|a|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|a|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|b|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|b|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|mat>:<matrix|<tformat|<table|<row|<cell|e<rsub|x>>|<cell|e<rsub|y>>|<cell|e<rsub|z>>>|<row|<cell|a<rsub|1>>|<cell|a<rsub|2>>|<cell|a<rsub|3>>>|<row|<cell|b<rsub|1>>|<cell|b<rsub|2>>|<cell|b<rsub|3>>>>>>,<math-up|result>:<math-up|trigsimp><around*|(|<math-up|determinant><around*|(|<math-up|mat>|)>|)>|)>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -47,7 +53,7 @@
       prodotto_vettoriale(a,b)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
-      >><around*|[|<around*|(|\<alpha\><rsub|1>*\<gamma\><rsub|2>-\<gamma\><rsub|1>*\<alpha\><rsub|2>|)>*e<rsub|z>-<around*|(|\<alpha\><rsub|1>*\<gamma\><rsub|3>-\<gamma\><rsub|1>*\<alpha\><rsub|3>|)>*e<rsub|y>+<around*|(|\<alpha\><rsub|2>*\<gamma\><rsub|3>-\<gamma\><rsub|2>*\<alpha\><rsub|3>|)>*e<rsub|x>|]>>>
+      >><around*|[|<around*|(|\<alpha\><rsub|1>*\<gamma\><rsub|2>-\<gamma\><rsub|1>*\<alpha\><rsub|2>|)>*e<rsub|z>+<around*|(|\<gamma\><rsub|1>*\<alpha\><rsub|3>-\<alpha\><rsub|1>*\<gamma\><rsub|3>|)>*e<rsub|y>+<around*|(|\<alpha\><rsub|2>*\<gamma\><rsub|3>-\<gamma\><rsub|2>*\<alpha\><rsub|3>|)>*e<rsub|x>|]>>>
     </unfolded-io>
 
     \;
@@ -84,6 +90,14 @@
 
       [sum,res1,res2,res3,final_sum],
 
+      if scalarp(u) = true or listp(u) = true then return(0),
+
+      if scalarp(v) = true or listp(v) = true then return(0),
+
+      if scalarp(w) = true or listp(w) = true then return(0),
+
+      \;
+
       sum:u+w,
 
       res1:prodotto_vettoriale(v,sum),
@@ -92,7 +106,7 @@
 
       res3:prodotto_vettoriale(v,w),
 
-      final_sum:res2+res3,
+      final_sum:fullratsimp(res2+res3),
 
       [res1,final_sum]
 
@@ -101,7 +115,7 @@
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
-      >><with|math-font-family|rm|proprieta_distributiva><around*|(|u,v,w|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|sum>,<with|math-font-family|rm|res1>,<with|math-font-family|rm|res2>,<with|math-font-family|rm|res3>,<with|math-font-family|rm|final_sum>|]>,<math-up|sum>:u+w,<with|math-font-family|rm|res1>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|v,<math-up|sum>|)>,<with|math-font-family|rm|res2>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|v,u|)>,<with|math-font-family|rm|res3>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|v,w|)>,<with|math-font-family|rm|final_sum>:<with|math-font-family|rm|res2>+<with|math-font-family|rm|res3>,<around*|[|<with|math-font-family|rm|res1>,<with|math-font-family|rm|final_sum>|]>|)>>>
+      >><with|math-font-family|rm|proprieta_distributiva><around*|(|u,v,w|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|sum>,<with|math-font-family|rm|res1>,<with|math-font-family|rm|res2>,<with|math-font-family|rm|res3>,<with|math-font-family|rm|final_sum>|]>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|u|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|u|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|v|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|v|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|w|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|w|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|sum>:u+w,<with|math-font-family|rm|res1>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|v,<math-up|sum>|)>,<with|math-font-family|rm|res2>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|v,u|)>,<with|math-font-family|rm|res3>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|v,w|)>,<with|math-font-family|rm|final_sum>:<math-up|fullratsimp><around*|(|<with|math-font-family|rm|res2>+<with|math-font-family|rm|res3>|)>,<around*|[|<with|math-font-family|rm|res1>,<with|math-font-family|rm|final_sum>|]>|)>>>
     </unfolded-io>
 
     <\input>
@@ -112,11 +126,11 @@
 
     \;
 
-    <math|<around*|[|<around*|(|\<gamma\><rsub|1>*<around*|(|\<delta\><rsub|2>+\<alpha\><rsub|2>|)>-<around*|(|\<delta\><rsub|1>+\<alpha\><rsub|1>|)>*\<gamma\><rsub|2>|)>*e<rsub|z>-<around*|(|\<gamma\><rsub|1>*<around*|(|\<delta\><rsub|3>+\<alpha\><rsub|3>|)>-<around*|(|\<delta\><rsub|1>+\<alpha\><rsub|1>|)>*\<gamma\><rsub|3>|)>*e<rsub|y>+<around*|(|\<gamma\><rsub|2>*<around*|(|\<delta\><rsub|3>+\<alpha\><rsub|3>|)>-<around*|(|\<delta\><rsub|2>+\<alpha\><rsub|2>|)>*\<gamma\><rsub|3>|)>*e<rsub|x>|]>>,
+    <around*|[|<around*|(|<around*|(|-\<delta\><rsub|1>-\<alpha\><rsub|1>|)>*\<gamma\><rsub|2>+\<gamma\><rsub|1>*\<delta\><rsub|2>+\<gamma\><rsub|1>*\<alpha\><rsub|2>|)>*e<rsub|z>+<around*|(|<around*|(|\<delta\><rsub|1>+\<alpha\><rsub|1>|)>*\<gamma\><rsub|3>-\<gamma\><rsub|1>*\<delta\><rsub|3>-\<gamma\><rsub|1>*\<alpha\><rsub|3>|)>*e<rsub|y>+<around*|(|<around*|(|-\<delta\><rsub|2>-\<alpha\><rsub|2>|)>*\<gamma\><rsub|3>+\<gamma\><rsub|2>*\<delta\><rsub|3>+\<gamma\><rsub|2>*\<alpha\><rsub|3>|)>*e<rsub|x>|]>
 
     \;
 
-    <math|<around*|[|<around*|(|\<gamma\><rsub|1>*\<delta\><rsub|2>-\<delta\><rsub|1>*\<gamma\><rsub|2>|)>*e<rsub|z>+<around*|(|\<gamma\><rsub|1>*\<alpha\><rsub|2>-\<alpha\><rsub|1>*\<gamma\><rsub|2>|)>*e<rsub|z>-<around*|(|\<gamma\><rsub|1>*\<delta\><rsub|3>-\<delta\><rsub|1>*\<gamma\><rsub|3>|)>*e<rsub|y>-<around*|(|\<gamma\><rsub|1>*\<alpha\><rsub|3>-\<alpha\><rsub|1>*\<gamma\><rsub|3>|)>*e<rsub|y>+<around*|(|\<gamma\><rsub|2>*\<delta\><rsub|3>-\<delta\><rsub|2>*\<gamma\><rsub|3>|)>*e<rsub|x>+<around*|(|\<gamma\><rsub|2>*\<alpha\><rsub|3>-\<alpha\><rsub|2>*\<gamma\><rsub|3>|)>*e<rsub|x>|]>>
+    <around*|[|<around*|(|<around*|(|-\<delta\><rsub|1>-\<alpha\><rsub|1>|)>*\<gamma\><rsub|2>+\<gamma\><rsub|1>*\<delta\><rsub|2>+\<gamma\><rsub|1>*\<alpha\><rsub|2>|)>*e<rsub|z>+<around*|(|<around*|(|\<delta\><rsub|1>+\<alpha\><rsub|1>|)>*\<gamma\><rsub|3>-\<gamma\><rsub|1>*\<delta\><rsub|3>-\<gamma\><rsub|1>*\<alpha\><rsub|3>|)>*e<rsub|y>+<around*|(|<around*|(|-\<delta\><rsub|2>-\<alpha\><rsub|2>|)>*\<gamma\><rsub|3>+\<gamma\><rsub|2>*\<delta\><rsub|3>+\<gamma\><rsub|2>*\<alpha\><rsub|3>|)>*e<rsub|x>|]>
 
     \;
 
@@ -156,18 +170,22 @@
 
       [result1,result2],
 
+      if scalarp(u) = true or listp(u) = true then return(0),
+
+      if scalarp(v) = true or listp(v) = true then return(0),
+
+      \;
+
       result1:prodotto_vettoriale(u,v),
 
       result2:prodotto_vettoriale(v,u),
 
-      [result1,result2]
+      return([result1,result2])
 
       )
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
-      >><with|math-font-family|rm|proprieta_antisimmetria><around*|(|u,v|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|result1>,<with|math-font-family|rm|result2>|]>,<with|math-font-family|rm|result1>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|u,v|)>,<with|math-font-family|rm|result2>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|v,u|)>,<around*|[|<with|math-font-family|rm|result1>,<with|math-font-family|rm|result2>|]>|)>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
+      >><with|math-font-family|rm|proprieta_antisimmetria><around*|(|u,v|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|result1>,<with|math-font-family|rm|result2>|]>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|u|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|u|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|v|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|v|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<with|math-font-family|rm|result1>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|u,v|)>,<with|math-font-family|rm|result2>:<with|math-font-family|rm|prodotto_vettoriale><around*|(|v,u|)>,<math-up|return><around*|(|<around*|[|<with|math-font-family|rm|result1>,<with|math-font-family|rm|result2>|]>|)>|)>>>
     </unfolded-io>
 
     <\input>
@@ -207,6 +225,8 @@
 
       [res],
 
+      if listp(theta) = true or matrixp(theta) = true then return(0),
+
       res:matrix([cos(theta), -sin(theta)],[sin(theta), cos(theta)]),
 
       return(res)
@@ -214,7 +234,7 @@
       )
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
-      >><with|math-font-family|rm|matrice_rotazione><around*|(|\<vartheta\>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|res>|]>,<math-up|res>:<matrix|<tformat|<table|<row|<cell|cos
+      >><with|math-font-family|rm|matrice_rotazione><around*|(|\<vartheta\>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|res>|]>,<math-bf|if><space|0.27em><math-up|listp><around*|(|\<vartheta\>|)>=<math-bf|true>\<vee\><math-up|matrixp><around*|(|\<vartheta\>|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|res>:<matrix|<tformat|<table|<row|<cell|cos
       <around*|(|\<vartheta\>|)>>|<cell|-sin
       <around*|(|\<vartheta\>|)>>>|<row|<cell|sin
       <around*|(|\<vartheta\>|)>>|<cell|cos
@@ -252,13 +272,13 @@
     <|unfolded-io>
       proprieta_mat_R(theta):=block(
 
-      [mat,matT,res1,res2],
+      [mat,mat_T,res1,res2],
 
       mat:matrice_rotazione(theta),
 
-      matT:transpose(mat),
+      mat_T:transpose(mat),
 
-      res1:trigsimp(mat.matT),
+      res1:trigsimp(mat.mat_T),
 
       \;
 
@@ -266,14 +286,16 @@
 
       if res1 # II then return(0),
 
-      res2:determinant(mat),
+      res2:trigsimp(determinant(mat)),
 
       if res2 # 1 then return(0) else return(1)
 
       )
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
-      >><with|math-font-family|rm|proprieta_mat_R><around*|(|\<vartheta\>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|mat>,<math-up|matT>,<with|math-font-family|rm|res1>,<with|math-font-family|rm|res2>|]>,<math-up|mat>:<with|math-font-family|rm|matrice_rotazione><around*|(|\<vartheta\>|)>,<math-up|matT>:<math-up|transpose><around*|(|<math-up|mat>|)>,<with|math-font-family|rm|res1>:<math-up|trigsimp><around*|(|<math-up|mat>\<cdot\><math-up|matT>|)>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|1>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|res1>\<neq\><math-up|II><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<with|math-font-family|rm|res2>:<math-up|determinant><around*|(|<math-up|mat>|)>,<math-bf|if><space|0.27em><with|math-font-family|rm|res2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)><space|0.27em><math-bf|else><space|0.27em><math-up|return><around*|(|1|)>|)>>>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
+      >><with|math-font-family|rm|proprieta_mat_R><around*|(|\<vartheta\>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|mat>,<with|math-font-family|rm|mat_T>,<with|math-font-family|rm|res1>,<with|math-font-family|rm|res2>|]>,<math-up|mat>:<with|math-font-family|rm|matrice_rotazione><around*|(|\<vartheta\>|)>,<with|math-font-family|rm|mat_T>:<math-up|transpose><around*|(|<math-up|mat>|)>,<with|math-font-family|rm|res1>:<math-up|trigsimp><around*|(|<math-up|mat>\<cdot\><with|math-font-family|rm|mat_T>|)>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|1>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|res1>\<neq\><math-up|II><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<with|math-font-family|rm|res2>:<math-up|trigsimp><around*|(|<math-up|determinant><around*|(|<math-up|mat>|)>|)>,<math-bf|if><space|0.27em><with|math-font-family|rm|res2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)><space|0.27em><math-bf|else><space|0.27em><math-up|return><around*|(|1|)>|)>>>
     </unfolded-io>
 
     <\unfolded-io>
