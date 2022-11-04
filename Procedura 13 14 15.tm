@@ -20,6 +20,10 @@
 
       [norma2,e],
 
+      if scalarp(vettore) = true or listp(vettore) = true then return(0),
+
+      \;
+
       norma2:sqrt((vettore[1,1])^2+(vettore[2,1])^2+(vettore[3,1])^2),
 
       if norma2 = 0 then return(0),
@@ -31,7 +35,7 @@
       )
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o1>)
-      >><with|math-font-family|rm|calcolo_versore><around*|(|<math-up|vettore>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|norma2>,e|]>,<with|math-font-family|rm|norma2>:<sqrt|<math-up|vettore><rsub|1,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|3,1><rsup|2>>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em>e:<frac|1|<with|math-font-family|rm|norma2>>*<math-up|vettore><space|0.27em><math-bf|else><space|0.27em>e:<math-up|vettore>,<math-up|return><around*|(|e|)>|)>>>
+      >><with|math-font-family|rm|calcolo_versore><around*|(|<math-up|vettore>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|norma2>,e|]>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|<math-up|vettore>|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|<math-up|vettore>|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<with|math-font-family|rm|norma2>:<sqrt|<math-up|vettore><rsub|1,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|3,1><rsup|2>>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em>e:<frac|1|<with|math-font-family|rm|norma2>>*<math-up|vettore><space|0.27em><math-bf|else><space|0.27em>e:<math-up|vettore>,<math-up|return><around*|(|e|)>|)>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -40,6 +44,9 @@
       mat_R(vet,angolo):=block(
 
       [e,S,norma2,theta,II,sII,sIImS,sIImS_inv,mat],
+
+      /*Tale funzione torna nulla se l'elemento passato in input non è un
+      vettore o è identicamente nullo*/
 
       e:calcolo_versore(vet),
 
@@ -51,7 +58,7 @@
 
       if listp(angolo) = true or matrixp(angolo) = true then return(0),
 
-      norma2:sqrt((vet[1,1])^2+(vet[2,1])^2+(vet[3,1])^2),
+      norma2:sqrt((vet[1,1]^2)+(vet[2,1]^2)+(vet[3,1]^2)),
 
       theta:%pi*(angolo/180),
 
