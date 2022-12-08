@@ -28,7 +28,6 @@ float TT = -0.04;
 int numRobot = 0;                                   //questa variabile serve per indicare queale robot rappresentare nella finestra di lavoro
 int numVariable = 1;                                //questa variabile serve per indicare quale giunto far variare tra tutti i giunti possibili
 
-
 //la funzione seguente viene eseguita una sola volta all'inizio dell'esecuzione del programma
 void setup() {
   size(900,700,P3D);
@@ -38,14 +37,15 @@ void setup() {
   fill(#F2CB2E);
   
   //inizializzo l'array che tiene conto del tipo di giunti tutti a 0
-  typesOfJoint[0] = 0;
-  typesOfJoint[1] = 0;
-  typesOfJoint[2] = 0;
+  for(int i = 0; i < 3; i=i+1) {
+  typesOfJoint[i] = 0;
+  }
 }
 
 //la funzione seguente viene eseguita ripetutamente con una certa frequenza a partire dall'esecuzione del programma e per tutta la sua durata
 void draw() {
   background(#6FB2C4);
+  
   //tramite la seguente funzione rappresento l'oscilloscopio che permette di osservare l'andamento delle variabili di giunto
   oscilloscopio();
 
@@ -86,6 +86,7 @@ void draw() {
   else if(numRobot == 6) {
     text("Antropomorfo",400,25);
   }
+  
   
   translate(200,450);                               //spostamento dell'origine del sistema di riferimento nel centro della finestra di lavoro
 
@@ -440,8 +441,10 @@ void keyPressed() {
   }
 }
 
+//funzione che permette di disegnare sulla finestra di lavoro lo sfondo dell'oscilloscopio
 void oscilloscopio() {
   //rappresento sulla finestra di lavoro l'oscilloscopio
+  strokeWeight(1);
   stroke(0);
   fill(255);
   rect(500,150,400,500);
@@ -458,6 +461,7 @@ void oscilloscopio() {
   
   fill(0);
   textSize(20);
+  //asse y del grafico
   text("-200",455,600);
   text("-150",455,550);
   text("-100",455,500);
@@ -467,5 +471,7 @@ void oscilloscopio() {
   text("100",465,300);
   text("150",465,250);
   text("200",465,200);
-  
+  //asse x del grafico
+  text("[sec]",850,670);
+  text("0",700,670);
 }
