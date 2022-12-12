@@ -1,3 +1,8 @@
+//ISTRUZIONI PER L'UTILIZZO DEL CODICE:
+//1.I giunti prismatici sono rappresentati in metri. I giunti prismatici, sull'oscilloscopio hanno come unità di misura i radianti. mentre nelle variabili
+//  stampate a schermo hanno come unità di misura i gradi.
+
+
 //le seguenti variabili sono usate per ruotare lungo l'asse x e l'asse y il manipolatore planare
 float angoloX = 0.0;
 float angoloY = 0.0;
@@ -28,6 +33,14 @@ float TT = -0.04;
 int numRobot = 0;                                   //questa variabile serve per indicare queale robot rappresentare nella finestra di lavoro
 int numVariable = 1;                                //questa variabile serve per indicare quale giunto far variare tra tutti i giunti possibili
 
+//le seguenti liste tengon traccia dei valori passati e presente della variabile di giunto q per la rappresentazione sull'oscilloscopio
+IntList andamento_q1;
+IntList andamento_q2;
+IntList andamento_q3;
+IntList andamento_q4;
+IntList andamento_q5;
+IntList andamento_q6;
+
 //la funzione seguente viene eseguita una sola volta all'inizio dell'esecuzione del programma
 void setup() {
   size(900,700,P3D);
@@ -40,6 +53,32 @@ void setup() {
   for(int i = 0; i < 3; i=i+1) {
   typesOfJoint[i] = 0;
   }
+  
+  //inizializzo la lista contenente i valori delle variabili di giunto
+  andamento_q1 = new IntList();
+  for(int i  = 0; i < 400; i=i+1) {
+    andamento_q1.append(int(q1ref));
+  }
+  andamento_q2 = new IntList();
+  for(int i  = 0; i < 400; i=i+1) {
+    andamento_q2.append(int(q2ref));
+  }
+  andamento_q3 = new IntList();
+  for(int i  = 0; i < 400; i=i+1) {
+    andamento_q3.append(int(q3ref));
+  }
+  andamento_q4 = new IntList();
+  for(int i  = 0; i < 400; i=i+1) {
+    andamento_q4.append(int(q4ref));
+  }
+  andamento_q5 = new IntList();
+  for(int i  = 0; i < 400; i=i+1) {
+    andamento_q5.append(int(q5ref));
+  }
+  andamento_q6 = new IntList();
+  for(int i  = 0; i < 400; i=i+1) {
+    andamento_q6.append(int(q6ref));
+  }
 }
 
 //la funzione seguente viene eseguita ripetutamente con una certa frequenza a partire dall'esecuzione del programma e per tutta la sua durata
@@ -48,16 +87,35 @@ void draw() {
   
   //tramite la seguente funzione rappresento l'oscilloscopio che permette di osservare l'andamento delle variabili di giunto
   oscilloscopio();
+  andamenti_variabili_q(andamento_q1,andamento_q2);
 
   //rappresento a schermo tutte le variabili di giunto con i rispettivi valori ed il nome del robot disegnato
   fill(0);
   textSize(15);
-  text("q1:",10,25);
-  text("q2:",10,50);
-  text("q3:",10,75);
-  text(q1,35,25);
-  text(q2,35,50);
-  text(q3,35,75);
+  if(typesOfJoint[0] == 1) {
+    text("q1:",10,25);
+    text(q1,35,25);
+  }
+  if(typesOfJoint[0] == 0) {
+    text("q1:",10,25);
+    text((q1*180)/PI,35,25);
+  }
+  if(typesOfJoint[1] == 1) {
+    text("q2:",10,50);
+    text(q2,35,50);
+  }
+  if(typesOfJoint[1] == 0) {
+    text("q2:",10,50);
+    text((q2*180)/PI,35,50);
+  }
+  if(typesOfJoint[2] == 1) {
+    text("q3:",10,75);
+    text(q3,35,75);
+  }
+  if(typesOfJoint[2] == 0) {
+    text("q3:",10,75);
+    text((q3*180)/PI,35,75);
+  }
   text("q4:",90,25);
   text("q5:",90,50);
   text("q6:",90,75);
@@ -128,6 +186,7 @@ void draw() {
   
   //rappresento sulla finestra di lavoro il robot preso in esame
   fill(#F2CB2E);
+  strokeWeight(1);
   robot();
   
   //evoluzione delle variabili di giunto
@@ -261,6 +320,10 @@ void keyPressed() {
   //premento il tasto 0 le variabili di riferimento qiref vengono resettate a 0
   if(keyCode == '0') {
     q1ref = q2ref = q3ref = q4ref = q5ref = q6ref = 0;
+    //reset variabili dell'oscilloscopio
+    for(int i  = 0; i < 400; i=i+1) {
+    andamento_q1.append(int(q1ref));
+    }
   }
   
   //le seguenti istruzioni sono utilizzate per selezionare le variabili di giunto da esaminare
@@ -294,7 +357,7 @@ void keyPressed() {
           q1ref = q1ref - 2*incremento;
         }
         else {
-          q1ref = q1ref - incremento/2;
+          q1ref = q1ref - incremento/5;
         }
       }
     }
@@ -307,7 +370,7 @@ void keyPressed() {
           q2ref = q2ref - 2*incremento;
         }
         else {
-          q2ref = q2ref - incremento/2;
+          q2ref = q2ref - incremento/5;
         }
       }
     }
@@ -320,18 +383,18 @@ void keyPressed() {
           q3ref = q3ref - 2*incremento;
         }
         else {
-          q3ref = q3ref - incremento/2;
+          q3ref = q3ref - incremento/5;
         }
       }
     }
     else if(numVariable == 4) {
-      q4ref = q4ref - incremento/2;
+      q4ref = q4ref - incremento/5;
     }
     else if(numVariable == 5) {
-      q5ref = q5ref - incremento/2;
+      q5ref = q5ref - incremento/5;
     }
     else if(numVariable == 6) {
-      q6ref = q6ref - incremento/2;
+      q6ref = q6ref - incremento/5;
     }
   }
   if(keyCode == RIGHT) {
@@ -340,7 +403,7 @@ void keyPressed() {
         q1ref = q1ref + 2*incremento;
       }
       else {
-        q1ref = q1ref + incremento/2;
+        q1ref = q1ref + incremento/5;
       }
     }
     else if(numVariable == 2) {
@@ -348,7 +411,7 @@ void keyPressed() {
         q2ref = q2ref + 2*incremento;
       }
       else {
-        q2ref = q2ref + incremento/2;
+        q2ref = q2ref + incremento/5;
       }
     }
     else if(numVariable == 3) {
@@ -356,17 +419,17 @@ void keyPressed() {
         q3ref = q3ref + 2*incremento;
       }
       else {
-        q3ref = q3ref + incremento/2;
+        q3ref = q3ref + incremento/5;
       }
     }
     else if(numVariable == 4) {
-      q4ref = q4ref + incremento/2;
+      q4ref = q4ref + incremento/5;
     }
     else if(numVariable == 5) {
-      q5ref = q5ref + incremento/2;
+      q5ref = q5ref + incremento/5;
     }
     else if(numVariable == 6) {
-      q6ref = q6ref + incremento/2;
+      q6ref = q6ref + incremento/5;
     }
   }
   
@@ -473,5 +536,77 @@ void oscilloscopio() {
   text("200",465,200);
   //asse x del grafico
   text("[sec]",850,670);
-  text("0",700,670);
+}
+
+void andamenti_variabili_q(IntList lista1, IntList lista2) {
+  if(numRobot != 0) {
+    //aggiornamento della lista contenente i valori di q1
+    stroke(255,0,0);
+    strokeWeight(1.5);
+    
+    //variabile di giunto q1
+    if(typesOfJoint[0] == 0) {
+      //allora il primo giunto è di tipo rotoidale
+      int val_q1 = int(q1);
+      for(int i = 0; i < 399; i=i+1) {
+        int val_q1_next = lista1.get(i+1);
+        lista1.set(i+1,val_q1);
+        if(400-val_q1_next < 150 || 400-val_q1_next > 650) {
+          noStroke();
+        }
+        else {
+          line(900-i,400-val_q1,899-i,400-val_q1_next);
+          val_q1 = val_q1_next;
+        }
+      }
+    }
+    if(typesOfJoint[0] == 1) {
+      //allora il primo giunto è di tipo prismatico
+      int val_q1 = int(q1);
+      for(int i = 0; i < 399; i=i+1) {
+        int val_q1_next = lista1.get(i+1);
+        lista1.set(i+1,val_q1);
+        if(400-val_q1_next < 150 || 400-val_q1_next > 650) {
+          noStroke();
+        }
+        else {
+          line(900-i,400-val_q1,899-i,400-val_q1_next);
+          val_q1 = val_q1_next;
+        }
+      }
+    }
+    
+    stroke(234,132,28);
+    //variabile di giunto q2
+    if(typesOfJoint[1] == 0) {
+      //allora il primo giunto è di tipo rotoidale
+      int val_q2 = int(q2);
+      for(int i = 0; i < 399; i=i+1) {
+        int val_q2_next = lista2.get(i+1);
+        lista2.set(i+1,val_q2);
+        if(400-val_q2_next < 150 || 400-val_q2_next > 650) {
+          noStroke();
+        }
+        else {
+          line(900-i,400-val_q2,899-i,400-val_q2_next);
+          val_q2 = val_q2_next;
+        }
+      }
+    }
+    if(typesOfJoint[1] == 1) {
+      //allora il primo giunto è di tipo prismatico
+      int val_q2 = int(q2);
+      for(int i = 0; i < 399; i=i+1) {
+        int val_q2_next = lista2.get(i+1);
+        lista2.set(i+1,val_q2);
+        if(400-val_q2_next < 150 || 400-val_q2_next > 650) {
+          noStroke();
+        }
+        else {
+          line(900-i,400-val_q2,899-i,400-val_q2_next);
+          val_q2 = val_q2_next;
+        }
+      }
+    }
+  }
 }
