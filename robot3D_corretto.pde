@@ -1,6 +1,5 @@
 //ISTRUZIONI PER L'UTILIZZO DEL CODICE:
-//1.I giunti prismatici sono rappresentati in metri. I giunti prismatici, sull'oscilloscopio hanno come unità di misura i radianti. mentre nelle variabili
-//  stampate a schermo hanno come unità di misura i gradi.
+//1.I giunti prismatici sono rappresentati in metri. I giunti prismatici hanno come unità di misura i radianti
 
 
 //le seguenti variabili sono usate per ruotare lungo l'asse x e l'asse y il manipolatore planare
@@ -87,11 +86,12 @@ void draw() {
   
   //tramite la seguente funzione rappresento l'oscilloscopio che permette di osservare l'andamento delle variabili di giunto
   oscilloscopio();
-  andamenti_variabili_q(andamento_q1,andamento_q2);
+  andamenti_variabili_q(andamento_q1,andamento_q2,andamento_q3,andamento_q4,andamento_q5,andamento_q6);
 
   //rappresento a schermo tutte le variabili di giunto con i rispettivi valori ed il nome del robot disegnato
-  fill(0);
-  textSize(15);
+  textSize(18);
+  
+  fill(255,0,0);
   if(typesOfJoint[0] == 1) {
     text("q1:",10,25);
     text(q1,35,25);
@@ -100,6 +100,8 @@ void draw() {
     text("q1:",10,25);
     text((q1*180)/PI,35,25);
   }
+  
+  fill(255,132,0);
   if(typesOfJoint[1] == 1) {
     text("q2:",10,50);
     text(q2,35,50);
@@ -108,6 +110,8 @@ void draw() {
     text("q2:",10,50);
     text((q2*180)/PI,35,50);
   }
+  
+  fill(14,77,13);
   if(typesOfJoint[2] == 1) {
     text("q3:",10,75);
     text(q3,35,75);
@@ -116,12 +120,20 @@ void draw() {
     text("q3:",10,75);
     text((q3*180)/PI,35,75);
   }
-  text("q4:",90,25);
-  text("q5:",90,50);
-  text("q6:",90,75);
-  text((q4*180)/PI,115,25);
-  text((q5*180)/PI,115,50);
-  text((q6*180)/PI,115,75);
+  
+  fill(255,0,200);
+  text("q4:",100,25);
+  text((q4*180)/PI,125,25);
+  
+  fill(0,0,255);
+  text("q5:",100,50);
+  text((q5*180)/PI,125,50);
+  
+  fill(186,203,0);
+  text("q6:",100,75);
+  text((q6*180)/PI,125,75);
+  
+  fill(0);
   text("TT:",10,100);
   text(TT,35,100);
   
@@ -538,74 +550,98 @@ void oscilloscopio() {
   text("[sec]",850,670);
 }
 
-void andamenti_variabili_q(IntList lista1, IntList lista2) {
+void andamenti_variabili_q(IntList lista1, IntList lista2, IntList lista3, IntList lista4, IntList lista5, IntList lista6) {
   if(numRobot != 0) {
-    //aggiornamento della lista contenente i valori di q1
-    stroke(255,0,0);
+    //aggiornamento della lista contenente i valori delle variabili di giunto
     strokeWeight(1.5);
     
+    stroke(255,0,0);
     //variabile di giunto q1
-    if(typesOfJoint[0] == 0) {
-      //allora il primo giunto è di tipo rotoidale
-      int val_q1 = int(q1);
-      for(int i = 0; i < 399; i=i+1) {
-        int val_q1_next = lista1.get(i+1);
-        lista1.set(i+1,val_q1);
-        if(400-val_q1_next < 150 || 400-val_q1_next > 650) {
-          noStroke();
-        }
-        else {
-          line(900-i,400-val_q1,899-i,400-val_q1_next);
-          val_q1 = val_q1_next;
-        }
+    int val_q1 = int(q1);
+    for(int i = 0; i < 399; i=i+1) {
+      int val_q1_next = lista1.get(i+1);
+      lista1.set(i+1,val_q1);
+      if(400-val_q1_next < 150 || 400-val_q1_next > 650) {
+        noStroke();
+      }
+      else {
+        line(900-i,400-val_q1,899-i,400-val_q1_next);
+        val_q1 = val_q1_next;
       }
     }
-    if(typesOfJoint[0] == 1) {
-      //allora il primo giunto è di tipo prismatico
-      int val_q1 = int(q1);
-      for(int i = 0; i < 399; i=i+1) {
-        int val_q1_next = lista1.get(i+1);
-        lista1.set(i+1,val_q1);
-        if(400-val_q1_next < 150 || 400-val_q1_next > 650) {
-          noStroke();
-        }
-        else {
-          line(900-i,400-val_q1,899-i,400-val_q1_next);
-          val_q1 = val_q1_next;
-        }
+
+    stroke(255,132,0);
+    //variabile di giunto q2
+    int val_q2 = int(q2);
+    for(int i = 0; i < 399; i=i+1) {
+      int val_q2_next = lista2.get(i+1);
+      lista2.set(i+1,val_q2);
+      if(400-val_q2_next < 150 || 400-val_q2_next > 650) {
+        noStroke();
+      }
+      else {
+        line(900-i,400-val_q2,899-i,400-val_q2_next);
+        val_q2 = val_q2_next;
       }
     }
     
-    stroke(234,132,28);
-    //variabile di giunto q2
-    if(typesOfJoint[1] == 0) {
-      //allora il primo giunto è di tipo rotoidale
-      int val_q2 = int(q2);
-      for(int i = 0; i < 399; i=i+1) {
-        int val_q2_next = lista2.get(i+1);
-        lista2.set(i+1,val_q2);
-        if(400-val_q2_next < 150 || 400-val_q2_next > 650) {
-          noStroke();
-        }
-        else {
-          line(900-i,400-val_q2,899-i,400-val_q2_next);
-          val_q2 = val_q2_next;
-        }
+    stroke(14,77,13);
+    //variabile di giunto q3
+    int val_q3 = int(q3);
+    for(int i = 0; i < 399; i=i+1) {
+      int val_q3_next = lista3.get(i+1);
+      lista3.set(i+1,val_q3);
+      if(400-val_q3_next < 150 || 400-val_q3_next > 650) {
+        noStroke();
+      }
+      else {
+        line(900-i,400-val_q3,899-i,400-val_q3_next);
+        val_q3 = val_q3_next;
       }
     }
-    if(typesOfJoint[1] == 1) {
-      //allora il primo giunto è di tipo prismatico
-      int val_q2 = int(q2);
-      for(int i = 0; i < 399; i=i+1) {
-        int val_q2_next = lista2.get(i+1);
-        lista2.set(i+1,val_q2);
-        if(400-val_q2_next < 150 || 400-val_q2_next > 650) {
-          noStroke();
-        }
-        else {
-          line(900-i,400-val_q2,899-i,400-val_q2_next);
-          val_q2 = val_q2_next;
-        }
+    
+    stroke(255,0,200);
+    //variabile di giunto q4
+    int val_q4 = int((q4*180)/PI);
+    for(int i = 0; i < 399; i=i+1) {
+      int val_q4_next = lista4.get(i+1);
+      lista4.set(i+1,val_q4);
+      if(400-val_q4_next < 150 || 400-val_q4_next > 650) {
+        noStroke();
+      }
+      else {
+        line(900-i,400-val_q4,899-i,400-val_q4_next);
+        val_q4 = val_q4_next;
+      }
+    }
+    
+    stroke(0,0,255);
+    //variabile di giunto q5
+    int val_q5 = int((q5*180)/PI);
+    for(int i = 0; i < 399; i=i+1) {
+      int val_q5_next = lista5.get(i+1);
+      lista5.set(i+1,val_q5);
+      if(400-val_q5_next < 150 || 400-val_q5_next > 650) {
+        noStroke();
+      }
+      else {
+        line(900-i,400-val_q5,899-i,400-val_q5_next);
+        val_q5 = val_q5_next;
+      }
+    }
+    
+    stroke(186,203,0);
+    //variabile di giunto q6
+    int val_q6 = int((q6*180)/PI);
+    for(int i = 0; i < 399; i=i+1) {
+      int val_q6_next = lista6.get(i+1);
+      lista6.set(i+1,val_q6);
+      if(400-val_q6_next < 150 || 400-val_q6_next > 650) {
+        noStroke();
+      }
+      else {
+        line(900-i,400-val_q6,899-i,400-val_q6_next);
+        val_q6 = val_q6_next;
       }
     }
   }
