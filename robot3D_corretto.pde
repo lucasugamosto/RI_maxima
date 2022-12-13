@@ -1,5 +1,27 @@
 //ISTRUZIONI PER L'UTILIZZO DEL CODICE:
-//1.I giunti prismatici sono rappresentati in metri. I giunti prismatici hanno come unità di misura i radianti
+//1.I giunti prismatici sono rappresentati in metri. 
+//  I giunti rotoidali sono rappresentati in gradi.
+
+//2.Tasti per la scelta dei robot da visualizzare:
+//    1) ROBOT CARTESIANO
+//    2) ROBOT CILINDRICO
+//    3) ROBOT SCARA
+//    4) ROBOT SFERICO DI 1°TIPO
+//    5) ROBOT SFERICO DI 2°TIPO
+//    6) ROBOT ANTROPOMORFO
+
+//3.Tasti per la scenta dei giunti da far variare nel robot precedentemente selezionato:
+//    A) giunto q1
+//    B) giunto q2
+//    C) giunto q3
+//    D) giunto q4
+//    E) giunto q5
+//    F) giunto q6
+
+//4.Con il tasto '0' si resettano le variabili di giunto associando valore nullo ad esse
+//5.Con le frecce direzionali 'LEFT' e 'RIGHT' rispettivamente si decrementa ed incrementa il valore del giunto selezionato
+//6.Con le frecce direzionali 'DOWN' e 'UP' rispettivamente si decrementa ed incrementa iò valore dell'autovalore TT.
+//  Se questo assume valore nullo allora non è possibile far variare il giunto selezionato poichè il termine che calcola l'evoluzione non c'è.
 
 
 //le seguenti variabili sono usate per ruotare lungo l'asse x e l'asse y il manipolatore planare
@@ -129,7 +151,7 @@ void draw() {
   text("q5:",100,50);
   text((q5*180)/PI,125,50);
   
-  fill(186,203,0);
+  fill(142,135,0);
   text("q6:",100,75);
   text((q6*180)/PI,125,75);
   
@@ -555,48 +577,102 @@ void andamenti_variabili_q(IntList lista1, IntList lista2, IntList lista3, IntLi
     //aggiornamento della lista contenente i valori delle variabili di giunto
     strokeWeight(1.5);
     
-    stroke(255,0,0);
-    //variabile di giunto q1
-    int val_q1 = int(q1);
-    for(int i = 0; i < 399; i=i+1) {
-      int val_q1_next = lista1.get(i+1);
-      lista1.set(i+1,val_q1);
-      if(400-val_q1_next < 150 || 400-val_q1_next > 650) {
-        noStroke();
-      }
-      else {
-        line(900-i,400-val_q1,899-i,400-val_q1_next);
-        val_q1 = val_q1_next;
+    if(typesOfJoint[0] == 1) {
+      stroke(255,0,0);
+      //variabile di giunto q1 prismatico
+      int val_q1 = int(q1);
+      for(int i = 0; i < 399; i=i+1) {
+        int val_q1_next = lista1.get(i+1);
+        lista1.set(i+1,val_q1);
+        if(400-val_q1_next < 150 || 400-val_q1_next > 650) {
+          noStroke();
+        }
+        else {
+          line(900-i,400-val_q1,899-i,400-val_q1_next);
+          val_q1 = val_q1_next;
+        }
       }
     }
-
-    stroke(255,132,0);
-    //variabile di giunto q2
-    int val_q2 = int(q2);
-    for(int i = 0; i < 399; i=i+1) {
-      int val_q2_next = lista2.get(i+1);
-      lista2.set(i+1,val_q2);
-      if(400-val_q2_next < 150 || 400-val_q2_next > 650) {
-        noStroke();
-      }
-      else {
-        line(900-i,400-val_q2,899-i,400-val_q2_next);
-        val_q2 = val_q2_next;
+    if(typesOfJoint[0] == 0) {
+      stroke(255,0,0);
+      //variabile di giunto q1 rotoidale
+      int val_q1 = int((q1*180)/PI);
+      for(int i = 0; i < 399; i=i+1) {
+        int val_q1_next = lista1.get(i+1);
+        lista1.set(i+1,val_q1);
+        if(400-val_q1_next < 150 || 400-val_q1_next > 650) {
+          noStroke();
+        }
+        else {
+          line(900-i,400-val_q1,899-i,400-val_q1_next);
+          val_q1 = val_q1_next;
+        }
       }
     }
     
-    stroke(14,77,13);
-    //variabile di giunto q3
-    int val_q3 = int(q3);
-    for(int i = 0; i < 399; i=i+1) {
-      int val_q3_next = lista3.get(i+1);
-      lista3.set(i+1,val_q3);
-      if(400-val_q3_next < 150 || 400-val_q3_next > 650) {
-        noStroke();
+    if(typesOfJoint[1] == 1) {
+      stroke(255,132,0);
+      //variabile di giunto q2 prismatico
+      int val_q2 = int(q2);
+      for(int i = 0; i < 399; i=i+1) {
+        int val_q2_next = lista2.get(i+1);
+        lista2.set(i+1,val_q2);
+        if(400-val_q2_next < 150 || 400-val_q2_next > 650) {
+          noStroke();
+        }
+        else {
+          line(900-i,400-val_q2,899-i,400-val_q2_next);
+          val_q2 = val_q2_next;
+        }
       }
-      else {
-        line(900-i,400-val_q3,899-i,400-val_q3_next);
-        val_q3 = val_q3_next;
+    }
+    if(typesOfJoint[1] == 0) {
+      stroke(255,132,0);
+      //variabile di giunto q2 rotoidale
+      int val_q2 = int((q2*180)/PI);
+      for(int i = 0; i < 399; i=i+1) {
+        int val_q2_next = lista2.get(i+1);
+        lista2.set(i+1,val_q2);
+        if(400-val_q2_next < 150 || 400-val_q2_next > 650) {
+          noStroke();
+        }
+        else {
+          line(900-i,400-val_q2,899-i,400-val_q2_next);
+          val_q2 = val_q2_next;
+        }
+      }
+    }
+    
+    if(typesOfJoint[2] == 1) {
+      stroke(14,77,13);
+      //variabile di giunto q3 prismatico
+      int val_q3 = int(q3);
+      for(int i = 0; i < 399; i=i+1) {
+        int val_q3_next = lista3.get(i+1);
+        lista3.set(i+1,val_q3);
+        if(400-val_q3_next < 150 || 400-val_q3_next > 650) {
+          noStroke();
+        }
+        else {
+          line(900-i,400-val_q3,899-i,400-val_q3_next);
+          val_q3 = val_q3_next;
+        }
+      }
+    }
+    if(typesOfJoint[2] == 0) {
+      stroke(14,77,13);
+      //variabile di giunto q3 rotoidale
+      int val_q3 = int((q3*180)/PI);
+      for(int i = 0; i < 399; i=i+1) {
+        int val_q3_next = lista3.get(i+1);
+        lista3.set(i+1,val_q3);
+        if(400-val_q3_next < 150 || 400-val_q3_next > 650) {
+          noStroke();
+        }
+        else {
+          line(900-i,400-val_q3,899-i,400-val_q3_next);
+          val_q3 = val_q3_next;
+        }
       }
     }
     
@@ -630,7 +706,7 @@ void andamenti_variabili_q(IntList lista1, IntList lista2, IntList lista3, IntLi
       }
     }
     
-    stroke(186,203,0);
+    stroke(142,135,0);
     //variabile di giunto q6
     int val_q6 = int((q6*180)/PI);
     for(int i = 0; i < 399; i=i+1) {
