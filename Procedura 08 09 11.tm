@@ -3,22 +3,17 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
-  PROCEDURA PER IL CALCOLO DIRETTO (dalla coppia (asse,angolo) alla matrice
-  di rotazone R) ED INVERSO (dalla matrice di rotazione R alla coppia
-  (asse,angolo)) \ TRAMITE LA FORMULA DI RODRIGUEZ.
+  PROCEDURA PER IL CALCOLO DIRETTO [(vettore,angolo) -\<gtr\> R] E PER IL
+  CALCOLO INVERSO [R -\<gtr\> (vettore,angolo)] TRAMITE LA FORMULA DI
+  RODRIGUES.
 
-  <with|color|red|Procedura 1: Data una coppia di valori in input
-  (asse,angolo), verifica se l'asse è un versore e non un vettore. Se l'asse
-  è un versore allora viene usata la FORMULA DI RODRIGUEZ per il calcolo
-  della matrice di rotazione R intorno all'asse v di un angolo \<theta\>,
-  altrimenti viene calcolato prima il versore e poi viene calcolata la
-  matrice R.>
+  <with|color|BLACK|CALCOLO DIRETTO>
 
   <\session|maxima|default>
-    <\unfolded-io>
+    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>1) >
-    <|unfolded-io>
-      calcolo_versore(vettore):=block(
+    <|input>
+      calcoloVersore(vettore):=block(
 
       [norma2,e],
 
@@ -26,33 +21,40 @@
 
       \;
 
-      norma2:sqrt((vettore[1,1])^2+(vettore[2,1])^2+(vettore[3,1])^2),
+      norma2:sqrt((vettore[1,1]^2)+(vettore[2,1]^2)+(vettore[3,1]^2)),
 
       if norma2 = 0 then return(0),
 
       if norma2 # 1 then e:(1/norma2)*vettore else e:vettore,
 
+      e:trigsimp(trigreduce(factor(e))),
+
       return(e)
 
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o1>)
-      >><with|math-font-family|rm|calcolo_versore><around*|(|<math-up|vettore>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|norma2>,e|]>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|<math-up|vettore>|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|<math-up|vettore>|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<with|math-font-family|rm|norma2>:<sqrt|<math-up|vettore><rsub|1,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|3,1><rsup|2>>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em>e:<frac|1|<with|math-font-family|rm|norma2>>*<math-up|vettore><space|0.27em><math-bf|else><space|0.27em>e:<math-up|vettore>,<math-up|return><around*|(|e|)>|)>>>
-    </unfolded-io>
+      )$
+    </input>
 
-    <\unfolded-io>
+    \;
+
+    \;
+
+    La funzione \PmatriceDiRotazione\Q riceve in ingresso un vettore 3x1 ed
+    un angolo e calcola la matrice di rotazione R, utilizzando la formula di
+    Rodrigues.
+
+    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>2) >
-    <|unfolded-io>
-      mat_rotazioneR(asse,angolo):=block(
+    <|input>
+      matriceDiRotazione(vettore,angolo):=block(
 
-      [e,S,norma2,theta,S2,II,mat1,mat2,R],
+      [e,S,norma2,S2,II,mat1,mat2,R],
 
-      e:calcolo_versore(asse),
+      e:calcoloVersore(vettore),
 
       \;
 
-      /*La funzione precedente ritorna 0 in caso l'asse passato non è un
-      vettore o se è identicamente nullo*/
+      /*la funzione precedente ritorna 0 in caso l'asse passato non è un
+      vettore o se è un vettore totalmente nullo*/
 
       if e = 0 then return(0),
 
@@ -62,19 +64,19 @@
 
       \;
 
-      /*Controllo che l'angolo sia uno scalare*/
+      /*controllare che l'angolo sia uno scalare*/
 
       if listp(angolo) = true or matrixp(angolo) = true then return(0),
 
       \;
 
-      theta:%pi*(angolo/180),
+      norma2:sqrt((vettore[1,1]^2)+(vettore[2,1]^2)+(vettore[3,1]^2)),
 
-      norma2:sqrt((asse[1,1])^2+(asse[2,1])^2+(asse[3,1])^2),
-
-      if norma2 # 1 then theta:norma2*theta,
+      if norma2 # 1 then angolo:norma2*angolo,
 
       \;
+
+      /*calcolo la matrice di rotazione tramite la formula di Rodrigues*/
 
       S2:S.S,
 
@@ -82,128 +84,63 @@
 
       II:matrix([1,0,0],[0,1,0],[0,0,1]),
 
-      mat1:factor(sin(theta)*S),
+      mat1:factor(sin(angolo)*S),
 
-      mat2:factor((1-cos(theta))*S2),
+      mat2:factor((1-cos(angolo))*S2),
 
       R:II+mat1+mat2,
 
-      R:trigsimp(trigreduce(factor(R))),
+      R:trigrat(trigreduce(factor(R))),
 
-      return(R)
+      radR:float(R),
 
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
-      >><with|math-font-family|rm|mat_rotazioneR><around*|(|<math-up|asse>,<math-up|angolo>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|e,S,<with|math-font-family|rm|norma2>,\<vartheta\>,<with|math-font-family|rm|S2>,<math-up|II>,<with|math-font-family|rm|mat1>,<with|math-font-family|rm|mat2>,R|]>,e:<with|math-font-family|rm|calcolo_versore><around*|(|<math-up|asse>|)>,<math-bf|if><space|0.27em>e=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,S:<matrix|<tformat|<table|<row|<cell|0>|<cell|-e<rsub|3,1>>|<cell|e<rsub|2,1>>>|<row|<cell|e<rsub|3,1>>|<cell|0>|<cell|-e<rsub|1,1>>>|<row|<cell|-e<rsub|2,1>>|<cell|e<rsub|1,1>>|<cell|0>>>>>,<math-bf|if><space|0.27em><math-up|listp><around*|(|<math-up|angolo>|)>=<math-bf|true>\<vee\><math-up|matrixp><around*|(|<math-up|angolo>|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,\<vartheta\>:\<pi\>*<around*|(|<frac|<math-up|angolo>|180>|)>,<with|math-font-family|rm|norma2>:<sqrt|<math-up|asse><rsub|1,1><rsup|2>+<math-up|asse><rsub|2,1><rsup|2>+<math-up|asse><rsub|3,1><rsup|2>>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em>\<vartheta\>:<with|math-font-family|rm|norma2>*\<vartheta\>,<with|math-font-family|rm|S2>:S\<cdot\>S,<with|math-font-family|rm|S2>:<math-up|trigsimp><around*|(|<math-up|trigreduce><around*|(|<math-up|factor><around*|(|<with|math-font-family|rm|S2>|)>|)>|)>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<with|math-font-family|rm|mat1>:<math-up|factor><around*|(|sin
-      <around*|(|\<vartheta\>|)>*S|)>,<with|math-font-family|rm|mat2>:<math-up|factor><around*|(|<around*|(|1-cos
-      <around*|(|\<vartheta\>|)>|)>*<with|math-font-family|rm|S2>|)>,R:<math-up|II>+<with|math-font-family|rm|mat1>+<with|math-font-family|rm|mat2>,R:<math-up|trigsimp><around*|(|<math-up|trigreduce><around*|(|<math-up|factor><around*|(|R|)>|)>|)>,<math-up|return><around*|(|R|)>|)>>>
-    </unfolded-io>
+      return([R,radR])
 
-    <\unfolded-io>
+      )$
+    </input>
+
+    \;
+
+    La funzione \Pfactor\Q fattorizza l'espressione passata in ingresso,
+    contenente un qualsiasi numero di variabili o funzioni, in fattori
+    irriducibili.
+
+    La funzione \Ptrigreduce\Q semplifica i prodotti e le potenze di seni e
+    coseni dell'espressione passata in ingresso.
+
+    La funzione \Ptrigrat\Q restituisce un'espressione semplificata con
+    numeratore e denominatore lineare in seno e coseno, in questo caso
+    specifico è stata usata per effetttuare somma e/o sottrazione di angoli
+    in seni e coseni.
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    CALCOLO INVERSO
+
+    \;
+
+    La funzione \PcalcoloValore\Q scorre gli elementi delle matrici passate
+    in ingresso e restituisce le coordinate della posizione in cui il valore
+    è non nullo in entrambe.
+
+    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
-    <|unfolded-io>
-      mat1:mat_rotazioneR(matrix([1],[0],[0]),30)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
-      >><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|<sqrt|3>|2>>|<cell|-<frac|1|2>>>|<row|<cell|0>|<cell|<frac|1|2>>|<cell|<frac|<sqrt|3>|2>>>>>>>>
-    </unfolded-io>
+    <|input>
+      calcoloValore(mat1,mat2):=block(
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>4) >
-    <|unfolded-io>
-      mat2:mat_rotazioneR(matrix([1],[1],[0]),90)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|cos
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>+1|2>>|<cell|-<frac|cos
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>-1|2>>|<cell|<frac|sin
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>|<sqrt|2>>>>|<row|<cell|-<frac|cos
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>-1|2>>|<cell|<frac|cos
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>+1|2>>|<cell|-<frac|sin
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>|<sqrt|2>>>>|<row|<cell|-<frac|sin
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>|<sqrt|2>>>|<cell|<frac|sin
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>|<sqrt|2>>>|<cell|cos
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>>>>>>>>
-    </unfolded-io>
+      [value,i,j,x,y],
 
-    \;
+      /*controllare il tipo di dato degli elementi passati in ingresso*/
 
-    \;
+      if scalarp(mat1) = true or listp(mat1) = true then return(0),
 
-    <\with|color|red>
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      \;
-
-      Procedura 2: Calcolo dell'asse di rotazione e dell'angolo di rotazione
-      data una matrice di rotazione. Effettuare prima i relativi controlli.
-
-      Tramite la sottofunzione \Pcalcolo_val(mat1,mat2)\Q vengono calcolati
-      gli indici in cui il valore presente è NON NULLO, il tutto per
-      calcolare sin(\<theta\>) e cos(\<theta\>), e poi calcolare l'angolo
-      \<theta\> interessato.
-    </with>
-
-    \;
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>5) >
-    <|unfolded-io>
-      calcolo_val(mat1,mat2):=block(
-
-      [val,i,j,x,y],
-
-      /*Tramite questa funzione si scorrono gli elementi delle matrici fino a
-      trovarne uno diverso da zero in entrambe*/
+      if scalarp(mat2) = true or listp(mat2) = true then return(0),
 
       \;
 
@@ -219,36 +156,38 @@
 
       \ x:i,
 
-      \ if mat[i,y] # 0 then return(1)
+      \ if mat1[i,y] # 0 and mat2[i,y] # 0 then return(1)
 
       ),
 
-      return([x,y])
+      if mat1[x,y] # 0 and mat2[x,y] # 0 then return([x,y]) else
+      return([0,0])
 
-      )
-    <|unfolded-io>
+      )$
+    </input>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>4) >
+    <|input>
+      calcoloAsseRotazione(R):=block(
+
+      [transposeMatrix,finalMatrix,II,det,RmII,adj,aut0,aut1,norma2,e],
+
+      /*controllare che il parametro inserito in ingresso sia una matrice*/
+
+      if scalarp(R) = true or listp(R) = true then return(0),
+
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
-      >><with|math-font-family|rm|calcolo_val><around*|(|<with|math-font-family|rm|mat1>,<with|math-font-family|rm|mat2>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|val>,i,j,x,y|]>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<math-bf|for><space|0.27em>j<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|y:j,<math-bf|if><space|0.27em><with|math-font-family|rm|mat1><rsub|i,j>\<neq\>0\<wedge\><with|math-font-family|rm|mat2><rsub|i,j>\<neq\>0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|1|)>|)>,x:i,<math-bf|if><space|0.27em><math-up|mat><rsub|i,y>\<neq\>0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|1|)>|)>,<math-up|return><around*|(|<around*|[|x,y|]>|)>|)>>>
-    </unfolded-io>
+      /*controllare che la matrice inserita in ingresso sia di rotazione*/
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>6) >
-    <|unfolded-io>
-      calcolo_asseRotazione(R):=block(
+      transposeMatrix:transpose(R),
 
-      [mat_T,mat_fin,II,det,RmII,adj,aut0,aut1,norma2,e],
-
-      /*Controllo che la matrice inserita in input sia di rotazione*/
-
-      mat_T:transpose(R),
-
-      mat_fin:trigsimp(R.mat_T),
+      finalMatrix:trigsimp(R.transposeMatrix),
 
       II:matrix([1,0,0],[0,1,0],[0,0,1]),
 
-      if mat_fin # II then return(0),
+      if finalMatrix # II then return(0),
 
       det:trigsimp(determinant(R)),
 
@@ -256,10 +195,12 @@
 
       \;
 
-      /*Calcolo l'asse di rotazione tramite la definizione dell'aggiunta e di
-      un autovettore associato all'autovalore unitario*/
+      /*calcolare l'asse di rotazione tramite la definizione dell'aggiunta e
+      di un autovettore associato all'autovalore unitario. Si scorrono tutte
+      le colonne dell'aggiunta di R-II ed appena se ne trova una che è
+      diversa da zero, questa viene selezionata*/
 
-      RmII:R-II,
+      RmII:fullratsimp(R-II),
 
       adj:adjoint(RmII),
 
@@ -275,133 +216,489 @@
 
       ),
 
-      \;
-
-      norma2:sqrt((aut1[1,1]^2)+(aut1[2,1]^2)+(aut1[3,1]^2)),
-
-      if norma2 # 1 then e:(1/norma2)*aut1 else e:aut1,
+      e:calcoloVersore(aut1),
 
       return(e)
 
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
-      >><with|math-font-family|rm|calcolo_asseRotazione><around*|(|R|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|mat_T>,<with|math-font-family|rm|mat_fin>,<math-up|II>,<math-up|det>,<math-up|RmII>,<math-up|adj>,<with|math-font-family|rm|aut0>,<with|math-font-family|rm|aut1>,<with|math-font-family|rm|norma2>,e|]>,<with|math-font-family|rm|mat_T>:<math-up|transpose><around*|(|R|)>,<with|math-font-family|rm|mat_fin>:<math-up|trigsimp><around*|(|R\<cdot\><with|math-font-family|rm|mat_T>|)>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|mat_fin>\<neq\><math-up|II><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|det>:<math-up|trigsimp><around*|(|<math-up|determinant><around*|(|R|)>|)>,<math-bf|if><space|0.27em><math-up|det>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|RmII>:R-<math-up|II>,<math-up|adj>:<math-up|adjoint><around*|(|<math-up|RmII>|)>,<with|math-font-family|rm|aut0>:<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<with|math-font-family|rm|aut1>:<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<with|math-font-family|rm|aut1>:<matrix|<tformat|<table|<row|<cell|<math-up|adj><rsub|1,i>>>|<row|<cell|<math-up|adj><rsub|2,i>>>|<row|<cell|<math-up|adj><rsub|3,i>>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|aut1>\<neq\><with|math-font-family|rm|aut0><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|<with|math-font-family|rm|aut1>|)>|)>,<with|math-font-family|rm|norma2>:<sqrt|<with|math-font-family|rm|aut1><rsub|1,1><rsup|2>+<with|math-font-family|rm|aut1><rsub|2,1><rsup|2>+<with|math-font-family|rm|aut1><rsub|3,1><rsup|2>>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em>e:<frac|1|<with|math-font-family|rm|norma2>>*<with|math-font-family|rm|aut1><space|0.27em><math-bf|else><space|0.27em>e:<with|math-font-family|rm|aut1>,<math-up|return><around*|(|e|)>|)>>>
-    </unfolded-io>
+      )$
+    </input>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>5) >
+    <|input>
+      ATAN2(y,x):=block(
+
+      if x = 0 and y = 0 then return(-1),
+
+      if x = 0 and y \<gtr\> 0 then return(%pi/2),
+
+      if x = 0 and y \<less\> 0 then return(-%pi/2),
+
+      if y = 0 and x = -1 then return(%pi),
+
+      if y = 0 and x = 1 then return(0),
+
+      if x \<gtr\> 0 then return(atan(y/x)),
+
+      if x \<less\> 0 and y \<gtr\>= 0 then return(atan(y/x)+2*%pi),
+
+      if x \<less\> 0 and y \<less\> 0 then return(atan(y/x)-2*%pi)
+
+      )$
+    </input>
+
+    \;
+
+    \;
+
+    La funzione ATAN2(y,x) creata qui è definita nell'intervallo
+    [0,<math|2*\<pi\>>] a differenza di quella della libreria che è definita
+    nell'intervallo [-\<pi\>,+\<pi\>].
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    La funzione \PcalcoloAngolo\Q riceve in ingresse la matrice di rotazione
+    e calcola per mezzo delle formule inverse di Rodrigues l'angolo di
+    rotazione intorno all'asse.
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>6) >
+    <|input>
+      calcoloAngolo(R):=block(
+
+      [e,transposeR,S,mat,value1,value2,seno,S2,result,coseno,angolo],
+
+      /*controllare che il parametro in ingresso sia di tipo matriciale*/
+
+      if scalarp(R) = true or listp(R) = true then return(-1),
+
+      \;
+
+      /*calcolare l'asse di rotazione*/
+
+      e:calcoloAsseRotazione(R),
+
+      if e = 0 then return(-2),
+
+      \;
+
+      /*calcolare l'angolo di rotazione*/
+
+      /*calcolo del seno dell'angolo*/
+
+      S:matrix([0,-e[3,1],e[2,1]],[e[3,1],0,-e[1,1]],[-e[2,1],e[1,1],0]),
+
+      transposeR:trigsimp(transpose(R)),
+
+      II:matrix([1,0,0],[0,1,0],[0,0,1]),
+
+      mat[1]:fullratsimp((1/2)*(R-transposeR)),
+
+      \;
+
+      /*trovare il valore diverso da zero in entrambe le matrici, con le
+      stesse coordinate*/
+
+      [value1,value2]:calcoloValore(mat[1],S),
+
+      if value1 = 0 and value2 = 0 then seno:0 else
+      seno:((1/2)*(R[value1,value2]-R[value2,value1]))/S[value1,value2],
+
+      seno:fullratsimp(factor(seno)),
+
+      \;
+
+      /*calcolo del coseno dell'angolo*/
+
+      S2:trigsimp(S.S),
+
+      mat[2]:fullratsimp(((1/2)*(R+transposeR))-II),
+
+      \;
+
+      /*trovare il valore diverso da zero in entrambe le matrici, con le
+      stesse coordinate*/
+
+      [value1,value2]:calcoloValore(mat[2],S2),
+
+      result:(((1/2)*(R[value1,value2]+R[value2,value1]))-II[value1,value2])/S2[value1,value2],
+
+      result:fullratsimp(factor(result)),
+
+      coseno:factor(1-result),
+
+      \;
+
+      /*calcolo angolo di rotazione intorno all'asse precedentemente
+      trovato*/
+
+      angolo:ATAN2(seno,coseno),
+
+      angoloSemplificato:trigreduce(angolo),
+
+      radAngolo:float(angoloSemplificato),
+
+      return([e,angolo,angoloSemplificato,radAngolo])
+
+      )$
+    </input>
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>7) >
     <|unfolded-io>
-      R:matrix([0,1,0],[0,0,-1],[-1,0,0])
+      R1:matriceDiRotazione(matrix([1],[1],[0]),%pi)
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
-      >><matrix|<tformat|<table|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-1>>|<row|<cell|-1>|<cell|0>|<cell|0>>>>>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>+1|2>>|<cell|-<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>-1|2>>|<cell|<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>>|<row|<cell|-<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>-1|2>>|<cell|<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>+1|2>>|<cell|-<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>>|<row|<cell|-<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>|<cell|<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>|<cell|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>>>>>>,<matrix|<tformat|<table|<row|<cell|0.3668723289792922>|<cell|0.6331276710207079>|<cell|-0.6815820173810371>>|<row|<cell|0.6331276710207079>|<cell|0.3668723289792922>|<cell|0.6815820173810371>>|<row|<cell|0.6815820173810371>|<cell|-0.6815820173810371>|<cell|-0.2662553420414157>>>>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|unfolded-io>
-      calcolo_asseRotazione(R)
+      calcoloAngolo(R1[1])
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|1|<sqrt|3>>>>|<row|<cell|<frac|1|<sqrt|3>>>>|<row|<cell|-<frac|1|<sqrt|3>>>>>>>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|1|<sqrt|2>>>>|<row|<cell|<frac|1|<sqrt|2>>>>|<row|<cell|0>>>>>,arctan
+      <around*|(|<frac|sin <around*|(|<sqrt|2>*\<pi\>|)>|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>>|)>-2*\<pi\>,<sqrt|2>*\<pi\>-2*\<pi\>,-1.84030236902122|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|unfolded-io>
-      eigenvectors(R)
+      R1controllo:matriceDiRotazione(matrix([1/sqrt(2)],[1/sqrt(2)],[0]),sqrt(2)*%pi-2*%pi)
     <|unfolded-io>
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
-      >><around*|[|<around*|[|<around*|[|<frac|<sqrt|3>*\<mathi\>-1|2>,-<frac|<sqrt|3>*\<mathi\>+1|2>,1|]>,<around*|[|1,1,1|]>|]>,<around*|[|<around*|[|<around*|[|1,<frac|<sqrt|3>*\<mathi\>-1|2>,<frac|<sqrt|3>*\<mathi\>+1|2>|]>|]>,<around*|[|<around*|[|1,-<frac|<sqrt|3>*\<mathi\>+1|2>,-<frac|<sqrt|3>*\<mathi\>-1|2>|]>|]>,<around*|[|<around*|[|1,1,-1|]>|]>|]>|]>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>+1|2>>|<cell|-<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>-1|2>>|<cell|<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>>|<row|<cell|-<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>-1|2>>|<cell|<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>+1|2>>|<cell|-<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>>|<row|<cell|-<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>|<cell|<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>|<cell|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>>>>>>,<matrix|<tformat|<table|<row|<cell|0.3668723289792922>|<cell|0.6331276710207079>|<cell|-0.6815820173810371>>|<row|<cell|0.6331276710207079>|<cell|0.3668723289792922>|<cell|0.6815820173810371>>|<row|<cell|0.6815820173810371>|<cell|-0.6815820173810371>|<cell|-0.2662553420414157>>>>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>10) >
     <|unfolded-io>
-      calcolo_asse_angolo(R):=block(
-
-      [e,RT,S,mat,val1,val2,seno,S2,res,coseno,theta],
-
-      /*Calcolo asse di rotazione*/
-
-      e:calcolo_asseRotazione(R),
-
-      if e = 0 then return(0),
-
-      \;
-
-      /*Calcolo angolo di rotazione*/
-
-      S:matrix([0,-e[3,1],e[2,1]],[e[3,1],0,-e[1,1]],[-e[2,1],e[1,1],0]),
-
-      RT:transpose(R),
-
-      II:matrix([1,0,0],[0,1,0],[0,0,1]),
-
-      mat:(1/2)*(R-RT),
-
-      [val1,val2]:calcolo_val(mat,S),
-
-      seno:((1/2)*(R[val1,val2]-R[val2,val1]))/S[val1,val2],
-
-      seno:factor(seno),
-
-      \;
-
-      S2:trigsimp(S.S),
-
-      mat:((1/2)*(R+RT))-II,
-
-      [val1,val2]:calcolo_val(mat,S2),
-
-      res:(((1/2)*(R[val1,val2]+R[val2,val1]))-II[val1,val2])/S2[val1,val2],
-
-      res:factor(res),
-
-      coseno:factor(1-res),
-
-      theta:atan2(seno,coseno),
-
-      return([e,theta])
-
-      )
+      R2:matriceDiRotazione(matrix([2],[0],[1]),%pi/2)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
-      >><with|math-font-family|rm|calcolo_asse_angolo><around*|(|R|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|e,<math-up|RT>,S,<math-up|mat>,<with|math-font-family|rm|val1>,<with|math-font-family|rm|val2>,<math-up|seno>,<with|math-font-family|rm|S2>,<math-up|res>,<math-up|coseno>,\<vartheta\>|]>,e:<with|math-font-family|rm|calcolo_asseRotazione><around*|(|R|)>,<math-bf|if><space|0.27em>e=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,S:<matrix|<tformat|<table|<row|<cell|0>|<cell|-e<rsub|3,1>>|<cell|e<rsub|2,1>>>|<row|<cell|e<rsub|3,1>>|<cell|0>|<cell|-e<rsub|1,1>>>|<row|<cell|-e<rsub|2,1>>|<cell|e<rsub|1,1>>|<cell|0>>>>>,<math-up|RT>:<math-up|transpose><around*|(|R|)>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<math-up|mat>:<frac|1|2>*<around*|(|R-<math-up|RT>|)>,<around*|[|<with|math-font-family|rm|val1>,<with|math-font-family|rm|val2>|]>:<with|math-font-family|rm|calcolo_val><around*|(|<math-up|mat>,S|)>,<math-up|seno>:<frac|<frac|1|2>*<around*|(|R<rsub|<with|math-font-family|rm|val1>,<with|math-font-family|rm|val2>>-R<rsub|<with|math-font-family|rm|val2>,<with|math-font-family|rm|val1>>|)>|S<rsub|<with|math-font-family|rm|val1>,<with|math-font-family|rm|val2>>>,<math-up|seno>:<math-up|factor><around*|(|<math-up|seno>|)>,<with|math-font-family|rm|S2>:<math-up|trigsimp><around*|(|S\<cdot\>S|)>,<math-up|mat>:<frac|1|2>*<around*|(|R+<math-up|RT>|)>-<math-up|II>,<around*|[|<with|math-font-family|rm|val1>,<with|math-font-family|rm|val2>|]>:<with|math-font-family|rm|calcolo_val><around*|(|<math-up|mat>,<with|math-font-family|rm|S2>|)>,<math-up|res>:<frac|<frac|1|2>*<around*|(|R<rsub|<with|math-font-family|rm|val1>,<with|math-font-family|rm|val2>>+R<rsub|<with|math-font-family|rm|val2>,<with|math-font-family|rm|val1>>|)>-<math-up|II><rsub|<with|math-font-family|rm|val1>,<with|math-font-family|rm|val2>>|<with|math-font-family|rm|S2><rsub|<with|math-font-family|rm|val1>,<with|math-font-family|rm|val2>>>,<math-up|res>:<math-up|factor><around*|(|<math-up|res>|)>,<math-up|coseno>:<math-up|factor><around*|(|1-<math-up|res>|)>,\<vartheta\>:<math-up|atan2><around*|(|<math-up|seno>,<math-up|coseno>|)>,<math-up|return><around*|(|<around*|[|e,\<vartheta\>|]>|)>|)>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|cos
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>+4|5>>|<cell|-<frac|sin
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>|<cell|-<frac|2*cos
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>-2|5>>>|<row|<cell|<frac|sin
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>|<cell|cos
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>>|<cell|-<frac|2*sin
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>>|<row|<cell|-<frac|2*cos
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>-2|5>>|<cell|<frac|2*sin
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>|<cell|<frac|4*cos
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>+1|5>>>>>>,<matrix|<tformat|<table|<row|<cell|0.6135935152373545>|<cell|0.1620589775117936>|<cell|0.7728129695252911>>|<row|<cell|-0.1620589775117936>|<cell|-0.9320324238132276>|<cell|0.3241179550235873>>|<row|<cell|0.7728129695252911>|<cell|-0.3241179550235873>|<cell|-0.5456259390505821>>>>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|unfolded-io>
-      mat1
+      calcoloAngolo(R2[1])
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
-      >><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|<sqrt|3>|2>>|<cell|-<frac|1|2>>>|<row|<cell|0>|<cell|<frac|1|2>>|<cell|<frac|<sqrt|3>|2>>>>>>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|2|<sqrt|5>>>>|<row|<cell|0>>|<row|<cell|<frac|1|<sqrt|5>>>>>>>,arctan
+      <around*|(|<frac|sin <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|cos
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>>|)>-2*\<pi\>,<frac|<sqrt|5>*\<pi\>|2>-2*\<pi\>,-2.770777941659223|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>12) >
     <|unfolded-io>
-      calcolo_asse_angolo(mat1)
+      R2controllo:matriceDiRotazione(matrix([2/sqrt(5)],[0],[1/sqrt(5)]),((sqrt(5)*%pi)/2)-2*%pi)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,<frac|\<pi\>|6>|]>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|cos
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>+4|5>>|<cell|-<frac|sin
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>|<cell|-<frac|2*cos
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>-2|5>>>|<row|<cell|<frac|sin
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>|<cell|cos
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>>|<cell|-<frac|2*sin
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>>|<row|<cell|-<frac|2*cos
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>-2|5>>|<cell|<frac|2*sin
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>|<cell|<frac|4*cos
+      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>+1|5>>>>>>,<matrix|<tformat|<table|<row|<cell|0.6135935152373545>|<cell|0.1620589775117936>|<cell|0.7728129695252911>>|<row|<cell|-0.1620589775117936>|<cell|-0.9320324238132276>|<cell|0.3241179550235873>>|<row|<cell|0.7728129695252911>|<cell|-0.3241179550235873>|<cell|-0.5456259390505821>>>>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>13) >
     <|unfolded-io>
-      calcolo_asse_angolo(R)
+      R4:matriceDiRotazione(matrix([1],[0],[0]),%pi/6)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|1|<sqrt|3>>>>|<row|<cell|<frac|1|<sqrt|3>>>>|<row|<cell|-<frac|1|<sqrt|3>>>>>>>,<frac|2*\<pi\>|3>|]>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|<sqrt|3>|2>>|<cell|-<frac|1|2>>>|<row|<cell|0>|<cell|<frac|1|2>>|<cell|<frac|<sqrt|3>|2>>>>>>,<matrix|<tformat|<table|<row|<cell|1.0>|<cell|0.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|0.8660254037844386>|<cell|-0.5>>|<row|<cell|0.0>|<cell|0.5>|<cell|0.8660254037844386>>>>>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>14) >
+    <|unfolded-io>
+      calcoloAngolo(R4[1])
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,<frac|\<pi\>|6>,<frac|\<pi\>|6>,0.5235987755982988|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>15) >
+    <|unfolded-io>
+      R4controllo:matriceDiRotazione(matrix([1],[0],[0]),%pi/6)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|<sqrt|3>|2>>|<cell|-<frac|1|2>>>|<row|<cell|0>|<cell|<frac|1|2>>|<cell|<frac|<sqrt|3>|2>>>>>>,<matrix|<tformat|<table|<row|<cell|1.0>|<cell|0.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|0.8660254037844386>|<cell|-0.5>>|<row|<cell|0.0>|<cell|0.5>|<cell|0.8660254037844386>>>>>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>16) >
+    <|unfolded-io>
+      R5:matriceDiRotazione(matrix([1],[1],[-1]),(2*%pi)/3)
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|2*cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|<frac|<sqrt|3>*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|<frac|<sqrt|3>*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-1|3>>>|<row|<cell|-<frac|<sqrt|3>*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-1|3>>|<cell|<frac|2*cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|-<frac|<sqrt|3>*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>>|<row|<cell|-<frac|<sqrt|3>*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|<frac|<sqrt|3>*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-1|3>>|<cell|<frac|2*cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>>>>>,<matrix|<tformat|<table|<row|<cell|-0.2561369739606306>|<cell|0.3583892312942261>|<cell|-0.8977477426664047>>|<row|<cell|0.8977477426664047>|<cell|-0.2561369739606306>|<cell|-0.3583892312942261>>|<row|<cell|-0.3583892312942261>|<cell|-0.8977477426664047>|<cell|-0.2561369739606306>>>>>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>17) >
+    <|unfolded-io>
+      calcoloAngolo(R5[1])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|1|<sqrt|3>>>>|<row|<cell|<frac|1|<sqrt|3>>>>|<row|<cell|-<frac|1|<sqrt|3>>>>>>>,arctan
+      <around*|(|<frac|sin <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>|cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>>|)>-2*\<pi\>,<frac|2*\<pi\>|<sqrt|3>>-2*\<pi\>,-2.65558657871115|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>18) >
+    <|unfolded-io>
+      R5controllo:matriceDiRotazione(matrix([1/sqrt(3)],[1/sqrt(3)],[-1/sqrt(3)]),((2*%pi)/(sqrt(3)))-2*%pi)
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|2*cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|<frac|<sqrt|3>*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|<frac|<sqrt|3>*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-1|3>>>|<row|<cell|-<frac|<sqrt|3>*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-1|3>>|<cell|<frac|2*cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|-<frac|<sqrt|3>*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>>|<row|<cell|-<frac|<sqrt|3>*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|<frac|<sqrt|3>*sin
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-1|3>>|<cell|<frac|2*cos
+      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>>>>>,<matrix|<tformat|<table|<row|<cell|-0.2561369739606306>|<cell|0.3583892312942261>|<cell|-0.8977477426664047>>|<row|<cell|0.8977477426664047>|<cell|-0.2561369739606306>|<cell|-0.3583892312942261>>|<row|<cell|-0.3583892312942261>|<cell|-0.8977477426664047>|<cell|-0.2561369739606306>>>>>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>19) >
+    <|unfolded-io>
+      R6:matriceDiRotazione(matrix([1],[0],[0]),%pi/4)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|1|<sqrt|2>>>|<cell|-<frac|1|<sqrt|2>>>>|<row|<cell|0>|<cell|<frac|1|<sqrt|2>>>|<cell|<frac|1|<sqrt|2>>>>>>>,<matrix|<tformat|<table|<row|<cell|1.0>|<cell|0.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|0.7071067811865475>|<cell|-0.7071067811865475>>|<row|<cell|0.0>|<cell|0.7071067811865475>|<cell|0.7071067811865475>>>>>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>20) >
+    <|unfolded-io>
+      calcoloAngolo(R6[1])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,<frac|\<pi\>|4>,<frac|\<pi\>|4>,0.7853981633974483|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>21) >
+    <|unfolded-io>
+      R:matriceDiRotazione(matrix([1],[2],[-1]),%pi/6)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|5*cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+1|6>>|<cell|<frac|<sqrt|6>*sin
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-2*cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2|6>>|<cell|<frac|2*<sqrt|6>*sin
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-1|6>>>|<row|<cell|-<frac|<sqrt|6>*sin
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2*cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-2|6>>|<cell|<frac|cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2|3>>|<cell|-<frac|<sqrt|6>*sin
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-2*cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2|6>>>|<row|<cell|-<frac|2*<sqrt|6>*sin
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+1|6>>|<cell|<frac|<sqrt|6>*sin
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2*cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-2|6>>|<cell|<frac|5*cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+1|6>>>>>>,<matrix|<tformat|<table|<row|<cell|0.4035595854039173>|<cell|0.6299816914498911>|<cell|0.6635229683036996>>|<row|<cell|-0.152829359773025>|<cell|0.7614238341615669>|<cell|-0.6299816914498911>>|<row|<cell|-0.9020991341421327>|<cell|0.152829359773025>|<cell|0.4035595854039173>>>>>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>22) >
+    <|unfolded-io>
+      calcoloAngolo(R[1])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|1|<sqrt|6>>>>|<row|<cell|<frac|<sqrt|6>|3>>>|<row|<cell|-<frac|1|<sqrt|6>>>>>>>,arctan
+      <around*|(|<frac|sin <around*|(|<frac|\<pi\>|<sqrt|6>>|)>|cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>>|)>,<frac|\<pi\>|<sqrt|6>>,1.282549830161864|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>23) >
+    <|unfolded-io>
+      R:matriceDiRotazione(matrix([1/sqrt(6)], [sqrt(6)/3],
+      [-1/sqrt(6)]),%pi/sqrt(6))
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|5*cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+1|6>>|<cell|<frac|<sqrt|6>*sin
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-2*cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2|6>>|<cell|<frac|2*<sqrt|6>*sin
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-1|6>>>|<row|<cell|-<frac|<sqrt|6>*sin
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2*cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-2|6>>|<cell|<frac|cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2|3>>|<cell|-<frac|<sqrt|6>*sin
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-2*cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2|6>>>|<row|<cell|-<frac|2*<sqrt|6>*sin
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+1|6>>|<cell|<frac|<sqrt|6>*sin
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2*cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-2|6>>|<cell|<frac|5*cos
+      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+1|6>>>>>>,<matrix|<tformat|<table|<row|<cell|0.4035595854039173>|<cell|0.6299816914498911>|<cell|0.6635229683036996>>|<row|<cell|-0.152829359773025>|<cell|0.7614238341615669>|<cell|-0.6299816914498911>>|<row|<cell|-0.9020991341421327>|<cell|0.152829359773025>|<cell|0.4035595854039173>>>>>|]>>>
     </unfolded-io>
   </session>
 

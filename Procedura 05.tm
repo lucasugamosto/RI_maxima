@@ -6,18 +6,19 @@
   PROCEDURA CHE CALCOLA LA MATRICE DI ROTAZIONE UTILIZZANDO LA MATRICE
   ANTISIMMETRICA E LA TRASFORMATA DI LAPLACE.
 
-  <with|color|red|Procedura 1: Procedura che prende in input un vettore e
-  associa a quel vettore la corrispondente matrice anti-simmetrica.>
+  Scrivere una procedura che utilizzando la trasformata di Laplace calcoli la
+  matrice di rotazione intorno all'asse rappresentato dal versore \Pv\Q, di
+  un angolo \<theta\>, cioè <math|R<rsub|z><around*|(|\<theta\>|)>=e<rsup|S<around*|(|v|)>.\<theta\>>>
 
   <\session|maxima|default>
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>1) >
     <|unfolded-io>
-      mat_antisimmetricaS(v):=block(
+      matAntisimmetrica(v):=block(
 
       [S],
 
-      /*Controllo che l'elemento passato in ingresso sia un vettore*/
+      /*controllare che l'elemento passato in ingresso sia un vettore*/
 
       if scalarp(v) = true or listp(v) = true then return(0),
 
@@ -32,112 +33,72 @@
       \;
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o1>)
-      >><with|math-font-family|rm|mat_antisimmetricaS><around*|(|v|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|S|]>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|v|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|v|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,S:<matrix|<tformat|<table|<row|<cell|0>|<cell|-v<rsub|3,1>>|<cell|v<rsub|2,1>>>|<row|<cell|v<rsub|3,1>>|<cell|0>|<cell|-v<rsub|1,1>>>|<row|<cell|-v<rsub|2,1>>|<cell|v<rsub|1,1>>|<cell|0>>>>>,<math-up|return><around*|(|S|)>|)>>>
+      >><math-up|matAntisimmetrica><around*|(|v|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|S|]>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|v|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|v|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,S:<matrix|<tformat|<table|<row|<cell|0>|<cell|-v<rsub|3,1>>|<cell|v<rsub|2,1>>>|<row|<cell|v<rsub|3,1>>|<cell|0>|<cell|-v<rsub|1,1>>>|<row|<cell|-v<rsub|2,1>>|<cell|v<rsub|1,1>>|<cell|0>>>>>,<math-up|return><around*|(|S|)>|)>>>
     </unfolded-io>
 
     \;
 
-    \;
-
-    <\with|color|red>
+    <\with|color|black>
       \;
 
-      \;
-
-      Procedura 2: Procedura che prende in input una matrice, verifica se è
-      anti-simmetrica e determina il vettore corrispondente.
+      La funzione \PcalcoloVettore\Q riceve in input una matrice, verifica se
+      è antisimmetrica e determina il vettore corrispondente che la crea.
     </with>
 
     \;
 
-    <\unfolded-io>
+    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>2) >
-    <|unfolded-io>
-      calcolo_vettore(S):=block(
+    <|input>
+      calcoloVettore(S):=block(
 
-      [ST,mat],
+      [transposeS,mat],
 
-      if scalarp(S) = true or listp(S) = true then retuen(0),
+      if scalarp(S) = true or listp(S) = true then return(-1),
 
       \;
 
+      /*controllare che la matrice inserite in ingresso sia antisimmetrica*/
+
       if S[1,1] # 0 or S[2,2] # 0 or S[3,3] # 0 then return(0),
 
-      ST:transpose(S),
+      transposeS:transpose(S),
 
       mat:-S,
 
-      if ST # mat then return(0),
+      if transposeS # mat then return(0),
 
       v:matrix([S[3,2]],[S[1,3]],[S[2,1]]),
 
       return(v)
 
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
-      >><with|math-font-family|rm|calcolo_vettore><around*|(|S|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|ST>,<math-up|mat>|]>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|S|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|S|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|retuen><around*|(|0|)>,<math-bf|if><space|0.27em>S<rsub|1,1>\<neq\>0\<vee\>S<rsub|2,2>\<neq\>0\<vee\>S<rsub|3,3>\<neq\>0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|ST>:<math-up|transpose><around*|(|S|)>,<math-up|mat>:-S,<math-bf|if><space|0.27em><math-up|ST>\<neq\><math-up|mat><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,v:<matrix|<tformat|<table|<row|<cell|S<rsub|3,2>>>|<row|<cell|S<rsub|1,3>>>|<row|<cell|S<rsub|2,1>>>>>>,<math-up|return><around*|(|v|)>|)>>>
-    </unfolded-io>
+      )$
+    </input>
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>3) >
-    <|unfolded-io>
-      calcolo_vettore(matrix([0,-c,b],[c,0,-a],[-b,a,0]))
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
-      >><matrix|<tformat|<table|<row|<cell|a>>|<row|<cell|b>>|<row|<cell|c>>>>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>4) >
-    <|unfolded-io>
-      mat_antisimmetricaS(matrix([a],[b],[c]))
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
-      >><matrix|<tformat|<table|<row|<cell|0>|<cell|-c>|<cell|b>>|<row|<cell|c>|<cell|0>|<cell|-a>>|<row|<cell|-b>|<cell|a>|<cell|0>>>>>>>
-    </unfolded-io>
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    <\with|color|red>
-      \;
-
-      Procedura 3: Procedura che prende in input una coppia di valori
-      (vettore,angolo). Se il vettore è un versore allora si applica la
-      procedura per il calcolo della matrice di rotazione. Se il vettore non
-      è un versore bisogna normalizzare il vettore e ricordare
-      successivamente di moltiplicare l'angolo per la norma calcolata in
-      precedenza. Inoltre controllare che l'angolo sia un numero.
-
+    <\with|color|black>
       \;
     </with>
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>5) >
-    <|unfolded-io>
-      calcolo_versore(vettore):=block(
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>3) >
+    <|input>
+      calcoloVersore(vettore):=block(
 
       [norma2,e],
 
-      if scalarp(vettore) = true or listp(vettore) = true then return(0),
+      /*controllare che il parametro inserito in ingresso sia una matrice*/
+
+      if scalarp(vettore) = true or listp(vettore) = true then return(-1),
+
+      \;
+
+      /*calcolare la norma2 del vettore inserito in ingresso*/
 
       norma2:sqrt((vettore[1,1]^2)+(vettore[2,1]^2)+(vettore[3,1]^2)),
 
       \;
 
-      /*Controllo che il vettore inserito non sia composto da soli zeri*/
+      /*controllare che il vettore inserito non sia composto da soli zeri*/
 
       if norma2 = 0 then return(0),
 
@@ -147,96 +108,61 @@
 
       return(e)
 
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
-      >><with|math-font-family|rm|calcolo_versore><around*|(|<math-up|vettore>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|norma2>,e|]>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|<math-up|vettore>|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|<math-up|vettore>|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<with|math-font-family|rm|norma2>:<sqrt|<math-up|vettore><rsub|1,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|3,1><rsup|2>>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em>e:<frac|1|<with|math-font-family|rm|norma2>>*<math-up|vettore><space|0.27em><math-bf|else><space|0.27em>e:<math-up|vettore>,<math-up|return><around*|(|e|)>|)>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>6) >
-    <|unfolded-io>
-      calcolo_versore(matrix([2],[1],[0]))
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|2|<sqrt|5>>>>|<row|<cell|<frac|1|<sqrt|5>>>>|<row|<cell|0>>>>>>>
-    </unfolded-io>
+      )$
+    </input>
 
     <\textput>
       \;
 
       \;
 
-      <\with|color|red>
-        \;
-
-        \;
-
-        \;
-
-        \;
-
-        \;
-
-        \;
-
-        \;
-
-        \;
-
-        \;
-
-        \;
-
-        \;
-
-        \;
-
-        \;
-
-        \;
-
-        Funzione che vuole passati in ingresso due parametri: il primo è una
-        matrice 3x1 ed il secondo è uno scalare rappresentante l'angolo di
-        rotazione, espresso in modo generico (alpha,beta,ecc<text-dots>)
-        oppure in gradi poichè viene convertito in radianti all'interno della
-        funzione.
-      </with>
+      La funzione \PmatRotazione\Q riceve in ingresso due parametri, una
+      matrice di dimensione 3x1 ed uno scalare, e calcola la matrice di
+      rotazione R per mezzo della trasformata di Laplace:
     </textput>
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>7) >
-    <|unfolded-io>
-      mat_rotazione(vet,angolo):=block(
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>4) >
+    <|input>
+      matRotazione(vettore,angolo):=block(
 
-      [e,S,theta,norma2,II,sII,sIImS,sIImS_inv,R],
+      [e,S,norma2,II,sII,sIImS,sIImSInv,R],
 
-      e:calcolo_versore(vet),
+      /*calcolo del versore a partire dal vettore dato*/
 
-      \;
-
-      /*Può tornare 0 se il parametro in input non è un vettore o se è un
-      vettore identicamente nullo*/
-
-      if e = 0 then return(0),
-
-      S:mat_antisimmetricaS(e),
+      e:calcoloVersore(vettore),
 
       \;
 
-      if listp(angolo) = true or matrixp(angolo) = true then return(0),
+      /*la funzione calcoloVersore restituisce -1 se il parametro in input
+      non è un vettore o 0 se è un vettore identicamente nullo*/
 
-      theta:%pi*(angolo/180),
+      if e = 0 or e = -1 then return(-1),
+
+      \;
+
+      /*calcolare la matrie antisimmetrica generata dal versore e*/
+
+      S:matAntisimmetrica(e),
 
       \;
 
-      /*Normalizzo l'angolo nel caso fosse necessario (norma2 # 1)*/
+      /*controllare il tipo di dato del secondo parametro in ingresso*/
 
-      norma2:sqrt((vet[1,1]^2)+(vet[2,1]^2)+(vet[3,1]^2)),
-
-      if norma2 # 1 then theta:norma2*theta,
+      if listp(angolo) = true or matrixp(angolo) = true then return(-1),
 
       \;
+
+      /*Normalizzare l'angolo nel caso fosse necessario (norma2 # 1)*/
+
+      norma2:sqrt((vettore[1,1]^2)+(vettore[2,1]^2)+(vettore[3,1]^2)),
+
+      if norma2 # 1 then angolo:norma2*angolo,
+
+      \;
+
+      /*per calcolare la matrice di rotazione si calcola la trasformata
+      inversa di Laplace della matrice sI-S*/
 
       II:matrix([1,0,0],[0,1,0],[0,0,1]),
 
@@ -244,11 +170,11 @@
 
       sIImS:sII-S,
 
-      sIImS_inv:trigsimp(factor(invert(sIImS))),
+      sIImSInv:trigsimp(factor(invert(sIImS))),
 
-      R:matrix([ilt(sIImS_inv[1,1],s,t),ilt(sIImS_inv[1,2],s,t),ilt(sIImS_inv[1,3],s,t)],[ilt(sIImS_inv[2,1],s,t),ilt(sIImS_inv[2,2],s,t),ilt(sIImS_inv[2,3],s,t)],[ilt(sIImS_inv[3,1],s,t),ilt(sIImS_inv[3,2],s,t),ilt(sIImS_inv[3,3],s,t)]),
+      R:matrix([ilt(sIImSInv[1,1],s,t),ilt(sIImSInv[1,2],s,t),ilt(sIImSInv[1,3],s,t)],[ilt(sIImSInv[2,1],s,t),ilt(sIImSInv[2,2],s,t),ilt(sIImSInv[2,3],s,t)],[ilt(sIImSInv[3,1],s,t),ilt(sIImSInv[3,2],s,t),ilt(sIImSInv[3,3],s,t)]),
 
-      R:subst(t=theta,R),
+      R:subst(t=angolo,R),
 
       for i:1 thru 3 do (
 
@@ -260,54 +186,109 @@
 
       ),
 
-      return(R)
+      radR:float(R),
 
-      )
+      return([R,radR])
+
+      )$
+    </input>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>6) >
+    <|unfolded-io>
+      matRotazione(matrix([1],[0],[0]),%pi/2)
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
-      >><with|math-font-family|rm|mat_rotazione><around*|(|<math-up|vet>,<math-up|angolo>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|e,S,\<vartheta\>,<with|math-font-family|rm|norma2>,<math-up|II>,<math-up|sII>,<math-up|sIImS>,<with|math-font-family|rm|sIImS_inv>,R|]>,e:<with|math-font-family|rm|calcolo_versore><around*|(|<math-up|vet>|)>,<math-bf|if><space|0.27em>e=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,S:<with|math-font-family|rm|mat_antisimmetricaS><around*|(|e|)>,<math-bf|if><space|0.27em><math-up|listp><around*|(|<math-up|angolo>|)>=<math-bf|true>\<vee\><math-up|matrixp><around*|(|<math-up|angolo>|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,\<vartheta\>:\<pi\>*<around*|(|<frac|<math-up|angolo>|180>|)>,<with|math-font-family|rm|norma2>:<sqrt|<math-up|vet><rsub|1,1><rsup|2>+<math-up|vet><rsub|2,1><rsup|2>+<math-up|vet><rsub|3,1><rsup|2>>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em>\<vartheta\>:<with|math-font-family|rm|norma2>*\<vartheta\>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<math-up|sII>:s*<math-up|II>,<math-up|sIImS>:<math-up|sII>-S,<with|math-font-family|rm|sIImS_inv>:<math-up|trigsimp><around*|(|<math-up|factor><around*|(|<math-up|invert><around*|(|<math-up|sIImS>|)>|)>|)>,R:<matrix|<tformat|<table|<row|<cell|<math-up|ilt><around*|(|<with|math-font-family|rm|sIImS_inv><rsub|1,1>,s,t|)>>|<cell|<math-up|ilt><around*|(|<with|math-font-family|rm|sIImS_inv><rsub|1,2>,s,t|)>>|<cell|<math-up|ilt><around*|(|<with|math-font-family|rm|sIImS_inv><rsub|1,3>,s,t|)>>>|<row|<cell|<math-up|ilt><around*|(|<with|math-font-family|rm|sIImS_inv><rsub|2,1>,s,t|)>>|<cell|<math-up|ilt><around*|(|<with|math-font-family|rm|sIImS_inv><rsub|2,2>,s,t|)>>|<cell|<math-up|ilt><around*|(|<with|math-font-family|rm|sIImS_inv><rsub|2,3>,s,t|)>>>|<row|<cell|<math-up|ilt><around*|(|<with|math-font-family|rm|sIImS_inv><rsub|3,1>,s,t|)>>|<cell|<math-up|ilt><around*|(|<with|math-font-family|rm|sIImS_inv><rsub|3,2>,s,t|)>>|<cell|<math-up|ilt><around*|(|<with|math-font-family|rm|sIImS_inv><rsub|3,3>,s,t|)>>>>>>,R:<math-up|subst><around*|(|t=\<vartheta\>,R|)>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><math-bf|for><space|0.27em>j<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em>R<rsub|i,j>:<math-up|trigsimp><around*|(|R<rsub|i,j>|)>,<math-up|return><around*|(|R|)>|)>>>
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-1>>|<row|<cell|0>|<cell|1>|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|1.0>|<cell|0.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|0.0>|<cell|-1.0>>|<row|<cell|0.0>|<cell|1.0>|<cell|0.0>>>>>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>7) >
+    <|unfolded-io>
+      matRotazione(matrix([0],[1],[0]),%pi)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|-1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-1>>>>>,<matrix|<tformat|<table|<row|<cell|-1.0>|<cell|0.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|1.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|0.0>|<cell|-1.0>>>>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|unfolded-io>
-      mat_rotazione(matrix([1],[0],[0]),90)
+      matRotazione(matrix([0],[0],[1]),%pi/3)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
-      >><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-1>>|<row|<cell|0>|<cell|1>|<cell|0>>>>>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|1|2>>|<cell|-<frac|<sqrt|3>|2>>|<cell|0>>|<row|<cell|<frac|<sqrt|3>|2>>|<cell|<frac|1|2>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|0.5>|<cell|-0.8660254037844386>|<cell|0.0>>|<row|<cell|0.8660254037844386>|<cell|0.5>|<cell|0.0>>|<row|<cell|0.0>|<cell|0.0>|<cell|1.0>>>>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|unfolded-io>
-      mat_rotazione(matrix([1],[1],[0]),60)
+      matRotazione(matrix([1],[1],[0]),%pi)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|cos
-      <around*|(|<frac|<sqrt|2>*\<pi\>|3>|)>+1|2>>|<cell|-<frac|cos
-      <around*|(|<frac|<sqrt|2>*\<pi\>|3>|)>-1|2>>|<cell|<frac|sin
-      <around*|(|<frac|<sqrt|2>*\<pi\>|3>|)>|<sqrt|2>>>>|<row|<cell|-<frac|cos
-      <around*|(|<frac|<sqrt|2>*\<pi\>|3>|)>-1|2>>|<cell|<frac|cos
-      <around*|(|<frac|<sqrt|2>*\<pi\>|3>|)>+1|2>>|<cell|-<frac|sin
-      <around*|(|<frac|<sqrt|2>*\<pi\>|3>|)>|<sqrt|2>>>>|<row|<cell|-<frac|sin
-      <around*|(|<frac|<sqrt|2>*\<pi\>|3>|)>|<sqrt|2>>>|<cell|<frac|sin
-      <around*|(|<frac|<sqrt|2>*\<pi\>|3>|)>|<sqrt|2>>>|<cell|cos
-      <around*|(|<frac|<sqrt|2>*\<pi\>|3>|)>>>>>>>>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>+1|2>>|<cell|-<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>-1|2>>|<cell|<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>>|<row|<cell|-<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>-1|2>>|<cell|<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>+1|2>>|<cell|-<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>>|<row|<cell|-<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>|<cell|<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>|<cell|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>>>>>>,<matrix|<tformat|<table|<row|<cell|0.3668723289792922>|<cell|0.6331276710207079>|<cell|-0.6815820173810371>>|<row|<cell|0.6331276710207079>|<cell|0.3668723289792922>|<cell|0.6815820173810371>>|<row|<cell|0.6815820173810371>|<cell|-0.6815820173810371>|<cell|-0.2662553420414157>>>>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>10) >
     <|unfolded-io>
-      mat_rotazione(matrix([a],[0],[0]),90)
+      matRotazione(matrix([a],[1],[0]),theta)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
-      >><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|cos
-      <around*|(|<frac|\<pi\>*<around*|\||a|\|>|2>|)>>|<cell|-<frac|a*sin
-      <around*|(|<frac|\<pi\>*<around*|\||a|\|>|2>|)>|<around*|\||a|\|>>>>|<row|<cell|0>|<cell|<frac|a*sin
-      <around*|(|<frac|\<pi\>*<around*|\||a|\|>|2>|)>|<around*|\||a|\|>>>|<cell|cos
-      <around*|(|<frac|\<pi\>*<around*|\||a|\|>|2>|)>>>>>>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|cos
+      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>+a<rsup|2>|a<rsup|2>+1>>|<cell|-<frac|a*cos
+      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>-a|a<rsup|2>+1>>|<cell|<frac|sin
+      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>|<sqrt|a<rsup|2>+1>>>>|<row|<cell|-<frac|a*cos
+      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>-a|a<rsup|2>+1>>|<cell|<frac|a<rsup|2>*cos
+      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>+1|a<rsup|2>+1>>|<cell|-<frac|a*sin
+      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>|<sqrt|a<rsup|2>+1>>>>|<row|<cell|-<frac|sin
+      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>|<sqrt|a<rsup|2>+1>>>|<cell|<frac|a*sin
+      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>|<sqrt|a<rsup|2>+1>>>|<cell|cos
+      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>>>>>>,<matrix|<tformat|<table|<row|<cell|<frac|cos
+      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>+a<rsup|2>|a<rsup|2>+1.0>>|<cell|-<frac|1.0*<around*|(|a*cos
+      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>-1.0*a|)>|a<rsup|2>+1.0>>|<cell|<frac|sin
+      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>|<sqrt|a<rsup|2>+1.0>>>>|<row|<cell|-<frac|1.0*<around*|(|a*cos
+      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>-1.0*a|)>|a<rsup|2>+1.0>>|<cell|<frac|a<rsup|2>*cos
+      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>+1.0|a<rsup|2>+1.0>>|<cell|-<frac|1.0*a*sin
+      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>|<sqrt|a<rsup|2>+1.0>>>>|<row|<cell|-<frac|1.0*sin
+      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>|<sqrt|a<rsup|2>+1.0>>>|<cell|<frac|a*sin
+      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>|<sqrt|a<rsup|2>+1.0>>>|<cell|cos
+      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>>>>>>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>11) >
+    <|unfolded-io>
+      matRotazione(matrix([0],[0],[0]),theta)
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
+      >>-1>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>12) >
+    <|unfolded-io>
+      matRotazione(matrix([1],[0],[0]),[alpha,beta])
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
+      >>-1>>
     </unfolded-io>
   </session>
 

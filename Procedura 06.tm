@@ -3,17 +3,19 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
-  PROCEDURA: SCRIVERE UNA PROCEDURA CHE UTILIZZANDO GLI AUTOVALORI /
-  AUTOVETTORI CALCOLI LA MATRICE DI ROTAZIONE INTORNO ALL'ASSE DESIDERATO,
-  RAPPRESENTATO DAL VERSORE v, DI UN ANGOLO \<theta\>.
+  PROCEDURA: Utilizzando gli autovalori e gli autovettori si calcoli la
+  matrice di rotazione intorno all'asse rappresentato dal versore \Pv\Q, di
+  un angolo \<theta\>, cioè deve valere: <math|S<around*|(|v|)>=V.\<Lambda\>.V<rsup|-1>,R<rsub|v><around*|(|\<theta\>|)>=V.e<rsup|\<Lambda\>*\<theta\>>.V<rsup|-1>>.
 
   <\session|maxima|default>
-    <\unfolded-io>
+    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>1) >
-    <|unfolded-io>
-      calcolo_versore(vettore):=block(
+    <|input>
+      calcoloVersore(vettore):=block(
 
       [norma2,e],
+
+      /*verificaRE che il parametro in ingresso sia di tipo matriciale*/
 
       if scalarp(vettore) = true or listp(vettore) = true then return(0),
 
@@ -27,45 +29,45 @@
 
       return(e)
 
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o1>)
-      >><with|math-font-family|rm|calcolo_versore><around*|(|<math-up|vettore>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|norma2>,e|]>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|<math-up|vettore>|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|<math-up|vettore>|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<with|math-font-family|rm|norma2>:<sqrt|<math-up|vettore><rsub|1,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|3,1><rsup|2>>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em>e:<frac|1|<with|math-font-family|rm|norma2>>*<math-up|vettore><space|0.27em><math-bf|else><space|0.27em>e:<math-up|vettore>,<math-up|return><around*|(|e|)>|)>>>
-    </unfolded-io>
+      )$
+    </input>
 
-    <\unfolded-io>
+    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>2) >
-    <|unfolded-io>
-      mat_antisimmetricaS(v):=block(
+    <|input>
+      matAntisimmetrica(vettore):=block(
 
-      [e,S],
+      [S],
 
-      e:calcolo_versore(v),
+      /*controllare che il parametro in ingresso sia un vettore*/
 
-      if e = 0 then return(0),
+      if scalarp(vettore) = true or listp(vettore) = true then return(0),
 
       \;
 
-      S:matrix([0,-e[3,1],e[2,1]],[e[3,1],0,-e[1,1]],[-e[2,1],e[1,1],0]),
+      S:matrix([0,-vettore[3,1],vettore[2,1]],[vettore[3,1],0,-vettore[1,1]],[-vettore[2,1],vettore[1,1],0]),
 
       return(factor(S))
 
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
-      >><with|math-font-family|rm|mat_antisimmetricaS><around*|(|v|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|e,S|]>,e:<with|math-font-family|rm|calcolo_versore><around*|(|v|)>,<math-bf|if><space|0.27em>e=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,S:<matrix|<tformat|<table|<row|<cell|0>|<cell|-e<rsub|3,1>>|<cell|e<rsub|2,1>>>|<row|<cell|e<rsub|3,1>>|<cell|0>|<cell|-e<rsub|1,1>>>|<row|<cell|-e<rsub|2,1>>|<cell|e<rsub|1,1>>|<cell|0>>>>>,<math-up|return><around*|(|<math-up|factor><around*|(|S|)>|)>|)>>>
-    </unfolded-io>
+      )$
+    </input>
 
-    <\unfolded-io>
+    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
-    <|unfolded-io>
-      calcolo_autovettore(S):=block(
+    <|input>
+      calcoloMatriceAutovettori(S):=block(
 
-      [II,sII,sIImS,pS,autovalori,adj,adj1,adj2,adj3,aut1,aut2,aut3,mat_autovettori],
-
-      if scalarp(S) = true or listp(S) = true then return(0),
+      [II,sII,sIImS,polS,autovalori,adj,adj1,adj2,adj3,aut1,aut2,aut3,matAutovettori],
 
       \;
+
+      /*verificare che il parametro in ingresso sia una matrice*/
+
+      if scalarp(S) = true or listp(S) = true then return(-1),
+
+      \;
+
+      /*calcolare il polinomio caratteristico della matrice sII-S*/
 
       II:matrix([1,0,0],[0,1,0],[0,0,1]),
 
@@ -73,9 +75,15 @@
 
       sIImS:sII-S,
 
-      pS:fullratsimp(determinant(sIImS)),
+      polS:fullratsimp(determinant(sIImS)),
 
-      autovalori:solve(pS,s),
+      \;
+
+      /*calcolo degli autovalori a partire dal polinomio calcolato e
+      successivamente dell'aggiunta della matrice sII-S in cui si vanno ad
+      inserire i valori degli autovalori al posto della variabile s*/
+
+      autovalori:solve(polS,s),
 
       adj:adjoint(sIImS),
 
@@ -87,6 +95,12 @@
 
       \;
 
+      /*calcolo della matrice degli autovalori composta da: una colonna viene
+      presa tra quelle della matrice dell'aggiunta 1 che sia diversa da zero,
+      una colonna viene presa tra quelle della matrice dell'aggiunta 2 che
+      sia diversa da zero e una colonna tra quelle della matrice
+      dell'aggiunta 3 che sia diverda da zero*/
+
       aut0:matrix([0],[0],[0]),
 
       for i:1 thru 3 do (
@@ -97,6 +111,10 @@
 
       ),
 
+      if aut1 = aut0 then return(0),
+
+      \;
+
       for i:1 thru 3 do (
 
       \ aut2:matrix([adj2[1,i]],[adj2[2,i]],[adj2[3,i]]),
@@ -104,6 +122,10 @@
       \ if aut2 # aut0 then return(aut2)
 
       ),
+
+      if aut2 = aut0 then return(0),
+
+      \ 
 
       for i:1 thru 3 do (
 
@@ -113,46 +135,36 @@
 
       ),
 
-      mat_autovettori:matrix([aut1[1,1],aut2[1,1],aut3[1,1]],[aut1[2,1],aut2[2,1],aut3[2,1]],[aut1[3,1],aut2[3,1],aut3[3,1]]),
+      if aut3 = aut0 then return(0),
+
+      \ 
+
+      matAutovettori:matrix([aut1[1,1],aut2[1,1],aut3[1,1]],[aut1[2,1],aut2[2,1],aut3[2,1]],[aut1[3,1],aut2[3,1],aut3[3,1]]),
 
       \;
 
-      return(trigsimp(factor(mat_autovettori)))
+      return(trigsimp(factor(matAutovettori)))
 
-      )
-    <|unfolded-io>
-      \;
+      )$
+    </input>
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
-      >><with|math-font-family|rm|calcolo_autovettore><around*|(|S|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|II>,<math-up|sII>,<math-up|sIImS>,<math-up|pS>,<math-up|autovalori>,<math-up|adj>,<with|math-font-family|rm|adj1>,<with|math-font-family|rm|adj2>,<with|math-font-family|rm|adj3>,<with|math-font-family|rm|aut1>,<with|math-font-family|rm|aut2>,<with|math-font-family|rm|aut3>,<with|math-font-family|rm|mat_autovettori>|]>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|S|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|S|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<math-up|sII>:s*<math-up|II>,<math-up|sIImS>:<math-up|sII>-S,<math-up|pS>:<math-up|fullratsimp><around*|(|<math-up|determinant><around*|(|<math-up|sIImS>|)>|)>,<math-up|autovalori>:<math-up|solve><around*|(|<math-up|pS>,s|)>,<math-up|adj>:<math-up|adjoint><around*|(|<math-up|sIImS>|)>,<with|math-font-family|rm|adj1>:<math-up|subst><around*|(|<math-up|autovalori><rsub|1>,<math-up|adj>|)>,<with|math-font-family|rm|adj2>:<math-up|subst><around*|(|<math-up|autovalori><rsub|2>,<math-up|adj>|)>,<with|math-font-family|rm|adj3>:<math-up|subst><around*|(|<math-up|autovalori><rsub|3>,<math-up|adj>|)>,<with|math-font-family|rm|aut0>:<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<with|math-font-family|rm|aut1>:<matrix|<tformat|<table|<row|<cell|<with|math-font-family|rm|adj1><rsub|1,i>>>|<row|<cell|<with|math-font-family|rm|adj1><rsub|2,i>>>|<row|<cell|<with|math-font-family|rm|adj1><rsub|3,i>>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|aut1>\<neq\><with|math-font-family|rm|aut0><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|<with|math-font-family|rm|aut1>|)>|)>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<with|math-font-family|rm|aut2>:<matrix|<tformat|<table|<row|<cell|<with|math-font-family|rm|adj2><rsub|1,i>>>|<row|<cell|<with|math-font-family|rm|adj2><rsub|2,i>>>|<row|<cell|<with|math-font-family|rm|adj2><rsub|3,i>>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|aut2>\<neq\><with|math-font-family|rm|aut0><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|<with|math-font-family|rm|aut2>|)>|)>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em>3<space|0.27em><math-bf|do><space|0.27em><around*|(|<with|math-font-family|rm|aut3>:<matrix|<tformat|<table|<row|<cell|<with|math-font-family|rm|adj3><rsub|1,i>>>|<row|<cell|<with|math-font-family|rm|adj3><rsub|2,i>>>|<row|<cell|<with|math-font-family|rm|adj3><rsub|3,i>>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|aut3>\<neq\><with|math-font-family|rm|aut0><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|<with|math-font-family|rm|aut3>|)>|)>,<with|math-font-family|rm|mat_autovettori>:<matrix|<tformat|<table|<row|<cell|<with|math-font-family|rm|aut1><rsub|1,1>>|<cell|<with|math-font-family|rm|aut2><rsub|1,1>>|<cell|<with|math-font-family|rm|aut3><rsub|1,1>>>|<row|<cell|<with|math-font-family|rm|aut1><rsub|2,1>>|<cell|<with|math-font-family|rm|aut2><rsub|2,1>>|<cell|<with|math-font-family|rm|aut3><rsub|2,1>>>|<row|<cell|<with|math-font-family|rm|aut1><rsub|3,1>>|<cell|<with|math-font-family|rm|aut2><rsub|3,1>>|<cell|<with|math-font-family|rm|aut3><rsub|3,1>>>>>>,<math-up|return><around*|(|<math-up|trigsimp><around*|(|<math-up|factor><around*|(|<with|math-font-family|rm|mat_autovettori>|)>|)>|)>|)>>>
-    </unfolded-io>
-
-    <\unfolded-io>
+    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>4) >
-    <|unfolded-io>
-      calcolo_autovettore(matrix([0,-5,2],[5,0,-3],[-2,3,0]))
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
-      >><matrix|<tformat|<table|<row|<cell|-29>|<cell|-29>|<cell|9>>|<row|<cell|6-5*<sqrt|38>*\<mathi\>>|<cell|5*<sqrt|38>*\<mathi\>+6>|<cell|6>>|<row|<cell|2*<sqrt|38>*\<mathi\>+15>|<cell|15-2*<sqrt|38>*\<mathi\>>|<cell|15>>>>>>>
-    </unfolded-io>
+    <|input>
+      calcoloMatriceAutovalori(S):=block(
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>5) >
-    <|unfolded-io>
-      eigenvectors(matrix([0,-5,2],[5,0,-3],[-2,3,0]))
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
-      >><around*|[|<around*|[|<around*|[|-<sqrt|38>*\<mathi\>,<sqrt|38>*\<mathi\>,0|]>,<around*|[|1,1,1|]>|]>,<around*|[|<around*|[|<around*|[|1,<frac|5*<sqrt|38>*\<mathi\>-6|29>,-<frac|2*<sqrt|38>*\<mathi\>+15|29>|]>|]>,<around*|[|<around*|[|1,-<frac|5*<sqrt|38>*\<mathi\>+6|29>,<frac|2*<sqrt|38>*\<mathi\>-15|29>|]>|]>,<around*|[|<around*|[|1,<frac|2|3>,<frac|5|3>|]>|]>|]>|]>>>
-    </unfolded-io>
+      [II,sII,sIImS,polS,autovalori,mat1,mat2,mat3,matAutovalori],
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>6) >
-    <|unfolded-io>
-      calcolo_autovalore(S):=block(
+      \;
 
-      [II,sII,sIImS,pS,autovalori,mat1,mat2,mat3,mat_autovalori],
+      /*controllare il tipo di dato del parametro in ingresso*/
 
-      if scalarp(S) = true or listp(S) = true then return(0),
+      if scalarp(S) = true or listp(S) = true then return(-1),
+
+      \;
+
+      /*calcolare il polinomio caratteristico della matrice sII-S e
+      successivamente calcolo degli autovalori*/
 
       II:matrix([1,0,0],[0,1,0],[0,0,1]),
 
@@ -160,9 +172,13 @@
 
       sIImS:sII-S,
 
-      pS:fullratsimp(determinant(sIImS)),
+      polS:fullratsimp(determinant(sIImS)),
 
-      autovalori:solve(pS,s),
+      autovalori:solve(polS,s),
+
+      \;
+
+      /*creazione della matrice degli autovalori*/
 
       mat1:matrix([s,0,0],[0,0,0],[0,0,0]),
 
@@ -176,58 +192,117 @@
 
       mat3:subst(autovalori[3],mat3),
 
-      mat_autovalori:mat1+mat2+mat3,
+      matAutovalori:mat1+mat2+mat3,
 
-      return(mat_autovalori)
+      return(matAutovalori)
 
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
-      >><with|math-font-family|rm|calcolo_autovalore><around*|(|S|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|II>,<math-up|sII>,<math-up|sIImS>,<math-up|pS>,<math-up|autovalori>,<with|math-font-family|rm|mat1>,<with|math-font-family|rm|mat2>,<with|math-font-family|rm|mat3>,<with|math-font-family|rm|mat_autovalori>|]>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|S|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|S|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<math-up|sII>:s*<math-up|II>,<math-up|sIImS>:<math-up|sII>-S,<math-up|pS>:<math-up|fullratsimp><around*|(|<math-up|determinant><around*|(|<math-up|sIImS>|)>|)>,<math-up|autovalori>:<math-up|solve><around*|(|<math-up|pS>,s|)>,<with|math-font-family|rm|mat1>:<matrix|<tformat|<table|<row|<cell|s>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>,<with|math-font-family|rm|mat2>:<matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|s>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>,<with|math-font-family|rm|mat3>:<matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|s>>>>>,<with|math-font-family|rm|mat1>:<math-up|subst><around*|(|<math-up|autovalori><rsub|1>,<with|math-font-family|rm|mat1>|)>,<with|math-font-family|rm|mat2>:<math-up|subst><around*|(|<math-up|autovalori><rsub|2>,<with|math-font-family|rm|mat2>|)>,<with|math-font-family|rm|mat3>:<math-up|subst><around*|(|<math-up|autovalori><rsub|3>,<with|math-font-family|rm|mat3>|)>,<with|math-font-family|rm|mat_autovalori>:<with|math-font-family|rm|mat1>+<with|math-font-family|rm|mat2>+<with|math-font-family|rm|mat3>,<math-up|return><around*|(|<with|math-font-family|rm|mat_autovalori>|)>|)>>>
-    </unfolded-io>
+      )$
+    </input>
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>7) >
-    <|unfolded-io>
-      calcolo_autovalore(matrix([0,-5,2],[5,0,-3],[-2,3,0]))
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
-      >><matrix|<tformat|<table|<row|<cell|-<sqrt|38>*\<mathi\>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<sqrt|38>*\<mathi\>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>>>
-    </unfolded-io>
+    \;
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>8) >
-    <|unfolded-io>
-      calcolo_matriceR(asse,angolo):=block(
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    La funzione \PmatriceDiRotazione\Q riceve in ingresso un vettore \Pv\Q ed
+    uno scalare \Pangolo\Q, e calcola la matrice di rotazione R per mezzo
+    delle matrici degli autovalori e degli autovettori.
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>11) >
+    <|input>
+      matriceDiRotazione(vettore,angolo):=block(
 
       [e,norma2,S,matAutovettori,matAutovettoriInv,matAutovalori,matEsponenziale,R],
 
-      /*la funzione seguente torna 0 se l'asse non è una matrice o se è un
-      vettore identicamente nullo*/
+      /*la funzione seguente torna 0 se il vettore non è una matrice o se è
+      un vettore identicamente nullo*/
 
-      e:calcolo_versore(asse),
+      e:calcoloVersore(vettore),
 
       if e = 0 then return(0),
 
-      S:mat_antisimmetricaS(e),
+      S:matAntisimmetrica(e),
 
       \;
 
-      norma2:sqrt((asse[1,1]^2)+(asse[2,1]^2)+(asse[3,1]^2)),
+      /*normalizzazione dell'angolo se il vettore non è un versore*/
 
-      theta:%pi*(angolo/180),
+      norma2:sqrt((vettore[1,1]^2)+(vettore[2,1]^2)+(vettore[3,1]^2)),
 
-      if norma2 # 1 then theta:norma2*theta,
+      if norma2 # 1 then angolo:norma2*angolo,
 
       \;
 
-      matAutovettori:calcolo_autovettore(S),
+      /*calcolo di tutte le matrici necessarie per calcolare la matrice di
+      rotazione R finale*/
+
+      matAutovettori:calcoloMatriceAutovettori(S),
 
       matAutovettoriInv:trigsimp(factor(invert(matAutovettori))),
 
-      matAutovalori:calcolo_autovalore(S),
+      matAutovalori:calcoloMatriceAutovalori(S),
 
-      matEsponenziale:matrix([exp(matAutovalori[1,1]*theta),0,0],[0,exp(matAutovalori[2,2]*theta),0],[0,0,exp(matAutovalori[3,3]*theta)]),
+      matEsponenziale:matrix([exp(matAutovalori[1,1]*angolo),0,0],[0,exp(matAutovalori[2,2]*angolo),0],[0,0,exp(matAutovalori[3,3]*angolo)]),
 
       \;
 
@@ -240,70 +315,109 @@
       /*La funzione "demoivre" permette di trasformare l'esponenziale in seno
       e coseno*/
 
-      R:trigsimp(trigreduce(factor(demoivre(R))))
+      R:trigsimp(trigreduce(factor(demoivre(R)))),
 
-      )
+      radR:float(R),
+
+      return([R,radR])
+
+      )$
+    </input>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>12) >
+    <|unfolded-io>
+      R:matriceDiRotazione(matrix([1],[0],[0]),theta)
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
+      >><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|\<mathe\><rsup|-\<mathi\>*\<vartheta\>>*<around*|(|\<mathe\><rsup|2*\<mathi\>*\<vartheta\>>+1|)>|2>>|<cell|<frac|\<mathe\><rsup|-\<mathi\>*\<vartheta\>>*<around*|(|\<mathi\>*\<mathe\><rsup|2*\<mathi\>*\<vartheta\>>-\<mathi\>|)>|2>>>|<row|<cell|0>|<cell|-<frac|\<mathe\><rsup|-\<mathi\>*\<vartheta\>>*<around*|(|\<mathi\>*\<mathe\><rsup|2*\<mathi\>*\<vartheta\>>-\<mathi\>|)>|2>>|<cell|<frac|\<mathe\><rsup|-\<mathi\>*\<vartheta\>>*<around*|(|\<mathe\><rsup|2*\<mathi\>*\<vartheta\>>+1|)>|2>>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>7) >
+    <|unfolded-io>
+      R:matriceDiRotazione(matrix([0],[1],[0]),%pi)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|-1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-1>>>>>,<matrix|<tformat|<table|<row|<cell|-1.0>|<cell|0.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|1.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|0.0>|<cell|-1.0>>>>>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>8) >
+    <|unfolded-io>
+      R:matriceDiRotazione(matrix([0],[0],[1]),%pi/3)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
-      >><with|math-font-family|rm|calcolo_matriceR><around*|(|<math-up|asse>,<math-up|angolo>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|e,<with|math-font-family|rm|norma2>,S,<math-up|matAutovettori>,<math-up|matAutovettoriInv>,<math-up|matAutovalori>,<math-up|matEsponenziale>,R|]>,e:<with|math-font-family|rm|calcolo_versore><around*|(|<math-up|asse>|)>,<math-bf|if><space|0.27em>e=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,S:<with|math-font-family|rm|mat_antisimmetricaS><around*|(|e|)>,<with|math-font-family|rm|norma2>:<sqrt|<math-up|asse><rsub|1,1><rsup|2>+<math-up|asse><rsub|2,1><rsup|2>+<math-up|asse><rsub|3,1><rsup|2>>,\<vartheta\>:\<pi\>*<around*|(|<frac|<math-up|angolo>|180>|)>,<math-bf|if><space|0.27em><with|math-font-family|rm|norma2>\<neq\>1<space|0.27em><math-bf|then><space|0.27em>\<vartheta\>:<with|math-font-family|rm|norma2>*\<vartheta\>,<math-up|matAutovettori>:<with|math-font-family|rm|calcolo_autovettore><around*|(|S|)>,<math-up|matAutovettoriInv>:<math-up|trigsimp><around*|(|<math-up|factor><around*|(|<math-up|invert><around*|(|<math-up|matAutovettori>|)>|)>|)>,<math-up|matAutovalori>:<with|math-font-family|rm|calcolo_autovalore><around*|(|S|)>,<math-up|matEsponenziale>:<matrix|<tformat|<table|<row|<cell|exp
-      <around*|(|<math-up|matAutovalori><rsub|1,1>*\<vartheta\>|)>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|exp
-      <around*|(|<math-up|matAutovalori><rsub|2,2>*\<vartheta\>|)>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|exp
-      <around*|(|<math-up|matAutovalori><rsub|3,3>*\<vartheta\>|)>>>>>>,R:<math-up|trigsimp><around*|(|<math-up|factor><around*|(|<math-up|matEsponenziale>\<cdot\><math-up|matAutovettoriInv>|)>|)>,R:<math-up|trigsimp><around*|(|<math-up|factor><around*|(|<math-up|matAutovettori>\<cdot\>R|)>|)>,R:<math-up|trigsimp><around*|(|<math-up|trigreduce><around*|(|<math-up|factor><around*|(|<math-up|demoivre><around*|(|R|)>|)>|)>|)>|)>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|1|2>>|<cell|-<frac|<sqrt|3>|2>>|<cell|0>>|<row|<cell|<frac|<sqrt|3>|2>>|<cell|<frac|1|2>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|0.5>|<cell|-0.8660254037844386>|<cell|0.0>>|<row|<cell|0.8660254037844386>|<cell|0.5>|<cell|0.0>>|<row|<cell|0.0>|<cell|0.0>|<cell|1.0>>>>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|unfolded-io>
-      R:calcolo_matriceR(matrix([1],[1],[0]),90)
+      R:matriceDiRotazione(matrix([1],[1],[0]),%pi)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|cos
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>+1|2>>|<cell|-<frac|cos
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>-1|2>>|<cell|<frac|sin
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>|<sqrt|2>>>>|<row|<cell|-<frac|cos
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>-1|2>>|<cell|<frac|cos
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>+1|2>>|<cell|-<frac|sin
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>|<sqrt|2>>>>|<row|<cell|-<frac|sin
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>|<sqrt|2>>>|<cell|<frac|sin
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>|<sqrt|2>>>|<cell|cos
-      <around*|(|<frac|\<pi\>|<sqrt|2>>|)>>>>>>>>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>+1|2>>|<cell|-<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>-1|2>>|<cell|<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>>|<row|<cell|-<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>-1|2>>|<cell|<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>+1|2>>|<cell|-<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>>|<row|<cell|-<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>|<cell|<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>|<cell|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>>>>>>,<matrix|<tformat|<table|<row|<cell|0.3668723289792922>|<cell|0.6331276710207079>|<cell|-0.6815820173810371>>|<row|<cell|0.6331276710207079>|<cell|0.3668723289792922>|<cell|0.6815820173810371>>|<row|<cell|0.6815820173810371>|<cell|-0.6815820173810371>|<cell|-0.2662553420414157>>>>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>10) >
     <|unfolded-io>
-      R:calcolo_matriceR(matrix([1/sqrt(3)],[1/sqrt(3)],[-1/sqrt(3)]),120)
+      R:matriceDiRotazione(matrix([1],[0],[1]),%pi)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
-      >><matrix|<tformat|<table|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-1>>|<row|<cell|-1>|<cell|0>|<cell|0>>>>>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>+1|2>>|<cell|-<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>|<cell|-<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>-1|2>>>|<row|<cell|<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>|<cell|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>>|<cell|-<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>>|<row|<cell|-<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>-1|2>>|<cell|<frac|sin
+      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>|<cell|<frac|cos
+      <around*|(|<sqrt|2>*\<pi\>|)>+1|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0.3668723289792922>|<cell|0.6815820173810371>|<cell|0.6331276710207079>>|<row|<cell|-0.6815820173810371>|<cell|-0.2662553420414157>|<cell|0.6815820173810371>>|<row|<cell|0.6331276710207079>|<cell|-0.6815820173810371>|<cell|0.3668723289792922>>>>>|]>>>
     </unfolded-io>
 
-    <\unfolded-io>
+    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>11) >
-    <|unfolded-io>
-      R:calcolo_matriceR(matrix([1],[0],[0]),alpha)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
-      >><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|cos
-      <around*|(|<frac|\<pi\>*\<alpha\>|180>|)>>|<cell|-sin
-      <around*|(|<frac|\<pi\>*\<alpha\>|180>|)>>>|<row|<cell|0>|<cell|sin
-      <around*|(|<frac|\<pi\>*\<alpha\>|180>|)>>|<cell|cos
-      <around*|(|<frac|\<pi\>*\<alpha\>|180>|)>>>>>>>>
-    </unfolded-io>
+    <|input>
+      \;
+    </input>
   </session>
+
+  \;
+
+  \;
 
   Per questa procedura ho creato una serie di funzioni che svolgono ognuna un
   compito ben definito. C'è quella che calcola il versore e quella che
-  calcola la matrice antisimmetrica, per poi passare a funzioni più
-  particolari che calcolano le matrici degli autovettori e degli autovalori.
+  calcola la matrice antisimmetrica.
 
-  Per definizione so che gli autovettori della matrice A sono autovalori
-  anche della matrice e^(At) per cui una volta trovati posso usare le formule
-  R(\<theta\>)=<math|V*e<rsup|A\<theta\>>*V<rsup|-1>> per calcolare la
-  matrice di rotazione intorno al vettore \Pv\Q di un certo angolo \<theta\>.
+  Poi si passa a funzioni più particolari che calcolano le matrici degli
+  autovettori e degli autovalori.
+
+  Gli autovettori della matrice A sono anche autovettori della matrice
+  <math|e<rsup|A*t>> per cui una volta trovati posso usare le formule
+  R(\<theta\>)=<math|V*e<rsup|\<Lambda\>\<theta\>>*V<rsup|-1>> per calcolare
+  la matrice di rotazione intorno al vettore \Pv\Q di un certo angolo
+  \<theta\>, dove l'esponente <strong|><math|\<b-Lambda\>> indica la matrice
+  degli autovalori.
 
   La funzione DEMOIVRE permette di sostituire la funzione esponenziale in
-  funzione con seno e coseno.
+  funzioni con seno e coseno.
 </body>
 
 <\initial>

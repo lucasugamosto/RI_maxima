@@ -3,105 +3,64 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
-  PROCEDURA PER IL CALCOLO DELL'ORIENTAMENTO INVERSO PER TUTTE LE STRUTTURE
-  PORTANTI, AVENDP SCELTO COME CASO DI STUDIO LA TERNA DI EULERO X,Y,X.
+  PROCEDURA 18: Risolvere il problema dell'orientamento inverso scegliendo
+  una terna di Eulero ed applicarla a tutte le strutture portanti viste a
+  lezione
 
-  <\with|color|red>
-    Procedura che, considerando una delle 6 terne di Eulero, risolve il
-    problema dell'orientamento inverso su tutte le strutture portanti
-    studiate. Come terna considero la seguente:
-    R<rsub|x>(\<alpha\>).R<rsub|y>(\<beta\>).R<rsub|x>(\<gamma\>).
-  </with>
+  Calcolo orientamento inverso tramite la terna di Eulero
+  <math|R<rsub|x><around*|(|\<alpha\>|)>*R<rsub|y><around*|(|\<beta\>|)>*R<rsub|x><around*|(|\<gamma\>|)>>
 
   <\session|maxima|default>
-    Ricavo la matrice simbolica dal prodotto di
-    R<rsub|x>(\<alpha\>).R<rsub|y>(\<beta\>).R<rsub|x>(\<gamma\>):
-
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>1) >
     <|unfolded-io>
-      mat_generica(alpha,beta,gamma):=block(
+      calcoloOrientamentoXYX(R):=block(
 
-      [Rx1,Rx2,Ry,mat],
+      [transpose,finalR,II,det,alpha,beta,gamma,s1,s2,c1,c2,mat],
 
-      Rx1:matrix([1,0,0],[0,cos(alpha),-sin(alpha)],[0,sin(alpha),cos(alpha)]),
+      \;
 
-      Rx2:matrix([1,0,0],[0,cos(gamma),-sin(gamma)],[0,sin(gamma),cos(gamma)]),
+      /*controllare che il parametro in ingresso è di tipo matriciale*/
 
-      Ry:matrix([cos(beta),0,sin(beta)],[0,1,0],[-sin(beta),0,cos(beta)]),
+      if scalarp(R) = true or listp(R) = true then return(-2),
 
-      mat:Rx1.Ry.Rx2,
+      \;
 
-      let(cos(alpha),c[alpha]),
+      /*controllare che la matrice in ingresso sia di rotazione*/
 
-      let(sin(alpha),s[alpha]),
+      transposeR:trigrat(trigreduce(factor(transpose(R)))),
 
-      let(cos(beta),c[beta]),
-
-      let(sin(beta),s[beta]),
-
-      let(cos(gamma),c[gamma]),
-
-      let(sin(gamma),s[gamma]),
-
-      mat:letsimp(mat)
-
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o1>)
-      >><with|math-font-family|rm|mat_generica><around*|(|\<alpha\>,\<beta\>,\<gamma\>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<with|math-font-family|rm|Rx1>,<with|math-font-family|rm|Rx2>,<math-up|Ry>,<math-up|mat>|]>,<with|math-font-family|rm|Rx1>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|cos
-      <around*|(|\<alpha\>|)>>|<cell|-sin
-      <around*|(|\<alpha\>|)>>>|<row|<cell|0>|<cell|sin
-      <around*|(|\<alpha\>|)>>|<cell|cos <around*|(|\<alpha\>|)>>>>>>,<with|math-font-family|rm|Rx2>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|cos
-      <around*|(|\<gamma\>|)>>|<cell|-sin
-      <around*|(|\<gamma\>|)>>>|<row|<cell|0>|<cell|sin
-      <around*|(|\<gamma\>|)>>|<cell|cos <around*|(|\<gamma\>|)>>>>>>,<math-up|Ry>:<matrix|<tformat|<table|<row|<cell|cos
-      <around*|(|\<beta\>|)>>|<cell|0>|<cell|sin
-      <around*|(|\<beta\>|)>>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|-sin
-      <around*|(|\<beta\>|)>>|<cell|0>|<cell|cos
-      <around*|(|\<beta\>|)>>>>>>,<math-up|mat>:<with|math-font-family|rm|Rx1>\<cdot\><math-up|Ry>\<cdot\><with|math-font-family|rm|Rx2>,<math-up|let><around*|(|cos
-      <around*|(|\<alpha\>|)>,c<rsub|\<alpha\>>|)>,<math-up|let><around*|(|sin
-      <around*|(|\<alpha\>|)>,s<rsub|\<alpha\>>|)>,<math-up|let><around*|(|cos
-      <around*|(|\<beta\>|)>,c<rsub|\<beta\>>|)>,<math-up|let><around*|(|sin
-      <around*|(|\<beta\>|)>,s<rsub|\<beta\>>|)>,<math-up|let><around*|(|cos
-      <around*|(|\<gamma\>|)>,c<rsub|\<gamma\>>|)>,<math-up|let><around*|(|sin
-      <around*|(|\<gamma\>|)>,s<rsub|\<gamma\>>|)>,<math-up|mat>:<math-up|letsimp><around*|(|<math-up|mat>|)>|)>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>2) >
-    <|unfolded-io>
-      calcolo_orientamento(R):=block(
-
-      [RT,R_tot,II,det,a,b,g,s,c,sol],
-
-      RT:transpose(R),
-
-      R_tot:trigsimp(R.RT),
+      finalR:trigrat(trigreduce(factor(R.transposeR))),
 
       II:matrix([1,0,0],[0,1,0],[0,0,1]),
 
-      if R_tot # II then return(0),
+      if finalR # II then return(-1),
 
-      det:trigsimp(determinant(R)),
+      det:trigsimp(trigreduce(determinant(R))),
 
-      if det # 1 then return(0),
+      if det # 1 then return(-1),
 
       \;
+
+      /*controllare e calcolare la variabile trigonometrica 'beta'*/
 
       if R[1,1] = 1 or R[1,1] = -1 then return(0),
 
       c[beta]:R[1,1],
 
-      s1[beta]:sqrt(1-(R[1,1])^2),
+      s1[beta]:sqrt(1-(R[1,1]^2)),
 
-      s2[beta]:-sqrt(1-(R[1,1])^2),
+      s2[beta]:-sqrt(1-(R[1,1]^2)),
 
       b[1]:atan2(s1[beta],c[beta]),
 
       b[2]:atan2(s2[beta],c[beta]),
 
       \;
+
+      /*controllare e calcolare la varianile trigonometrica 'gamma'*/
+
+      if s1[beta] = 0 then return(0),
 
       c1[gamma]:R[1,3]/s1[beta],
 
@@ -117,6 +76,10 @@
 
       \;
 
+      /*controllare e calcolare la variabile trigonometrica 'alpha'*/
+
+      if s1[beta] = 0 then return(0),
+
       c1[alpha]:-R[3,1]/s1[beta],
 
       c2[alpha]:-R[3,1]/s2[beta],
@@ -131,24 +94,121 @@
 
       \;
 
-      sol[1]:matrix([a[1]],[b[1]],[g[1]]),
+      mat:matrix([variabile,soluzione1,soluzione2],[ALPHA,a[1],a[2]],[BETA,b[1],b[2]],[GAMMA,g[1],g[2]]),
 
-      sol[2]:matrix([a[2]],[b[2]],[g[2]]),
-
-      sol:[sol[1],sol[2]]
+      return(mat)
 
       )
 
       \;
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
-      >><with|math-font-family|rm|calcolo_orientamento><around*|(|R|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|RT>,<with|math-font-family|rm|R_tot>,<math-up|II>,<math-up|det>,a,b,g,s,c,<math-up|sol>|]>,<math-up|RT>:<math-up|transpose><around*|(|R|)>,<with|math-font-family|rm|R_tot>:<math-up|trigsimp><around*|(|R\<cdot\><math-up|RT>|)>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<math-bf|if><space|0.27em><with|math-font-family|rm|R_tot>\<neq\><math-up|II><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-up|det>:<math-up|trigsimp><around*|(|<math-up|determinant><around*|(|R|)>|)>,<math-bf|if><space|0.27em><math-up|det>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<math-bf|if><space|0.27em>R<rsub|1,1>=1\<vee\>R<rsub|1,1>=-1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,c<rsub|\<beta\>>:R<rsub|1,1>,<with|math-font-family|rm|s1><rsub|\<beta\>>:<sqrt|1-R<rsub|1,1><rsup|2>>,<with|math-font-family|rm|s2><rsub|\<beta\>>:-<sqrt|1-R<rsub|1,1><rsup|2>>,b<rsub|1>:<math-up|atan2><around*|(|<with|math-font-family|rm|s1><rsub|\<beta\>>,c<rsub|\<beta\>>|)>,b<rsub|2>:<math-up|atan2><around*|(|<with|math-font-family|rm|s2><rsub|\<beta\>>,c<rsub|\<beta\>>|)>,<with|math-font-family|rm|c1><rsub|\<gamma\>>:<frac|R<rsub|1,3>|<with|math-font-family|rm|s1><rsub|\<beta\>>>,<with|math-font-family|rm|c2><rsub|\<gamma\>>:<frac|R<rsub|1,3>|<with|math-font-family|rm|s2><rsub|\<beta\>>>,<with|math-font-family|rm|s1><rsub|\<gamma\>>:<frac|R<rsub|1,2>|<with|math-font-family|rm|s1><rsub|\<beta\>>>,<with|math-font-family|rm|s2><rsub|\<gamma\>>:<frac|R<rsub|1,2>|<with|math-font-family|rm|s2><rsub|\<beta\>>>,g<rsub|1>:<math-up|atan2><around*|(|<with|math-font-family|rm|s1><rsub|\<gamma\>>,<with|math-font-family|rm|c1><rsub|\<gamma\>>|)>,g<rsub|2>:<math-up|atan2><around*|(|<with|math-font-family|rm|s2><rsub|\<gamma\>>,<with|math-font-family|rm|c2><rsub|\<gamma\>>|)>,<with|math-font-family|rm|c1><rsub|\<alpha\>>:<frac|-R<rsub|3,1>|<with|math-font-family|rm|s1><rsub|\<beta\>>>,<with|math-font-family|rm|c2><rsub|\<alpha\>>:<frac|-R<rsub|3,1>|<with|math-font-family|rm|s2><rsub|\<beta\>>>,<with|math-font-family|rm|s1><rsub|\<alpha\>>:<frac|R<rsub|2,1>|<with|math-font-family|rm|s1><rsub|\<beta\>>>,<with|math-font-family|rm|s2><rsub|\<alpha\>>:<frac|R<rsub|2,1>|<with|math-font-family|rm|s2><rsub|\<beta\>>>,a<rsub|1>:<math-up|atan2><around*|(|<with|math-font-family|rm|s1><rsub|\<alpha\>>,<with|math-font-family|rm|c1><rsub|\<alpha\>>|)>,a<rsub|2>:<math-up|atan2><around*|(|<with|math-font-family|rm|s2><rsub|\<alpha\>>,<with|math-font-family|rm|c2><rsub|\<alpha\>>|)>,<math-up|sol><rsub|1>:<matrix|<tformat|<table|<row|<cell|a<rsub|1>>>|<row|<cell|b<rsub|1>>>|<row|<cell|g<rsub|1>>>>>>,<math-up|sol><rsub|2>:<matrix|<tformat|<table|<row|<cell|a<rsub|2>>>|<row|<cell|b<rsub|2>>>|<row|<cell|g<rsub|2>>>>>>,<math-up|sol>:<around*|[|<math-up|sol><rsub|1>,<math-up|sol><rsub|2>|]>|)>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o1>)
+      >><math-up|calcoloOrientamentoXYX><around*|(|R|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|transpose>,<math-up|finalR>,<math-up|II>,<math-up|det>,\<alpha\>,\<beta\>,\<gamma\>,<with|math-font-family|rm|s1>,<with|math-font-family|rm|s2>,<with|math-font-family|rm|c1>,<with|math-font-family|rm|c2>,<math-up|mat>|]>,<math-bf|if><space|0.27em><math-up|scalarp><around*|(|R|)>=<math-bf|true>\<vee\><math-up|listp><around*|(|R|)>=<math-bf|true><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|-2|)>,<math-up|transposeR>:<math-up|trigrat><around*|(|<math-up|trigreduce><around*|(|<math-up|factor><around*|(|<math-up|transpose><around*|(|R|)>|)>|)>|)>,<math-up|finalR>:<math-up|trigrat><around*|(|<math-up|trigreduce><around*|(|<math-up|factor><around*|(|R\<cdot\><math-up|transposeR>|)>|)>|)>,<math-up|II>:<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>,<math-bf|if><space|0.27em><math-up|finalR>\<neq\><math-up|II><space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|-1|)>,<math-up|det>:<math-up|trigsimp><around*|(|<math-up|trigreduce><around*|(|<math-up|determinant><around*|(|R|)>|)>|)>,<math-bf|if><space|0.27em><math-up|det>\<neq\>1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|-1|)>,<math-bf|if><space|0.27em>R<rsub|1,1>=1\<vee\>R<rsub|1,1>=-1<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,c<rsub|\<beta\>>:R<rsub|1,1>,<with|math-font-family|rm|s1><rsub|\<beta\>>:<sqrt|1-R<rsub|1,1><rsup|2>>,<with|math-font-family|rm|s2><rsub|\<beta\>>:-<sqrt|1-R<rsub|1,1><rsup|2>>,b<rsub|1>:<math-up|atan2><around*|(|<with|math-font-family|rm|s1><rsub|\<beta\>>,c<rsub|\<beta\>>|)>,b<rsub|2>:<math-up|atan2><around*|(|<with|math-font-family|rm|s2><rsub|\<beta\>>,c<rsub|\<beta\>>|)>,<math-bf|if><space|0.27em><with|math-font-family|rm|s1><rsub|\<beta\>>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<with|math-font-family|rm|c1><rsub|\<gamma\>>:<frac|R<rsub|1,3>|<with|math-font-family|rm|s1><rsub|\<beta\>>>,<with|math-font-family|rm|c2><rsub|\<gamma\>>:<frac|R<rsub|1,3>|<with|math-font-family|rm|s2><rsub|\<beta\>>>,<with|math-font-family|rm|s1><rsub|\<gamma\>>:<frac|R<rsub|1,2>|<with|math-font-family|rm|s1><rsub|\<beta\>>>,<with|math-font-family|rm|s2><rsub|\<gamma\>>:<frac|R<rsub|1,2>|<with|math-font-family|rm|s2><rsub|\<beta\>>>,g<rsub|1>:<math-up|atan2><around*|(|<with|math-font-family|rm|s1><rsub|\<gamma\>>,<with|math-font-family|rm|c1><rsub|\<gamma\>>|)>,g<rsub|2>:<math-up|atan2><around*|(|<with|math-font-family|rm|s2><rsub|\<gamma\>>,<with|math-font-family|rm|c2><rsub|\<gamma\>>|)>,<math-bf|if><space|0.27em><with|math-font-family|rm|s1><rsub|\<beta\>>=0<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|0|)>,<with|math-font-family|rm|c1><rsub|\<alpha\>>:<frac|-R<rsub|3,1>|<with|math-font-family|rm|s1><rsub|\<beta\>>>,<with|math-font-family|rm|c2><rsub|\<alpha\>>:<frac|-R<rsub|3,1>|<with|math-font-family|rm|s2><rsub|\<beta\>>>,<with|math-font-family|rm|s1><rsub|\<alpha\>>:<frac|R<rsub|2,1>|<with|math-font-family|rm|s1><rsub|\<beta\>>>,<with|math-font-family|rm|s2><rsub|\<alpha\>>:<frac|R<rsub|2,1>|<with|math-font-family|rm|s2><rsub|\<beta\>>>,a<rsub|1>:<math-up|atan2><around*|(|<with|math-font-family|rm|s1><rsub|\<alpha\>>,<with|math-font-family|rm|c1><rsub|\<alpha\>>|)>,a<rsub|2>:<math-up|atan2><around*|(|<with|math-font-family|rm|s2><rsub|\<alpha\>>,<with|math-font-family|rm|c2><rsub|\<alpha\>>|)>,<math-up|mat>:<matrix|<tformat|<table|<row|<cell|<math-up|variabile>>|<cell|<with|math-font-family|rm|soluzione1>>|<cell|<with|math-font-family|rm|soluzione2>>>|<row|<cell|<math-up|ALPHA>>|<cell|a<rsub|1>>|<cell|a<rsub|2>>>|<row|<cell|<math-up|BETA>>|<cell|b<rsub|1>>|<cell|b<rsub|2>>>|<row|<cell|<math-up|GAMMA>>|<cell|g<rsub|1>>|<cell|g<rsub|2>>>>>>,<math-up|return><around*|(|<math-up|mat>|)>|)>>>
     </unfolded-io>
+
+    \;
+
+    \;
+
+    Una seconda terna di Eulero utile è quella
+    <math|R<rsub|z><around*|(|\<alpha\>|)>*R<rsub|x><around*|(|\<beta\>|)>*R<rsub|z><around*|(|\<gamma\>|)>>,
+    questa infatti permette di trovare soluzioni più semplici per le
+    strutture sferico 1, sferico 2 poichè selezionano elementi più semplici.
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>2) >
+    <|input>
+      calcoloOrientamentoZXZ(R):=block(
+
+      [],
+
+      \;
+
+      /*controllare che il parametro in ingresso sia di tipo matriciale*/
+
+      if scalar(R) = true or listp(R) = true then return (-2),
+
+      \;
+
+      /*controllare che la matrice in ingresso sia di rotazione*/
+
+      transposeR:trigrat(trigreduce(factor(transpose(R)))),
+
+      finalR:trigrat(trigreduce(factor(R.transposeR))),
+
+      II:matrix([1,0,0],[0,1,0],[0,0,1]),
+
+      if finalR # II then return(-1),
+
+      det:trigsimp(trigreduce(determinant(R))),
+
+      if det # 1 then return(-1),
+
+      \;
+
+      /*controllare e calcolare la variabile trigonometrica 'beta'*/
+
+      if R[3,3] = 1 or R[3,3] = -1 then return(0),
+
+      c[beta]:R[3,3],
+
+      s1[beta]:sqrt(1-(R[3,3]^2)),
+
+      s2[beta]:-sqrt(1-(R[3,3]^2)),
+
+      b[1]:atan2(s1[beta],c[beta]),
+
+      b[2]:atan2(s2[beta],c[beta]),
+
+      \;
+
+      /*controllare e calcolare la varianile trigonometrica 'gamma'*/
+
+      if s1[beta] = 0 then return(0),
+
+      c1[gamma]:R[3,2]/s1[beta],
+
+      c2[gamma]:R[3,2]/s2[beta],
+
+      s1[gamma]:R[3,1]/s1[beta],
+
+      s2[gamma]:R[3,1]/s2[beta],
+
+      g[1]:atan2(s1[gamma],c1[gamma]),
+
+      g[2]:atan2(s2[gamma],c2[gamma]),
+
+      \;
+
+      /*controllare e calcolare la variabile trigonometrica 'alpha'*/
+
+      if s1[beta] = 0 then return(0),
+
+      c1[alpha]:-R[2,3]/s1[beta],
+
+      c2[alpha]:-R[2,3]/s2[beta],
+
+      s1[alpha]:R[1,3]/s1[beta],
+
+      s2[alpha]:R[1,3]/s2[beta],
+
+      a[1]:atan2(s1[alpha],c1[alpha]),
+
+      a[2]:atan2(s2[alpha],c2[alpha]),
+
+      \;
+
+      mat:matrix([variabile,soluzione1,soluzione2],[ALPHA,a[1],a[2]],[BETA,b[1],b[2]],[GAMMA,g[1],g[2]]),
+
+      return(mat)
+
+      )$
+    </input>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
     <|unfolded-io>
-      R_RR:matrix([cos(q[1]+q[2]),-sin(q[1]+q[2]),0],[sin(q[1]+q[2]),cos(q[1]+q[2]),0],[0,0,1])
+      RRMatrix:matrix([cos(q[1]+q[2]),-sin(q[1]+q[2]),0],[sin(q[1]+q[2]),cos(q[1]+q[2]),0],[0,0,1])
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
       >><matrix|<tformat|<table|<row|<cell|cos
@@ -161,26 +221,22 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>4) >
     <|input>
-      orientamento_RR:calcolo_orientamento(R_RR)$
+      calcoloOrientamentoXYX(RRMatrix)$
     </input>
 
-    \;
-
-    <\equation*>
-      <matrix|<tformat|<table|<row|<cell|<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|2>+q<rsub|1>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>>,0|)>>>|<row|<cell|<math-up|atan2><around*|(|<sqrt|1-cos
-      <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>,cos
-      <around*|(|q<rsub|2>+q<rsub|1>|)>|)>>>|<row|<cell|-<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|2>+q<rsub|1>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>>,0|)>>>>>>,<matrix|<tformat|<table|<row|<cell|-<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|2>+q<rsub|1>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>>,0|)>>>|<row|<cell|-<math-up|atan2><around*|(|<sqrt|1-cos
-      <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>,cos
-      <around*|(|q<rsub|2>+q<rsub|1>|)>|)>>>|<row|<cell|<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|2>+q<rsub|1>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>>,0|)>>>>>>
-    </equation*>
+    <matrix|<tformat|<table|<row|<cell|<math-up|variabile>>|<cell|<with|math-font-family|rm|soluzione1>>|<cell|<with|math-font-family|rm|soluzione2>>>|<row|<cell|<math-up|ALPHA>>|<cell|<math-up|atan2><around*|(|<frac|sin
+    <around*|(|q<rsub|2>+q<rsub|1>|)>|<sqrt|1-cos
+    <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>>,0|)>>|<cell|-<math-up|atan2><around*|(|<frac|sin
+    <around*|(|q<rsub|2>+q<rsub|1>|)>|<sqrt|1-cos
+    <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>>,0|)>>>|<row|<cell|<math-up|BETA>>|<cell|<math-up|atan2><around*|(|<sqrt|1-cos
+    <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>,cos
+    <around*|(|q<rsub|2>+q<rsub|1>|)>|)>>|<cell|-<math-up|atan2><around*|(|<sqrt|1-cos
+    <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>,cos
+    <around*|(|q<rsub|2>+q<rsub|1>|)>|)>>>|<row|<cell|<math-up|GAMMA>>|<cell|-<math-up|atan2><around*|(|<frac|sin
+    <around*|(|q<rsub|2>+q<rsub|1>|)>|<sqrt|1-cos
+    <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>>,0|)>>|<cell|<math-up|atan2><around*|(|<frac|sin
+    <around*|(|q<rsub|2>+q<rsub|1>|)>|<sqrt|1-cos
+    <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>>,0|)>>>>>>
 
     \;
 
@@ -189,30 +245,29 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|unfolded-io>
-      R_PPP:matrix([0,0,1],[0,-1,0],[1,0,0])
+      cartesianoMatrix:matrix([0,0,1],[0,-1,0],[1,0,0])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|1>>|<row|<cell|0>|<cell|-1>|<cell|0>>|<row|<cell|1>|<cell|0>|<cell|0>>>>>>>
     </unfolded-io>
 
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>6) >
-    <|input>
-      orientamento_PPP:calcolo_orientamento(R_PPP)$
-    </input>
-
-    <\equation*>
-      <matrix|<tformat|<table|<row|<cell|\<pi\>>>|<row|<cell|<frac|\<pi\>|2>>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|-<frac|\<pi\>|2>>>|<row|<cell|\<pi\>>>>>>
-    </equation*>
-
-    \;
+    <|unfolded-io>
+      calcoloOrientamentoXYX(cartesianoMatrix)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
+      >><matrix|<tformat|<table|<row|<cell|<math-up|variabile>>|<cell|<with|math-font-family|rm|soluzione1>>|<cell|<with|math-font-family|rm|soluzione2>>>|<row|<cell|<math-up|ALPHA>>|<cell|\<pi\>>|<cell|0>>|<row|<cell|<math-up|BETA>>|<cell|<frac|\<pi\>|2>>|<cell|-<frac|\<pi\>|2>>>|<row|<cell|<math-up|GAMMA>>|<cell|0>|<cell|\<pi\>>>>>>>>
+    </unfolded-io>
 
     \;
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>7) >
     <|unfolded-io>
-      R_RPP:matrix([cos(q[1]),0,-sin(q[1])],[sin(q[1]),0,cos(q[1])],[0,-1,0])
+      cilindricoMatrix:matrix([cos(q[1]),0,-sin(q[1])],[sin(q[1]),0,cos(q[1])],[0,-1,0])
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
       >><matrix|<tformat|<table|<row|<cell|cos
@@ -222,75 +277,70 @@
       <around*|(|q<rsub|1>|)>>>|<row|<cell|0>|<cell|-1>|<cell|0>>>>>>>
     </unfolded-io>
 
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>8) >
-    <|input>
-      orientamento_RPP:calcolo_orientamento(R_RPP)$
-    </input>
-
-    <\equation*>
-      <matrix|<tformat|<table|<row|<cell|<math-up|atan2><around*|(|<frac|sin
+    <|unfolded-io>
+      calcoloOrientamentoXYX(cilindricoMatrix)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
+      >><matrix|<tformat|<table|<row|<cell|<math-up|variabile>>|<cell|<with|math-font-family|rm|soluzione1>>|<cell|<with|math-font-family|rm|soluzione2>>>|<row|<cell|<math-up|ALPHA>>|<cell|<math-up|atan2><around*|(|<frac|sin
       <around*|(|q<rsub|1>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>>>,0|)>>>|<row|<cell|<math-up|atan2><around*|(|<sqrt|1-cos
+      <around*|(|q<rsub|1>|)><rsup|2>>>,0|)>>|<cell|-<math-up|atan2><around*|(|<frac|sin
+      <around*|(|q<rsub|1>|)>|<sqrt|1-cos
+      <around*|(|q<rsub|1>|)><rsup|2>>>,0|)>>>|<row|<cell|<math-up|BETA>>|<cell|<math-up|atan2><around*|(|<sqrt|1-cos
       <around*|(|q<rsub|1>|)><rsup|2>>,cos
-      <around*|(|q<rsub|1>|)>|)>>>|<row|<cell|<math-up|atan2><around*|(|0,-<frac|sin
-      <around*|(|q<rsub|1>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>>>|)>>>>>>,<matrix|<tformat|<table|<row|<cell|-<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|1>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>>>,0|)>>>|<row|<cell|-<math-up|atan2><around*|(|<sqrt|1-cos
+      <around*|(|q<rsub|1>|)>|)>>|<cell|-<math-up|atan2><around*|(|<sqrt|1-cos
       <around*|(|q<rsub|1>|)><rsup|2>>,cos
-      <around*|(|q<rsub|1>|)>|)>>>|<row|<cell|<math-up|atan2><around*|(|0,<frac|sin
+      <around*|(|q<rsub|1>|)>|)>>>|<row|<cell|<math-up|GAMMA>>|<cell|<math-up|atan2><around*|(|0,-<frac|sin
       <around*|(|q<rsub|1>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>>>|)>>>>>>
-    </equation*>
+      <around*|(|q<rsub|1>|)><rsup|2>>>|)>>|<cell|<math-up|atan2><around*|(|0,<frac|sin
+      <around*|(|q<rsub|1>|)>|<sqrt|1-cos
+      <around*|(|q<rsub|1>|)><rsup|2>>>|)>>>>>>>>
+    </unfolded-io>
 
     \;
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|unfolded-io>
-      R_SCARA_STRUTTURA:matrix([cos(q[1]+q[2]),-sin(q[1]+q[2]),0],[sin(q[1]+q[2]),cos(q[1]+q[2]),0],[0,0,1])
+      scaraMatrix:matrix([cos(q[1]+q[2]),sin(q[1]+q[2]),0],[sin(q[1]+q[2]),-cos(q[1]+q[2]),0],[0,0,-1])
     <|unfolded-io>
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
       >><matrix|<tformat|<table|<row|<cell|cos
-      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|-sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|sin
       <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|0>>|<row|<cell|sin
-      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|cos
-      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>>>
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|-cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-1>>>>>>>
     </unfolded-io>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>10) >
     <|input>
-      orientamento_SCARA_STRUTTURA:calcolo_orientamento(R_SCARA_STRUTTURA)$
+      calcoloOrientamentoXYX(scaraMatrix)$
     </input>
 
     <\equation*>
-      <matrix|<tformat|<table|<row|<cell|<math-up|atan2><around*|(|<frac|sin
+      <matrix|<tformat|<table|<row|<cell|<math-up|variabile>>|<cell|<with|math-font-family|rm|soluzione1>>|<cell|<with|math-font-family|rm|soluzione2>>>|<row|<cell|<math-up|ALPHA>>|<cell|<math-up|atan2><around*|(|<frac|sin
       <around*|(|q<rsub|2>+q<rsub|1>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>>,0|)>>>|<row|<cell|<math-up|atan2><around*|(|<sqrt|1-cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>>,0|)>>|<cell|-<math-up|atan2><around*|(|<frac|sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>|<sqrt|1-cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>>,0|)>>>|<row|<cell|<math-up|BETA>>|<cell|<math-up|atan2><around*|(|<sqrt|1-cos
       <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>,cos
-      <around*|(|q<rsub|2>+q<rsub|1>|)>|)>>>|<row|<cell|-<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|2>+q<rsub|1>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>>,0|)>>>>>>,<matrix|<tformat|<table|<row|<cell|-<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|2>+q<rsub|1>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>>,0|)>>>|<row|<cell|-<math-up|atan2><around*|(|<sqrt|1-cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)>|)>>|<cell|-<math-up|atan2><around*|(|<sqrt|1-cos
       <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>,cos
-      <around*|(|q<rsub|2>+q<rsub|1>|)>|)>>>|<row|<cell|<math-up|atan2><around*|(|<frac|sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>|)>>>|<row|<cell|<math-up|GAMMA>>|<cell|<math-up|atan2><around*|(|<frac|sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>|<sqrt|1-cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>>,0|)>>|<cell|-<math-up|atan2><around*|(|<frac|sin
       <around*|(|q<rsub|2>+q<rsub|1>|)>|<sqrt|1-cos
       <around*|(|q<rsub|2>+q<rsub|1>|)><rsup|2>>>,0|)>>>>>>
     </equation*>
 
-    \;
-
-    \;
-
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|unfolded-io>
-      R_SFERICO1_STRUTTURA:matrix([cos(q[1])*cos(q[2]),sin(q[1]),cos(q[1])*sin(q[2])],[sin(q[1])*cos(q[2]),-cos(q[1]),sin(q[1])*sin(q[2])],[sin(q[2]),0,-cos(q[2])])
+      sferico1Matrix:matrix([cos(q[1])*cos(q[2]),sin(q[1]),cos(q[1])*sin(q[2])],[sin(q[1])*cos(q[2]),-cos(q[1]),sin(q[1])*sin(q[2])],[sin(q[2]),0,-cos(q[2])])
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
       >><matrix|<tformat|<table|<row|<cell|cos <around*|(|q<rsub|1>|)>*cos
@@ -304,38 +354,29 @@
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>12) >
+      <with|color|red|(<with|math-font-family|rm|%i>13) >
     <|input>
-      orientamento_SFERICO1_STRUTTURA:calcolo_orientamento(R_SFERICO1_STRUTTURA)$
+      calcoloOrientamentoZXZ(sferico1Matrix)$
     </input>
 
     <\equation*>
-      <matrix|<tformat|<table|<row|<cell|<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|1>|)>*cos <around*|(|q<rsub|2>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>>,-<frac|sin
-      <around*|(|q<rsub|2>|)>|<sqrt|1-cos <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>>|)>>>|<row|<cell|<math-up|atan2><around*|(|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>,cos <around*|(|q<rsub|1>|)>*cos
-      <around*|(|q<rsub|2>|)>|)>>>|<row|<cell|<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|1>|)>|<sqrt|1-cos <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>>,<frac|cos <around*|(|q<rsub|1>|)>*sin
-      <around*|(|q<rsub|2>|)>|<sqrt|1-cos <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>>|)>>>>>>,<matrix|<tformat|<table|<row|<cell|-<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|1>|)>*cos <around*|(|q<rsub|2>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>>,<frac|sin
-      <around*|(|q<rsub|2>|)>|<sqrt|1-cos <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>>|)>>>|<row|<cell|-<math-up|atan2><around*|(|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>,cos <around*|(|q<rsub|1>|)>*cos
-      <around*|(|q<rsub|2>|)>|)>>>|<row|<cell|-<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|1>|)>|<sqrt|1-cos <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>>,-<frac|cos
+      <matrix|<tformat|<table|<row|<cell|<math-up|variabile>>|<cell|<with|math-font-family|rm|soluzione1>>|<cell|<with|math-font-family|rm|soluzione2>>>|<row|<cell|<math-up|ALPHA>>|<cell|<math-up|atan2><around*|(|<frac|cos
       <around*|(|q<rsub|1>|)>*sin <around*|(|q<rsub|2>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>>|)>>>>>>
+      <around*|(|q<rsub|2>|)><rsup|2>>>,-<frac|sin
+      <around*|(|q<rsub|1>|)>*sin <around*|(|q<rsub|2>|)>|<sqrt|1-cos
+      <around*|(|q<rsub|2>|)><rsup|2>>>|)>>|<cell|-<math-up|atan2><around*|(|<frac|cos
+      <around*|(|q<rsub|1>|)>*sin <around*|(|q<rsub|2>|)>|<sqrt|1-cos
+      <around*|(|q<rsub|2>|)><rsup|2>>>,<frac|sin <around*|(|q<rsub|1>|)>*sin
+      <around*|(|q<rsub|2>|)>|<sqrt|1-cos
+      <around*|(|q<rsub|2>|)><rsup|2>>>|)>>>|<row|<cell|<math-up|BETA>>|<cell|<math-up|atan2><around*|(|<sqrt|1-cos
+      <around*|(|q<rsub|2>|)><rsup|2>>,-cos
+      <around*|(|q<rsub|2>|)>|)>>|<cell|-<math-up|atan2><around*|(|<sqrt|1-cos
+      <around*|(|q<rsub|2>|)><rsup|2>>,-cos
+      <around*|(|q<rsub|2>|)>|)>>>|<row|<cell|<math-up|GAMMA>>|<cell|<math-up|atan2><around*|(|<frac|sin
+      <around*|(|q<rsub|2>|)>|<sqrt|1-cos
+      <around*|(|q<rsub|2>|)><rsup|2>>>,0|)>>|<cell|-<math-up|atan2><around*|(|<frac|sin
+      <around*|(|q<rsub|2>|)>|<sqrt|1-cos
+      <around*|(|q<rsub|2>|)><rsup|2>>>,0|)>>>>>>
     </equation*>
 
     \;
@@ -343,11 +384,13 @@
     \;
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>13) >
+      <with|color|red|(<with|math-font-family|rm|%i>14) >
     <|unfolded-io>
-      R_SFERICO2_STRUTTURA:matrix([cos(q[1])*cos(q[2]),-sin(q[1]),cos(q[1])*sin(q[2])],[sin(q[1])*cos(q[2]),cos(q[1]),sin(q[1])*sin(q[2])],[-sin(q[2]),0,cos(q[2])])
+      sferico2Matrix:matrix([cos(q[1])*cos(q[2]),-sin(q[1]),cos(q[1])*sin(q[2])],[sin(q[1])*cos(q[2]),cos(q[1]),sin(q[1])*sin(q[2])],[-sin(q[2]),0,cos(q[2])])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
       >><matrix|<tformat|<table|<row|<cell|cos <around*|(|q<rsub|1>|)>*cos
       <around*|(|q<rsub|2>|)>>|<cell|-sin <around*|(|q<rsub|1>|)>>|<cell|cos
       <around*|(|q<rsub|1>|)>*sin <around*|(|q<rsub|2>|)>>>|<row|<cell|sin
@@ -359,50 +402,37 @@
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>14) >
+      <with|color|red|(<with|math-font-family|rm|%i>18) >
     <|input>
-      orientamento_SFERICO2_STRUTTURA:calcolo_orientamento(R_SFERICO2_STRUTTURA)$
+      calcoloOrientamentoZXZ(sferico2Matrix)$
     </input>
 
     <\equation*>
-      <matrix|<tformat|<table|<row|<cell|<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|1>|)>*cos <around*|(|q<rsub|2>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>>,<frac|sin
-      <around*|(|q<rsub|2>|)>|<sqrt|1-cos <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>>|)>>>|<row|<cell|<math-up|atan2><around*|(|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>,cos <around*|(|q<rsub|1>|)>*cos
-      <around*|(|q<rsub|2>|)>|)>>>|<row|<cell|-<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|1>|)>|<sqrt|1-cos <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>>,<frac|cos <around*|(|q<rsub|1>|)>*sin
-      <around*|(|q<rsub|2>|)>|<sqrt|1-cos <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>>|)>>>>>>,<matrix|<tformat|<table|<row|<cell|-<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|1>|)>*cos <around*|(|q<rsub|2>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>>,-<frac|sin
-      <around*|(|q<rsub|2>|)>|<sqrt|1-cos <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>>|)>>>|<row|<cell|-<math-up|atan2><around*|(|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>,cos <around*|(|q<rsub|1>|)>*cos
-      <around*|(|q<rsub|2>|)>|)>>>|<row|<cell|<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|1>|)>|<sqrt|1-cos <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>>,-<frac|cos
+      <matrix|<tformat|<table|<row|<cell|<math-up|variabile>>|<cell|<with|math-font-family|rm|soluzione1>>|<cell|<with|math-font-family|rm|soluzione2>>>|<row|<cell|<math-up|ALPHA>>|<cell|<math-up|atan2><around*|(|<frac|cos
       <around*|(|q<rsub|1>|)>*sin <around*|(|q<rsub|2>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|2>|)><rsup|2>>>|)>>>>>>
+      <around*|(|q<rsub|2>|)><rsup|2>>>,-<frac|sin
+      <around*|(|q<rsub|1>|)>*sin <around*|(|q<rsub|2>|)>|<sqrt|1-cos
+      <around*|(|q<rsub|2>|)><rsup|2>>>|)>>|<cell|-<math-up|atan2><around*|(|<frac|cos
+      <around*|(|q<rsub|1>|)>*sin <around*|(|q<rsub|2>|)>|<sqrt|1-cos
+      <around*|(|q<rsub|2>|)><rsup|2>>>,<frac|sin <around*|(|q<rsub|1>|)>*sin
+      <around*|(|q<rsub|2>|)>|<sqrt|1-cos
+      <around*|(|q<rsub|2>|)><rsup|2>>>|)>>>|<row|<cell|<math-up|BETA>>|<cell|<math-up|atan2><around*|(|<sqrt|1-cos
+      <around*|(|q<rsub|2>|)><rsup|2>>,cos
+      <around*|(|q<rsub|2>|)>|)>>|<cell|-<math-up|atan2><around*|(|<sqrt|1-cos
+      <around*|(|q<rsub|2>|)><rsup|2>>,cos
+      <around*|(|q<rsub|2>|)>|)>>>|<row|<cell|<math-up|GAMMA>>|<cell|-<math-up|atan2><around*|(|<frac|sin
+      <around*|(|q<rsub|2>|)>|<sqrt|1-cos
+      <around*|(|q<rsub|2>|)><rsup|2>>>,0|)>>|<cell|<math-up|atan2><around*|(|<frac|sin
+      <around*|(|q<rsub|2>|)>|<sqrt|1-cos
+      <around*|(|q<rsub|2>|)><rsup|2>>>,0|)>>>>>>
     </equation*>
 
-    \;
-
-    \;
-
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>15) >
+      <with|color|red|(<with|math-font-family|rm|%i>20) >
     <|unfolded-io>
-      R_ANTROPOMORFO_STRUTTURA:matrix([cos(q[1])*cos(q[2]+q[3]),-cos(q[1])*sin(q[2]+q[3]),sin(q[1])],[sin(q[1])*cos(q[2]+q[3]),-sin(q[1])*sin(q[2]+q[3]),-cos(q[1])],[sin(q[2]+q[3]),cos(q[2]+q[3]),0])
+      antropomorfoMatrix:matrix([cos(q[1])*cos(q[2]+q[3]),-cos(q[1])*sin(q[2]+q[3]),sin(q[1])],[sin(q[1])*cos(q[2]+q[3]),-sin(q[1])*sin(q[2]+q[3]),-cos(q[1])],[sin(q[2]+q[3]),cos(q[2]+q[3]),0])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
       >><matrix|<tformat|<table|<row|<cell|cos <around*|(|q<rsub|1>|)>*cos
       <around*|(|q<rsub|3>+q<rsub|2>|)>>|<cell|-cos
       <around*|(|q<rsub|1>|)>*sin <around*|(|q<rsub|3>+q<rsub|2>|)>>|<cell|sin
@@ -415,41 +445,19 @@
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>16) >
+      <with|color|red|(<with|math-font-family|rm|%i>22) >
     <|input>
-      orientamento_ANTROPOMORFO_STRUTTURA:calcolo_orientamento(R_ANTROPOMORFO_STRUTTURA)$
+      calcoloOrientamentoZXZ(antropomorfoMatrix)$
     </input>
 
     <\equation*>
-      <matrix|<tformat|<table|<row|<cell|<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|1>|)>*cos <around*|(|q<rsub|3>+q<rsub|2>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|3>+q<rsub|2>|)><rsup|2>>>,-<frac|sin
-      <around*|(|q<rsub|3>+q<rsub|2>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|3>+q<rsub|2>|)><rsup|2>>>|)>>>|<row|<cell|<math-up|atan2><around*|(|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|3>+q<rsub|2>|)><rsup|2>>,cos
-      <around*|(|q<rsub|1>|)>*cos <around*|(|q<rsub|3>+q<rsub|2>|)>|)>>>|<row|<cell|-<math-up|atan2><around*|(|<frac|cos
-      <around*|(|q<rsub|1>|)>*sin <around*|(|q<rsub|3>+q<rsub|2>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|3>+q<rsub|2>|)><rsup|2>>>,<frac|sin
-      <around*|(|q<rsub|1>|)>|<sqrt|1-cos <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|3>+q<rsub|2>|)><rsup|2>>>|)>>>>>>,<matrix|<tformat|<table|<row|<cell|-<math-up|atan2><around*|(|<frac|sin
-      <around*|(|q<rsub|1>|)>*cos <around*|(|q<rsub|3>+q<rsub|2>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|3>+q<rsub|2>|)><rsup|2>>>,<frac|sin
-      <around*|(|q<rsub|3>+q<rsub|2>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|3>+q<rsub|2>|)><rsup|2>>>|)>>>|<row|<cell|-<math-up|atan2><around*|(|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|3>+q<rsub|2>|)><rsup|2>>,cos
-      <around*|(|q<rsub|1>|)>*cos <around*|(|q<rsub|3>+q<rsub|2>|)>|)>>>|<row|<cell|<math-up|atan2><around*|(|<frac|cos
-      <around*|(|q<rsub|1>|)>*sin <around*|(|q<rsub|3>+q<rsub|2>|)>|<sqrt|1-cos
-      <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|3>+q<rsub|2>|)><rsup|2>>>,-<frac|sin
-      <around*|(|q<rsub|1>|)>|<sqrt|1-cos <around*|(|q<rsub|1>|)><rsup|2>*cos
-      <around*|(|q<rsub|3>+q<rsub|2>|)><rsup|2>>>|)>>>>>>
+      <matrix|<tformat|<table|<row|<cell|<math-up|variabile>>|<cell|<with|math-font-family|rm|soluzione1>>|<cell|<with|math-font-family|rm|soluzione2>>>|<row|<cell|<math-up|ALPHA>>|<cell|<math-up|atan2><around*|(|sin
+      <around*|(|q<rsub|1>|)>,cos <around*|(|q<rsub|1>|)>|)>>|<cell|-<math-up|atan2><around*|(|sin
+      <around*|(|q<rsub|1>|)>,-cos <around*|(|q<rsub|1>|)>|)>>>|<row|<cell|<math-up|BETA>>|<cell|<frac|\<pi\>|2>>|<cell|-<frac|\<pi\>|2>>>|<row|<cell|<math-up|GAMMA>>|<cell|<math-up|atan2><around*|(|sin
+      <around*|(|q<rsub|3>+q<rsub|2>|)>,cos
+      <around*|(|q<rsub|3>+q<rsub|2>|)>|)>>|<cell|-<math-up|atan2><around*|(|sin
+      <around*|(|q<rsub|3>+q<rsub|2>|)>,-cos
+      <around*|(|q<rsub|3>+q<rsub|2>|)>|)>>>>>>
     </equation*>
 
     \;

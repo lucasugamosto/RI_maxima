@@ -3,150 +3,161 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
-  PROCEDURE PER IL CALCOLO DELLA CINEMATICA INVERSA PER OGNI ROBOT STUDIATO A
-  LEZIONE.
+  PROCEDURA: calcolare con MAXIMA la cinematica inversa dei seguenti robot:
 
-  <with|color|red|Procedura 1: Procedura per il calcolo della cinematica
-  inversa del ROBOT RR a partire dalle equazioni seguenti:
-  <math|x=L<rsub|2>*c<rsub|1>*c<rsub|2>-L<rsub|2>*s<rsub|1>*s<rsub|2>+L<rsub|1>*c<rsub|1>>,
-  <math|y=L<rsub|2>*s<rsub|1>*c<rsub|2>+L<rsub|2>*c<rsub|1>*s<rsub|2>+L<rsub|1>*s<rsub|1>>.>
+  <\with|color|red>
+    Procedura1: Procedura per il calcolo della cinematica inversa del ROBOT
+    RR con quazioni: <math|x=L<rsub|2>*c<rsub|12>+L<rsub|1>*c<rsub|1>,y=L<rsub|2>*s<rsub|12>+L<rsub|1>*s<rsub|1>>,
+    \<phi\>=<math|q<rsub|1>+q<rsub|2>>.
+  </with>
 
   <\session|maxima|default>
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>1) >
     <|input>
-      eq1:L[2]*cos(q[1])*cos(q[2])-L[2]*sin(q[1])*sin(q[2])+L[1]*cos(q[1])-x$
+      eq1:L[2]*cos(q[1]+q[2])+L[1]*cos(q[1])-x$
+    </input>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>2) >
+    <|input>
+      eq1:subst([cos(q[1]+q[2])=c[12], cos(q[1])=c[1]],eq1)$
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>2) >
-    <|unfolded-io>
-      eq1:subst([sin(q[1])=s[1],cos(q[1])=c[1],sin(q[2])=s[2],cos(q[2])=c[2]],eq1)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
-      >>-x-s<rsub|1>*L<rsub|2>*s<rsub|2>+c<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1>*c<rsub|1>>>
-    </unfolded-io>
-
-    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
-    <|input>
-      eq2:L[2]*sin(q[1])*cos(q[2])+L[2]*cos(q[1])*sin(q[2])+L[1]*sin(q[1])-y$
-    </input>
+    <|unfolded-io>
+      X:solve([eq1],x)[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
+      >>x=L<rsub|2>*c<rsub|12>+L<rsub|1>*c<rsub|1>>>
+    </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>4) >
     <|unfolded-io>
-      eq2:subst([sin(q[1])=s[1],cos(q[1])=c[1],sin(q[2])=s[2],cos(q[2])=c[2]],eq2)
+      X:ratsimp(subst([c[12]=c[1]*c[2]-s[1]*s[2]],X))
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
-      >>-y+c<rsub|1>*L<rsub|2>*s<rsub|2>+s<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1>*s<rsub|1>>>
+      >>x=-s<rsub|1>*L<rsub|2>*s<rsub|2>+c<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1>*c<rsub|1>>>
     </unfolded-io>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|input>
-      eq3:(sin(q[2])^2)+(cos(q[2])^2)-1$
+      eq2:L[2]*sin(q[1]+q[2])+L[1]*sin(q[1])-y$
+    </input>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>6) >
+    <|input>
+      eq2:subst([sin(q[1]+q[2])=s[12], sin(q[1])=s[1]],eq2)$
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>6) >
-    <|unfolded-io>
-      eq3:subst([sin(q[2])=s[2],cos(q[2])=c[2]],eq3)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
-      >>s<rsub|2><rsup|2>+c<rsub|2><rsup|2>-1>>
-    </unfolded-io>
-
-    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>7) >
-    <|input>
-      eq4:(sin(q[1])^2)+(cos(q[1])^2)-1$
-    </input>
+    <|unfolded-io>
+      Y:solve([eq2],y)[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+      >>y=L<rsub|2>*s<rsub|12>+L<rsub|1>*s<rsub|1>>>
+    </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|unfolded-io>
-      eq4:subst([sin(q[1])=s[1],cos(q[1])=c[1]],eq4)
+      Y:ratsimp(subst([s[12]=s[1]*c[2]+c[1]*s[2]],Y))
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
+      >>y=c<rsub|1>*L<rsub|2>*s<rsub|2>+s<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1>*s<rsub|1>>>
+    </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>9) >
+    <|input>
+      eqTrig2:(sin(q[2])^2)+(cos(q[2])^2)-1$
+    </input>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>10) >
+    <|unfolded-io>
+      eqTrig2:subst([sin(q[2])=s[2],cos(q[2])=c[2]],eqTrig2)
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
+      >>s<rsub|2><rsup|2>+c<rsub|2><rsup|2>-1>>
+    </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>11) >
+    <|input>
+      eqTrig1:(sin(q[1])^2)+(cos(q[1])^2)-1$
+    </input>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>12) >
+    <|unfolded-io>
+      eqTrig1:subst([sin(q[1])=s[1],cos(q[1])=c[1]],eqTrig1)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
       >>s<rsub|1><rsup|2>+c<rsub|1><rsup|2>-1>>
     </unfolded-io>
 
     \;
 
-    Calcolo di \Px\Q dall'equazione eq<rsub|1> e di \Py\Q dall'equazione
-    eq<rsub|2>:
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>9) >
-    <|input>
-      e1:solve([eq1],x)$
-    </input>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>10) >
-    <|input>
-      e2:solve([eq2],y)$
-    </input>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>11) >
-    <|unfolded-io>
-      X:e1[1]
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
-      >>x=-s<rsub|1>*L<rsub|2>*s<rsub|2>+c<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1>*c<rsub|1>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>12) >
-    <|unfolded-io>
-      Y:e2[1]
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
-      >>y=c<rsub|1>*L<rsub|2>*s<rsub|2>+s<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1>*s<rsub|1>>>
-    </unfolded-io>
-
     \;
 
-    Calcolo di <with|color|blue|cos(q<rsub|2>)> (tramite l'utilizzo della
-    funzione \Peliminate\Q si eliminano le variabili sin(q<rsub|1>),
-    cos(q<rsub|1>) e sin(q<rsub|2>) presenti in eq<rsub|5>):
+    Calcolo di <with|color|blue|cos(q<rsub|2>)>:
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>13) >
     <|unfolded-io>
-      eq5:factor(X^2+Y^2)
+      eliminate([X,Y,eqTrig1],[s[1],c[1]])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
-      >>y<rsup|2>+x<rsup|2>=<around*|(|s<rsub|1><rsup|2>+c<rsub|1><rsup|2>|)>*<around*|(|L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>|)>>>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
+      >><around*|[|L<rsub|2><rsup|2>*s<rsub|2><rsup|2>*<around*|(|L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>|)>*<around*|(|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>*s<rsub|2><rsup|2>-L<rsub|2><rsup|2>*c<rsub|2><rsup|2>-2*L<rsub|1>*L<rsub|2>*c<rsub|2>-L<rsub|1><rsup|2>|)>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>14) >
     <|unfolded-io>
-      eq6:eliminate([eq3,eq4,eq5],[s[1]^2,s[2]^2])
+      eq1:y^2+x^2-L[2]^2*s[2]^2-L[2]^2*c[2]^2-2*L[1]*L[2]*c[2]-L[1]^2
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
-      >><around*|[|-y<rsup|2>-x<rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|2><rsup|2>+L<rsub|1><rsup|2>|]>>>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      >>y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>*s<rsub|2><rsup|2>-L<rsub|2><rsup|2>*c<rsub|2><rsup|2>-2*L<rsub|1>*L<rsub|2>*c<rsub|2>-L<rsub|1><rsup|2>>>
     </unfolded-io>
 
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>15) >
-    <|input>
-      eq6:eq6[1]$
-    </input>
+    <|unfolded-io>
+      eliminate([eq1,eqTrig2],[s[2]])
+    <|unfolded-io>
+      \;
 
-    <\input>
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
+      >><around*|[|<around*|(|y<rsup|2>+x<rsup|2>-2*L<rsub|1>*L<rsub|2>*c<rsub|2>-L<rsub|2><rsup|2>-L<rsub|1><rsup|2>|)><rsup|2>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>16) >
-    <|input>
-      C2:solve([eq6],c[2])$
-    </input>
+    <|unfolded-io>
+      eq1:y^2+x^2-2*L[1]*L[2]*c[2]-L[2]^2-L[1]^2
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
+      >>y<rsup|2>+x<rsup|2>-2*L<rsub|1>*L<rsub|2>*c<rsub|2>-L<rsub|2><rsup|2>-L<rsub|1><rsup|2>>>
+    </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>17) >
     <|unfolded-io>
-      C2:C2[1]
+      C2:solve([eq1],c[2])[1]
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
       >>c<rsub|2>=<frac|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>-L<rsub|1><rsup|2>|2*L<rsub|1>*L<rsub|2>>>>
@@ -182,11 +193,11 @@
   modi diversi (gomito alto, gomito basso).
 
   Se \|L<rsub|1>-L<rsub|2>\|=0 allora anche il centro della circonferenza può
-  essere raggiunto e questo viene fatto in infiniti modi.
+  essere raggiunto e questo viene fatto in infiniti modi (SINGOLARITA').\ 
 
   \;
 
-  Calcolo di <with|color|blue|sin(q<rsub|2>)> \ e considerando verificata la
+  Calcolo di <with|color|blue|sin(q<rsub|2>)>, considerando verificata la
   condizione <math|-1\<leqslant\><frac|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>-L<rsub|1><rsup|2>|2*L<rsub|1>*L<rsub|2>>\<leqslant\>1>
   :
 
@@ -194,21 +205,10 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>18) >
     <|unfolded-io>
-      eq7:eliminate([eq4,eq5],[s[1]^2])
+      S2:solve([eqTrig2],s[2])
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
-      >><around*|[|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>*s<rsub|2><rsup|2>-L<rsub|2><rsup|2>*c<rsub|2><rsup|2>-2*L<rsub|1>*L<rsub|2>*c<rsub|2>-L<rsub|1><rsup|2>|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>19) >
-    <|unfolded-io>
-      S2:solve([eq7[1]],s[2])
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
-      >><around*|[|s<rsub|2>=-<frac|<sqrt|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>*c<rsub|2><rsup|2>-2*L<rsub|1>*L<rsub|2>*c<rsub|2>-L<rsub|1><rsup|2>>|L<rsub|2>>,s<rsub|2>=<frac|<sqrt|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>*c<rsub|2><rsup|2>-2*L<rsub|1>*L<rsub|2>*c<rsub|2>-L<rsub|1><rsup|2>>|L<rsub|2>>|]>>>
+      >><around*|[|s<rsub|2>=-<sqrt|1-c<rsub|2><rsup|2>>,s<rsub|2>=<sqrt|1-c<rsub|2><rsup|2>>|]>>>
     </unfolded-io>
 
     \;
@@ -216,33 +216,33 @@
     Calcolo della variabile trigonometrica <with|color|blue|q<rsub|2>>:
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>20) >
+      <with|color|red|(<with|math-font-family|rm|%i>19) >
     <|input>
       q2[1]:atan2(S2[1],C2)$
     </input>
   </session>
 
   <\equation*>
-    -<math-up|atan2><around*|(|<frac|<sqrt|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>*c<rsub|2><rsup|2>-2*L<rsub|1>*L<rsub|2>*c<rsub|2>-L<rsub|1><rsup|2>>|L<rsub|2>>,<frac|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>-L<rsub|1><rsup|2>|2*L<rsub|1>*L<rsub|2>>|)>
+    -<math-up|atan2><around*|(|<sqrt|1-c<rsub|2><rsup|2>>,<frac|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>-L<rsub|1><rsup|2>|2*L<rsub|1>*L<rsub|2>>|)>
   </equation*>
 
   <\session|maxima|default>
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>21) >
+      <with|color|red|(<with|math-font-family|rm|%i>20) >
     <|input>
       q2[2]:atan2(S2[2],C2)$
     </input>
   </session>
 
   <\equation*>
-    <math|<math-up|atan2><around*|(|<frac|<sqrt|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>*c<rsub|2><rsup|2>-2*L<rsub|1>*L<rsub|2>*c<rsub|2>-L<rsub|1><rsup|2>>|L<rsub|2>>,<frac|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>-L<rsub|1><rsup|2>|2*L<rsub|1>*L<rsub|2>>|)>>
+    <math-up|atan2><around*|(|<sqrt|1-c<rsub|2><rsup|2>>,<frac|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>-L<rsub|1><rsup|2>|2*L<rsub|1>*L<rsub|2>>|)>
   </equation*>
 
   Quindi la variabile q<rsub|2> ha 2 SOLUZIONI GENERICHE.
 
   Se le grandezze L<rsub|1> ed L<rsub|2> sono nulle allora si ha che la
   funzione \Patan2\Q non è definita e quindi che l'origine si può raggiungere
-  con INFINITE SOLUZIONI. \ 
+  con INFINITE SOLUZIONI (SINGOLARITA').\ 
 
   <\session|maxima|default>
     \;
@@ -251,77 +251,62 @@
     <with|color|blue|sin(q<rsub|1>)>:
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>22) >
+      <with|color|red|(<with|math-font-family|rm|%i>21) >
     <|unfolded-io>
-      eq8:eliminate([X,eq4],[s[1]])
+      solve([X,Y],[s[1],c[1]])[1]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
-      >><around*|[|x<rsup|2>+<around*|(|-2*c<rsub|1>*L<rsub|2>*c<rsub|2>-2*L<rsub|1>*c<rsub|1>|)>*x+<around*|(|c<rsub|1><rsup|2>-1|)>*L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+c<rsub|1><rsup|2>*L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*c<rsub|1><rsup|2>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>*c<rsub|1><rsup|2>|]>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
+      >><around*|[|s<rsub|1>=-<frac|-L<rsub|2>*c<rsub|2>*y-L<rsub|1>*y+L<rsub|2>*s<rsub|2>*x|L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>>,c<rsub|1>=<frac|L<rsub|2>*s<rsub|2>*y+<around*|(|L<rsub|2>*c<rsub|2>+L<rsub|1>|)>*x|L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>>|]>>>
     </unfolded-io>
 
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>23) >
-    <|input>
-      C1:solve([eq8[1]],c[1])$
-    </input>
-
-    \;
-
-    <\equation*>
-      c<rsub|1>=-<frac|L<rsub|2>*s<rsub|2>*<sqrt|-x<rsup|2>+L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>>+<around*|(|-L<rsub|2>*c<rsub|2>-L<rsub|1>|)>*x|L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>>
-    </equation*>
-
-    \;
-
-    <\equation*>
-      c<rsub|1>=<frac|L<rsub|2>*s<rsub|2>*<sqrt|-x<rsup|2>+L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>>+<around*|(|L<rsub|2>*c<rsub|2>+L<rsub|1>|)>*x|L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>>
-    </equation*>
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>22) >
+    <|unfolded-io>
+      S1:-((-L[2]*c[2]*y-L[1]*y+L[2]*s[2]*x)/(L[2]^2*s[2]^2+L[2]^2*c[2]^2+2*L[1]*L[2]*c[2]+L[1]^2))
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
+      >>-<frac|-L<rsub|2>*c<rsub|2>*y-L<rsub|1>*y+L<rsub|2>*s<rsub|2>*x|L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>>>>
+    </unfolded-io>
 
     \;
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>24) >
+      <with|color|red|(<with|math-font-family|rm|%i>23) >
     <|unfolded-io>
-      S1:solve([X],s[1])[1]
+      C1:((L[2]*s[2]*y+(L[2]*c[2]+L[1])*x)/(L[2]^2*s[2]^2+L[2]^2*c[2]^2+2*L[1]*L[2]*c[2]+L[1]^2))
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o24>)
-      >>s<rsub|1>=-<frac|x-c<rsub|1>*L<rsub|2>*c<rsub|2>-L<rsub|1>*c<rsub|1>|L<rsub|2>*s<rsub|2>>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
+      >><frac|L<rsub|2>*s<rsub|2>*y+<around*|(|L<rsub|2>*c<rsub|2>+L<rsub|1>|)>*x|L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>>>>
     </unfolded-io>
 
     \;
 
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>25) >
-    <|input>
-      q1[1]:atan2(S1,C1[1])$
-    </input>
-
     \;
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>24) >
+    <|input>
+      q1:atan2(S1,C1)$
+    </input>
 
     <\equation*>
-      -<math-up|atan2><around*|(|<frac|x-c<rsub|1>*L<rsub|2>*c<rsub|2>-L<rsub|1>*c<rsub|1>|L<rsub|2>*s<rsub|2>>,-<frac|L<rsub|2>*s<rsub|2>*<sqrt|-x<rsup|2>+L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>>+<around*|(|-L<rsub|2>*c<rsub|2>-L<rsub|1>|)>*x|L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>>|)>
+      -<math-up|atan2><around*|(|<frac|-L<rsub|2>*c<rsub|2>*y-L<rsub|1>*y+L<rsub|2>*s<rsub|2>*x|L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>>,<frac|L<rsub|2>*s<rsub|2>*y+<around*|(|L<rsub|2>*c<rsub|2>+L<rsub|1>|)>*x|L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>>|)>
     </equation*>
-
-    \;
-
-    \;
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>26) >
-    <|input>
-      q1[2]:atan2(S1,C1[2])$
-    </input>
   </session>
 
-  <\equation*>
-    -<math-up|atan2><around*|(|<frac|x-c<rsub|1>*L<rsub|2>*c<rsub|2>-L<rsub|1>*c<rsub|1>|L<rsub|2>*s<rsub|2>>,<frac|L<rsub|2>*s<rsub|2>*<sqrt|-x<rsup|2>+L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>>+<around*|(|L<rsub|2>*c<rsub|2>+L<rsub|1>|)>*x|L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*c<rsub|2>+L<rsub|1><rsup|2>>|)>
-  </equation*>
+  \;
+
+  \;
 
   \;
 
   \;
 
-  <with|color|red|Procedura 2: Procedura per il calcolo della cinematica
+  \;
+
+  \;
+
+  <with|color|red|Procedura2: Procedura per il calcolo della cinematica
   inversa del ROBOT CARTESIANO a partire dalle equazioni seguenti:
   <math|x=q<rsub|1>,y=q<rsub|2>,z=q<rsub|3>>.>
 
@@ -329,46 +314,46 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>1) >
     <|input>
-      eq1:q[1]-x$
+      X:q[3]-x$
     </input>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>2) >
     <|input>
-      eq2:q[2]-y$
+      Y:q[2]-y$
     </input>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
     <|input>
-      eq3:q[3]-z$
+      Z:q[1]-z$
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>4) >
+      <with|color|red|(<with|math-font-family|rm|%i>7) >
     <|unfolded-io>
-      q1:solve([eq1],q[1])[1]
+      q1:solve([X],q[3])[1]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
-      >>q<rsub|1>=x>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+      >>q<rsub|3>=x>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>5) >
+      <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|unfolded-io>
-      q2:solve([eq2],q[2])[1]
+      q2:solve([Y],q[2])[1]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
       >>q<rsub|2>=y>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>6) >
+      <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|unfolded-io>
-      q3:solve([eq3],q[3])[1]
+      q3:solve([Z],q[1])[1]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
-      >>q<rsub|3>=z>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
+      >>q<rsub|1>=z>>
     </unfolded-io>
   </session>
 
@@ -381,7 +366,15 @@
 
   \;
 
-  <with|color|red|Procedura 3: Procedura per il calcolo della cinematica
+  \;
+
+  \;
+
+  \;
+
+  \;
+
+  <with|color|red|Procedura3: Procedura per il calcolo della cinematica
   inversa del ROBOT \ CILINDRICO a partire dalle equazioni seguenti:
   <math|x=-q<rsub|3>*s<rsub|1>>, <math|y=q<rsub|3>*c<rsub|1>>,
   <math|z=q<rsub|2>*+L<rsub|1>>.>
@@ -394,53 +387,88 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>1) >
     <|input>
-      eq1:-q[3]*sin(q[1])-x$
+      X:-q[3]*sin(q[1])-x$
+    </input>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>2) >
+    <|input>
+      X:subst(sin(q[1])=s[1],X)$
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>2) >
+      <with|color|red|(<with|math-font-family|rm|%i>3) >
     <|unfolded-io>
-      eq1:subst(sin(q[1])=s[1],eq1)
+      X:solve([X],x)[1]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
-      >>-x-s<rsub|1>*q<rsub|3>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
+      >>x=-s<rsub|1>*q<rsub|3>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>3) >
+      <with|color|red|(<with|math-font-family|rm|%i>4) >
     <|input>
-      eq2:q[3]*cos(q[1])-y$
+      Y:q[3]*cos(q[1])-y$
+    </input>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>5) >
+    <|input>
+      Y:subst(cos(q[1])=c[1],Y)$
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>4) >
+      <with|color|red|(<with|math-font-family|rm|%i>6) >
     <|unfolded-io>
-      eq2:subst(cos(q[1])=c[1],eq2)
+      Y:solve([Y],y)[1]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
-      >>c<rsub|1>*q<rsub|3>-y>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
+      >>y=c<rsub|1>*q<rsub|3>>>
     </unfolded-io>
 
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>7) >
+    <|input>
+      Z:q[2]+L[1]-z$
+    </input>
+
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>5) >
+      <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|unfolded-io>
-      eq3:q[2]+L[1]-z
+      Z:solve([Z],z)[1]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
-      >>-z+q<rsub|2>+L<rsub|1>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
+      >>z=q<rsub|2>+L<rsub|1>>>
+    </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>9) >
+    <|input>
+      eqTrig1:(sin(q[1])^2)+(cos(q[1])^2)-1$
+    </input>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>10) >
+    <|unfolded-io>
+      eqTrig1:subst([sin(q[1])=s[1],cos(q[1])=c[1]],eqTrig1)
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
+      >>s<rsub|1><rsup|2>+c<rsub|1><rsup|2>-1>>
     </unfolded-io>
 
     \;
 
     Calcolo della variabile lineare <with|color|blue|q<rsub|2>> a partire
-    dall terza equazione:
+    dall terza equazione che è disaccoppiata dalle altre due:
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>6) >
+      <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|unfolded-io>
-      q2:solve([eq3],q[2])[1]
+      q2:solve([Z],q[2])[1]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
       >>q<rsub|2>=z-L<rsub|1>>>
     </unfolded-io>
 
@@ -450,84 +478,58 @@
 
     \;
 
+    \;
+
+    \;
+
+    \;
+
+    \;
+
     Calcolo della variabile <with|color|blue|q<rsub|3>> partendo
     dall'equazioni eq<rsub|1>, eq<rsub|2> ed eliminando la variabile
     trigonometrica q<rsub|1>:
 
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>7) >
-    <|input>
-      e1:solve([eq1],x)$
-    </input>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>8) >
-    <|input>
-      X:e1[1]$
-    </input>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>9) >
-    <|input>
-      e2:solve([eq2],y)$
-    </input>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>10) >
-    <|input>
-      Y:e2[1]$
-    </input>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>11) >
-    <|unfolded-io>
-      eq4:(s[1]^2)+(c[1]^2)-1
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
-      >>s<rsub|1><rsup|2>+c<rsub|1><rsup|2>-1>>
-    </unfolded-io>
-
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>12) >
     <|unfolded-io>
-      eq5:factor(X^2+Y^2)
+      eq1:eliminate([X,Y,eqTrig1],[s[1],c[1]])
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
-      >>y<rsup|2>+x<rsup|2>=<around*|(|s<rsub|1><rsup|2>+c<rsub|1><rsup|2>|)>*q<rsub|3><rsup|2>>>
+      >><around*|[|q<rsub|3><rsup|2>*<around*|(|y<rsup|2>+x<rsup|2>-q<rsub|3><rsup|2>|)>|]>>>
     </unfolded-io>
 
-    <\unfolded-io>
+    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>13) >
-    <|unfolded-io>
-      eq6:eliminate([eq4,eq5],[c[1]^2])
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
-      >><around*|[|y<rsup|2>+x<rsup|2>-q<rsub|3><rsup|2>|]>>>
-    </unfolded-io>
-
-    L'equazione sopra indicata permette di definire lo SPAZIO OPERATIVO nel
-    piano (x,y) che è tutto R<rsup|2> e corrisponde ad una circonferenza di
-    centro (0,0) e raggio q<rsub|3>.
-
-    Nella realtà le variabili q<rsub|2>, q<rsub|3> saranno limitate
-    inferiormente e superiormente così da definire lo SPAZIO OPERATIVO VERO
-    come rappresentato da un cilindro cavo.
-
-    \;
+    <|input>
+      eq1:y^2+x^2-q[3]^2$
+    </input>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>14) >
     <|unfolded-io>
-      q3:solve([eq6[1]],q[3])
+      q3:solve([eq1],q[3])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
       >><around*|[|q<rsub|3>=-<sqrt|y<rsup|2>+x<rsup|2>>,q<rsub|3>=<sqrt|y<rsup|2>+x<rsup|2>>|]>>>
     </unfolded-io>
   </session>
 
-  In generale q<rsub|3> ha 2 SOLUZIONI ed è presente un punto di singolarità
-  quando x<rsup|2>+y<rsup|2>=0 poichè c'è solo una soluzione generica. Quindi
-  l'asse di rotazione del cilindro è un punto di singolarità.
+  In generale q<rsub|3> ha 2 SOLUZIONI ed è presente un punto di SINGOLARITA'
+  quando x<rsup|2>+y<rsup|2>=0 poichè c'è solo una soluzione. Quindi l'asse
+  di rotazione del cilindro è un punto di SINGOLARITA'.
+
+  L'equazione sopra indicata permette di definire lo SPAZIO OPERATIVO nel
+  piano (x,y) che è tutto R<rsup|2> e corrisponde ad una circonferenza di
+  centro (0,0) e raggio q<rsub|3>.
+
+  Nella realtà le variabili q<rsub|2>, q<rsub|3> saranno limitate
+  inferiormente e superiormente così da definire lo SPAZIO OPERATIVO VERO
+  come rappresentato da un cilindro cavo.
+
+  \;
 
   Ipotizzando q<rsub|3>!=0 allora è possibile calcolare la variabile
   trigonometrica <with|color|blue|<with|color|blue|q<rsub|1>>> come segue:
@@ -536,62 +538,67 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>15) >
     <|unfolded-io>
-      S1:solve([eq1],s[1])[1]
+      S1:solve([X],s[1])[1]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
       >>s<rsub|1>=-<frac|x|q<rsub|3>>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>16) >
     <|unfolded-io>
-      C1:solve([eq2],c[1])[1]
+      C1:solve([Y],c[1])[1]
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
       >>c<rsub|1>=<frac|y|q<rsub|3>>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>17) >
+      <with|color|red|(<with|math-font-family|rm|%i>18) >
     <|input>
       q1:atan2(S1,C1)$
     </input>
 
     <\equation*>
       <\equation*>
-        <text|<with|font-family|rm|atan2>><around*|(|s<rsub|1>,c<rsub|1>|)>=<math-up|atan2><around*|(|s<rsub|1>,<frac|y|q<rsub|3>>|)>=<around*|(|-<math-up|atan2><around*|(|<frac|x|q<rsub|3>>,c<rsub|1>|)>=-<math-up|atan2><around*|(|<frac|x|q<rsub|3>>,<frac|y|q<rsub|3>>|)>|)>
+        <text|<with|font-family|rm|>><math-up|atan2><around*|(|<frac|-x|q<rsub|3>>,<frac|y|q<rsub|3>>|)>=-<math-up|atan2><around*|(|<frac|x|q<rsub|3>>,<frac|y|q<rsub|3>>|)>
       </equation*>
     </equation*>
   </session>
 
   Quindi la variabile trigonometrica q<rsub|1> in generale ha un'unica
-  SOLUZIONE, mentre ha infinite soluzioni nel caso di singolarità con
-  q<rsub|3>=0.
+  SOLUZIONE, mentre ha infinite soluzioni (SINGOLARITA') nel caso
+  \ q<rsub|3>=0.
 
   \;
 
-  <with|color|red|Procedura 4: Procedura per il calcolo della cinematica
-  inversa del ROBOT SCARA (STRUTTURA) a partire dalle equazioni seguenti,
-  considerando nulle L<rsub|1> ed L<rsub|2> così da avere i 3 giunti tutti
-  alla stessa altezza: <math|x=D<rsub|1>*c<rsub|1>*c<rsub|2>-D<rsub|1>*s<rsub|1>*s<rsub|2>+D<rsub|2>*c<rsub|2>>,<math|y=D<rsub|1>*s<rsub|1>*c<rsub|2>+D<rsub|1>*c<rsub|1>*s<rsub|2>+D<rsub|2>*s<rsub|2>>,<math|z=q<rsub|3>>.>
+  <with|color|red|Procedura4: Procedura per il calcolo della cinematica
+  inversa del ROBOT SCARA (STRUTTURA) a partire dalle equazioni seguenti:
+  <math|x=L<rsub|2>*c<rsub|12>+L<rsub|1>*c<rsub|1>,
+  y=L<rsub|2>*s<rsub|12>+L<rsub|1>*s<rsub|1>>, <math|z=q<rsub|3>>.>
 
   Si tratta di un sistema disaccoppiato perchè q<rsub|3> dipende solo dalla
   coordinata z, mentre q<rsub|1> e q<rsub|2> solo dalle coordinate x ed y,
   quindi si possono studiare separatamente.
+
+  Nel calcolo di questa cinematica inversa ho considerato i primi due giunti
+  alla stessa altezza quindi <math|L<rsub|1>=0.>
 
   <\session|maxima|default>
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>1) >
     <|input>
       <\session|maxima|default>
-        eq1:D[1]*cos(q[1])*cos(q[2])-D[1]*sin(q[1])*sin(q[2])+D[2]*cos(q[2])-x$
+        eq1:D[2]*cos(q[1]+q[2])+D[1]*cos(q[1])-x$
       </session>
     </input>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>2) >
     <|input>
-      eq1:subst([sin(q[1])=s[1],cos(q[1])=c[1],sin(q[2])=s[2],cos(q[2])=c[2]],eq1)$
+      eq1:subst([cos(q[1]+q[2])=c[12], cos(q[1])=c[1]],eq1)$
     </input>
 
     <\unfolded-io>
@@ -600,43 +607,61 @@
       X:solve([eq1],x)[1]
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
-      >>x=<around*|(|D<rsub|2>+D<rsub|1>*c<rsub|1>|)>*c<rsub|2>-D<rsub|1>*s<rsub|1>*s<rsub|2>>>
+      >>x=D<rsub|2>*c<rsub|12>+D<rsub|1>*c<rsub|1>>>
     </unfolded-io>
 
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>4) >
-    <|input>
-      eq2:D[1]*sin(q[1])*cos(q[2])+D[1]*cos(q[1])*sin(q[2])+D[2]*sin(q[2])-y$
-    </input>
+    <|unfolded-io>
+      X:ratsimp(subst([c[12]=c[1]*c[2]-s[1]*s[2]],X))
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
+      >>x=-s<rsub|1>*D<rsub|2>*s<rsub|2>+c<rsub|1>*D<rsub|2>*c<rsub|2>+D<rsub|1>*c<rsub|1>>>
+    </unfolded-io>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|input>
-      eq2:subst([sin(q[1])=s[1],cos(q[1])=c[1],sin(q[2])=s[2],cos(q[2])=c[2]],eq2)$
+      eq2:D[2]*sin(q[1]+q[2])+D[1]*sin(q[1])-y$
+    </input>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>6) >
+    <|input>
+      eq2:subst([sin(q[1]+q[2])=s[12], sin(q[1])=s[1]],eq2)$
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>6) >
+      <with|color|red|(<with|math-font-family|rm|%i>7) >
     <|unfolded-io>
       Y:solve([eq2],y)[1]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
-      >>y=<around*|(|D<rsub|2>+D<rsub|1>*c<rsub|1>|)>*s<rsub|2>+D<rsub|1>*s<rsub|1>*c<rsub|2>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+      >>y=D<rsub|2>*s<rsub|12>+D<rsub|1>*s<rsub|1>>>
     </unfolded-io>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>7) >
-    <|input>
-      eq3:q[3]-z$
-    </input>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|unfolded-io>
-      Z:solve([eq3],z)[1]
+      Y:ratsimp(subst([s[12]=s[1]*c[2]+c[1]*s[2]],Y))
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
-      >>z=q<rsub|3>>>
+      >>y=c<rsub|1>*D<rsub|2>*s<rsub|2>+s<rsub|1>*D<rsub|2>*c<rsub|2>+D<rsub|1>*s<rsub|1>>>
+    </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>9) >
+    <|input>
+      eq3:-q[3]+L[2]-z$
+    </input>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>10) >
+    <|unfolded-io>
+      Z:solve([eq3],z)[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
+      >>z=L<rsub|2>-q<rsub|3>>>
     </unfolded-io>
 
     La variabile z sta ad indicare l'altezza del piano di lavoro e l'insieme
@@ -646,202 +671,140 @@
 
     \;
 
-    Considerando ora le prime due equazioni è possibile eliminare una delle
-    due variabili trigonometriche, in questo caso
-    <with|color|blue|q<rsub|2>>, come segue:
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>9) >
-    <|unfolded-io>
-      eq4:factor(X^2+Y^2)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
-      >>y<rsup|2>+x<rsup|2>=<around*|(|D<rsub|2><rsup|2>+2*D<rsub|1>*c<rsub|1>*D<rsub|2>+D<rsub|1><rsup|2>*s<rsub|1><rsup|2>+D<rsub|1><rsup|2>*c<rsub|1><rsup|2>|)>*<around*|(|s<rsub|2><rsup|2>+c<rsub|2><rsup|2>|)>>>
-    </unfolded-io>
-
-    \;
-
-    Calcolo l'espressione di <with|color|blue|cos(q<rsub|1>)>:
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>10) >
-    <|input>
-      e1:(s[1]^2)+(c[1]^2)-1$
-    </input>
+    Da ora in avanti <math|q<rsub|1 >,q<rsub|2>> si risolvono come per il
+    calcolo della cinematica inversa del robot RR
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|input>
-      e2:(s[2]^2)+(c[2]^2)-1$
+      eqTrig2:(sin(q[2])^2)+(cos(q[2])^2)-1$
     </input>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>12) >
     <|unfolded-io>
-      w1:eliminate([eq4,e1,e2],[s[2]^2,s[1]^2])
+      eqTrig2:subst([sin(q[2])=s[2],cos(q[2])=c[2]],eqTrig2)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
-      >><around*|[|y<rsup|2>+x<rsup|2>-D<rsub|2><rsup|2>-2*D<rsub|1>*c<rsub|1>*D<rsub|2>-D<rsub|1><rsup|2>|]>>>
+      >>s<rsub|2><rsup|2>+c<rsub|2><rsup|2>-1>>
     </unfolded-io>
 
-    <\unfolded-io>
+    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>13) >
-    <|unfolded-io>
-      C1:solve(w1[1],c[1])[1]
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
-      >>c<rsub|1>=<frac|y<rsup|2>+x<rsup|2>-D<rsub|2><rsup|2>-D<rsub|1><rsup|2>|2*D<rsub|1>*D<rsub|2>>>>
-    </unfolded-io>
-
-    \;
-
-    Questa equazione è risolubile se e solo se
-    <math|<around*|\||<frac|y<rsup|2>+x<rsup|2>-D<rsub|2><rsup|2>-D<rsub|1><rsup|2>|2*D<rsub|1>*D<rsub|2>>|\|>\<leqslant\>1>.
-
-    Da tale condizione (come nel caso del ROBOT RR) è possibile definire uno
-    SPAZIO OPERATIVO CANDIDATO per quanto riguarda il piano di lavoro (x,y)
-    che è rappresentato da una corona circolare di centro(0,0) e raggio
-    inferiore pari a <math|\|D<rsub|1>-D<rsub|2>\|> e raggio superiore pari a
-    (D<rsub|1>+D<rsub|2>).
-
-    \;
-
-    Ipotizzando di rispettare la condizione
-    <math|<around*|\||<frac|y<rsup|2>+x<rsup|2>-D<rsub|2><rsup|2>-D<rsub|1><rsup|2>|2*D<rsub|1>*D<rsub|2>>|\|>\<less\>1>
-    allora si può calcolare <with|color|blue|sin(q<rsub|1>)> nel caso
-    generale:
+    <|input>
+      eqTrig1:(sin(q[1])^2)+(cos(q[1])^2)-1$
+    </input>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>14) >
     <|unfolded-io>
-      w2:eliminate([eq4,e2],[c[2]^2])[1]
+      eqTrig1:subst([sin(q[1])=s[1],cos(q[1])=c[1]],eqTrig1)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
-      >>-y<rsup|2>-x<rsup|2>+D<rsub|2><rsup|2>+2*D<rsub|1>*c<rsub|1>*D<rsub|2>+D<rsub|1><rsup|2>*s<rsub|1><rsup|2>+D<rsub|1><rsup|2>*c<rsub|1><rsup|2>>>
+      >>s<rsub|1><rsup|2>+c<rsub|1><rsup|2>-1>>
     </unfolded-io>
+
+    \;
+
+    Calcolo l'espressione di <with|color|blue|cos(q<rsub|2>)>:
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>15) >
     <|unfolded-io>
-      S1:solve([w2],s[1])
+      eliminate([X,Y,eqTrig1],[s[1],c[1]])
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
-      >><around*|[|s<rsub|1>=-<frac|<sqrt|y<rsup|2>+x<rsup|2>-D<rsub|2><rsup|2>-2*D<rsub|1>*c<rsub|1>*D<rsub|2>-D<rsub|1><rsup|2>*c<rsub|1><rsup|2>>|D<rsub|1>>,s<rsub|1>=<frac|<sqrt|y<rsup|2>+x<rsup|2>-D<rsub|2><rsup|2>-2*D<rsub|1>*c<rsub|1>*D<rsub|2>-D<rsub|1><rsup|2>*c<rsub|1><rsup|2>>|D<rsub|1>>|]>>>
+      >><around*|[|D<rsub|2><rsup|2>*s<rsub|2><rsup|2>*<around*|(|D<rsub|2><rsup|2>*s<rsub|2><rsup|2>+D<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*D<rsub|1>*D<rsub|2>*c<rsub|2>+D<rsub|1><rsup|2>|)>*<around*|(|y<rsup|2>+x<rsup|2>-D<rsub|2><rsup|2>*s<rsub|2><rsup|2>-D<rsub|2><rsup|2>*c<rsub|2><rsup|2>-2*D<rsub|1>*D<rsub|2>*c<rsub|2>-D<rsub|1><rsup|2>|)>|]>>>
     </unfolded-io>
 
-    \;
-
-    Calcolo della variabile trigonometrica <with|color|blue|q<rsub|1>>:
-
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>16) >
-    <|input>
-      q1[1]:atan2(S1[1],C1)$
-    </input>
+    <|unfolded-io>
+      eq1:y^2+x^2-D[2]^2*s[2]^2-D[2]^2*c[2]^2-2*D[1]*D[2]*c[2]-D[1]^2
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
+      >>y<rsup|2>+x<rsup|2>-D<rsub|2><rsup|2>*s<rsub|2><rsup|2>-D<rsub|2><rsup|2>*c<rsub|2><rsup|2>-2*D<rsub|1>*D<rsub|2>*c<rsub|2>-D<rsub|1><rsup|2>>>
+    </unfolded-io>
 
-    <\equation*>
-      -<math-up|atan2><around*|(|<frac|<sqrt|y<rsup|2>+x<rsup|2>-D<rsub|2><rsup|2>-2*D<rsub|1>*c<rsub|1>*D<rsub|2>-D<rsub|1><rsup|2>*c<rsub|1><rsup|2>>|D<rsub|1>>,<frac|y<rsup|2>+x<rsup|2>-D<rsub|2><rsup|2>-D<rsub|1><rsup|2>|2*D<rsub|1>*D<rsub|2>>|)>
-    </equation*>
-
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>17) >
-    <|input>
-      q1[2]:atan2(S1[2],C1)$
-    </input>
-
-    <\equation*>
-      <math|<math-up|atan2><around*|(|<frac|<sqrt|y<rsup|2>+x<rsup|2>-D<rsub|2><rsup|2>-2*D<rsub|1>*c<rsub|1>*D<rsub|2>-D<rsub|1><rsup|2>*c<rsub|1><rsup|2>>|D<rsub|1>>,<frac|y<rsup|2>+x<rsup|2>-D<rsub|2><rsup|2>-D<rsub|1><rsup|2>|2*D<rsub|1>*D<rsub|2>>|)>>
-    </equation*>
-
-    \;
-
-    Quindi la variabile trigonometrica q<rsub|1> ha 2 SOLUZIONI GENERICHE.
-
-    \;
-
-    Se <math|<around*|\||<frac|y<rsup|2>+x<rsup|2>-D<rsub|2><rsup|2>-D<rsub|1><rsup|2>|2*D<rsub|1>*D<rsub|2>>|\|>=1>
-    si ha un caso di SINGOARITA' poichè cos(q<rsub|1>)=<math|\<pm\>1> e
-    sin(q<rsub|1>)=0, quindi q<rsub|1> ha una sola soluzione che vale 0 o
-    \<pi\>.
-
-    \;
-
-    Conoscendo adesso q<rsub|1> e supponendo verificata la condizione
-    <math|x<rsup|2>+y<rsup|2>!=0> si può calcolare
-    <with|color|blue|cos(q<rsub|2>)>, <with|color|blue|sin(q<rsub|2>)> ed
-    infine <with|color|blue|q<rsub|2>>:
+    <|unfolded-io>
+      C2:solve([eq1],c[2])[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
+      >>c<rsub|2>=-<frac|<sqrt|y<rsup|2>+x<rsup|2>-D<rsub|2><rsup|2>*s<rsub|2><rsup|2>>+D<rsub|1>|D<rsub|2>>>>
+    </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>18) >
     <|unfolded-io>
-      eq5:eliminate([X,e2],[s[2]])
+      S2:solve([eqTrig2],s[2])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
-      >><around*|[|x<rsup|2>+<around*|(|-2*D<rsub|2>-2*D<rsub|1>*c<rsub|1>|)>*c<rsub|2>*x+<around*|(|D<rsub|2><rsup|2>+2*D<rsub|1>*c<rsub|1>*D<rsub|2>+D<rsub|1><rsup|2>*s<rsub|1><rsup|2>+D<rsub|1><rsup|2>*c<rsub|1><rsup|2>|)>*c<rsub|2><rsup|2>-D<rsub|1><rsup|2>*s<rsub|1><rsup|2>|]>>>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
+      >><around*|[|s<rsub|2>=-<sqrt|1-c<rsub|2><rsup|2>>,s<rsub|2>=<sqrt|1-c<rsub|2><rsup|2>>|]>>>
     </unfolded-io>
+
+    \;
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>19) >
     <|input>
-      C2:solve([eq5[1]],c[2])$
+      q2[1]:atan2(S2[1],C2)$
+    </input>
+
+    <\textput>
+      <\equation*>
+        -<math-up|atan2><around*|(|<sqrt|1-c<rsub|2><rsup|2>>,-<frac|<sqrt|y<rsup|2>+x<rsup|2>-D<rsub|2><rsup|2>*s<rsub|2><rsup|2>>+D<rsub|1>|D<rsub|2>>|)>
+      </equation*>
+    </textput>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>20) >
+    <|input>
+      q2[2]:atan2(S2[2],C2)$
     </input>
 
     \;
 
     <\equation*>
-      c<rsub|2>=-<frac|D<rsub|1>*s<rsub|1>*<sqrt|-x<rsup|2>+D<rsub|2><rsup|2>+2*D<rsub|1>*c<rsub|1>*D<rsub|2>+D<rsub|1><rsup|2>*s<rsub|1><rsup|2>+D<rsub|1><rsup|2>*c<rsub|1><rsup|2>>+<around*|(|-D<rsub|2>-D<rsub|1>*c<rsub|1>|)>*x|D<rsub|2><rsup|2>+2*D<rsub|1>*c<rsub|1>*D<rsub|2>+D<rsub|1><rsup|2>*s<rsub|1><rsup|2>+D<rsub|1><rsup|2>*c<rsub|1><rsup|2>>
+      <math-up|atan2><around*|(|<sqrt|1-c<rsub|2><rsup|2>>,-<frac|<sqrt|y<rsup|2>+x<rsup|2>-D<rsub|2><rsup|2>*s<rsub|2><rsup|2>>+D<rsub|1>|D<rsub|2>>|)>
     </equation*>
 
-    \;
-
-    <\equation*>
-      c<rsub|2>=<frac|D<rsub|1>*s<rsub|1>*<sqrt|-x<rsup|2>+D<rsub|2><rsup|2>+2*D<rsub|1>*c<rsub|1>*D<rsub|2>+D<rsub|1><rsup|2>*s<rsub|1><rsup|2>+D<rsub|1><rsup|2>*c<rsub|1><rsup|2>>+<around*|(|D<rsub|2>+D<rsub|1>*c<rsub|1>|)>*x|D<rsub|2><rsup|2>+2*D<rsub|1>*c<rsub|1>*D<rsub|2>+D<rsub|1><rsup|2>*s<rsub|1><rsup|2>+D<rsub|1><rsup|2>*c<rsub|1><rsup|2>>
-    </equation*>
+    Calcolo ora i valori di <with|color|blue|cos(q<rsub|1>)> e
+    <with|color|blue|sin(q<rsub|1>)> tramite i quali poi calcolare la
+    variabile trigonometrica <math|q<rsub|1>>:
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>20) >
+      <with|color|red|(<with|math-font-family|rm|%i>21) >
     <|unfolded-io>
-      S2:solve([X],s[2])
+      solve([X,Y],[s[1],c[1]])[1]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
-      >><around*|[|s<rsub|2>=-<frac|x+<around*|(|-D<rsub|2>-D<rsub|1>*c<rsub|1>|)>*c<rsub|2>|D<rsub|1>*s<rsub|1>>|]>>>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
+      >><around*|[|s<rsub|1>=-<frac|-D<rsub|2>*c<rsub|2>*y-D<rsub|1>*y+D<rsub|2>*s<rsub|2>*x|D<rsub|2><rsup|2>*s<rsub|2><rsup|2>+D<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*D<rsub|1>*D<rsub|2>*c<rsub|2>+D<rsub|1><rsup|2>>,c<rsub|1>=<frac|D<rsub|2>*s<rsub|2>*y+<around*|(|D<rsub|2>*c<rsub|2>+D<rsub|1>|)>*x|D<rsub|2><rsup|2>*s<rsub|2><rsup|2>+D<rsub|2><rsup|2>*c<rsub|2><rsup|2>+2*D<rsub|1>*D<rsub|2>*c<rsub|2>+D<rsub|1><rsup|2>>|]>>>
     </unfolded-io>
 
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>21) >
-    <|input>
-      q2[1]:atan2(S2[1],C2[1])$
-    </input>
-  </session>
-
-  <\equation*>
-    -<math-up|atan2><around*|(|<frac|x+<around*|(|-D<rsub|2>-D<rsub|1>*c<rsub|1>|)>*c<rsub|2>|D<rsub|1>*s<rsub|1>>,-<frac|D<rsub|1>*s<rsub|1>*<sqrt|-x<rsup|2>+D<rsub|2><rsup|2>+2*D<rsub|1>*c<rsub|1>*D<rsub|2>+D<rsub|1><rsup|2>*s<rsub|1><rsup|2>+D<rsub|1><rsup|2>*c<rsub|1><rsup|2>>+<around*|(|-D<rsub|2>-D<rsub|1>*c<rsub|1>|)>*x|D<rsub|2><rsup|2>+2*D<rsub|1>*c<rsub|1>*D<rsub|2>+D<rsub|1><rsup|2>*s<rsub|1><rsup|2>+D<rsub|1><rsup|2>*c<rsub|1><rsup|2>>|)>
-  </equation*>
-
-  <\session|maxima|default>
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>22) >
-    <|input>
-      q2[2]:atan2(S2[1],C2[2])$
-    </input>
+    <|unfolded-io>
+      q3:solve([Z],q[3])[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
+      >>q<rsub|3>=L<rsub|2>-z>>
+    </unfolded-io>
   </session>
-
-  <\equation*>
-    <\equation*>
-      -<math-up|atan2><around*|(|<frac|x+<around*|(|-D<rsub|2>-D<rsub|1>*c<rsub|1>|)>*c<rsub|2>|D<rsub|1>*s<rsub|1>>,<frac|D<rsub|1>*s<rsub|1>*<sqrt|-x<rsup|2>+D<rsub|2><rsup|2>+2*D<rsub|1>*c<rsub|1>*D<rsub|2>+D<rsub|1><rsup|2>*s<rsub|1><rsup|2>+D<rsub|1><rsup|2>*c<rsub|1><rsup|2>>+<around*|(|D<rsub|2>+D<rsub|1>*c<rsub|1>|)>*x|D<rsub|2><rsup|2>+2*D<rsub|1>*c<rsub|1>*D<rsub|2>+D<rsub|1><rsup|2>*s<rsub|1><rsup|2>+D<rsub|1><rsup|2>*c<rsub|1><rsup|2>>|)>
-    </equation*>
-  </equation*>
 
   \;
 
   In definitiva la <with|color|red|variabile trigonometrica q<rsub|1>> ha 2
-  SOLUZIONI GENERICHE; ha 1 SOLUZIONE UNICA nel caso di singolarità che si ha
-  con la condizione sin(q<rsub|1>)=0; mentre ha SOLUZIONI INFINITE se
-  \|D<rsub|1>-D<rsub|2>\|=0 poichè l'origine si può raggiungere in infiniti
-  modi.
+  SOLUZIONI GENERICHE, a seconda del valore di <math|q<rsub|2>>; ha 1
+  SOLUZIONE UNICA nel caso di singolarità;
 
   La <with|color|red|variabile trigonometrica q<rsub|2>> ha 2 SOLUZIONI
-  GENERICHE, una per ogni valore di q<rsub|1>.
+  GENERICHE.
 
   La <with|color|red|variabile lineare q<rsub|3>> ha INFINITE SOLUZIONI
   GENERICHE (se non si considera l'esistenza dei fine corsa che lo limita
@@ -849,13 +812,16 @@
 
   Lo SPAZIO OPERATIVO VERO è rappresentato da un cilindro cavo di altezza
   minima data da q<rsub|3min> e altezza massima da q<rsub|3max>, e di raggio
-  inferiore \|D<rsub|1>-D<rsub|2>\| e raggio superiore (D<rsub|1>+D<rsub|2>).
+  inferiore \|<math|L<rsub|1>-L<rsub|2>>\| e raggio superiore
+  (<math|L<rsub|1>+L<rsub|2>>).
+
+  \;
 
   \;
 
   <with|color|red|Procedura 5: Procedura per il calcolo della cinematica
   inversa per il ROBOT SFERICO (PRIMO TIPO) a partire dalle seguenti
-  equazioni calcolate:<math|x=q<rsub|3>*c<rsub|1>*s<rsub|2>+L<rsub|2>*c<rsub|1>*c<rsub|2>>,
+  equazioni calcolate: <math|x=q<rsub|3>*c<rsub|1>*s<rsub|2>+L<rsub|2>*c<rsub|1>*c<rsub|2>>,
   <math|y=q<rsub|3>*s<rsub|1>*s<rsub|2>+L<rsub|2>*s<rsub|1>*c<rsub|2>>,
   <math|z=-q<rsub|3>*c<rsub|2>+L<rsub|2>*s<rsub|2>+L<rsub|1>>.>
 
@@ -925,229 +891,183 @@
 
     \;
 
-    Si possono sommare i quadrati delle equazioni X ed Y per eliminare una
-    delle due variabili trigonometrice, in questo caso q<rsub|1>, ed ottenere
-    la relazione dipendente solo da q<rsub|2>:
-
-    <\unfolded-io>
+    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>10) >
-    <|unfolded-io>
-      eq4:factor(X^2+Y^2)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
-      >>y<rsup|2>+x<rsup|2>=<around*|(|s<rsub|1><rsup|2>+c<rsub|1><rsup|2>|)>*<around*|(|s<rsub|2>*q<rsub|3>+L<rsub|2>*c<rsub|2>|)><rsup|2>>>
-    </unfolded-io>
+    <|input>
+      eqTrig1:(sin(q[1])^2)+(cos(q[1])^2)-1$
+    </input>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|unfolded-io>
-      eq4:subst((x^2+y^2)=P,eq4)
+      eqTrig1:subst([sin(q[1])=s[1],cos(q[1])=c[1]],eqTrig1)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
-      >>P=<around*|(|s<rsub|1><rsup|2>+c<rsub|1><rsup|2>|)>*<around*|(|s<rsub|2>*q<rsub|3>+L<rsub|2>*c<rsub|2>|)><rsup|2>>>
+      >>s<rsub|1><rsup|2>+c<rsub|1><rsup|2>-1>>
     </unfolded-io>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>12) >
     <|input>
-      eq5:(s[1]^2)+(c[1]^2)-1$
+      eqTrig2:(sin(q[2])^2)+(cos(q[2])^2)-1$
     </input>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>13) >
     <|unfolded-io>
-      w1:eliminate([eq4,eq5],[c[1]^2])
+      eqTrig2:subst([sin(q[2])=s[2],cos(q[2])=c[2]],eqTrig2)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
-      >><around*|[|-P+s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+2*L<rsub|2>*c<rsub|2>*s<rsub|2>*q<rsub|3>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>|]>>>
+      >>s<rsub|2><rsup|2>+c<rsub|2><rsup|2>-1>>
     </unfolded-io>
 
-    <\input>
+    \;
+
+    Dalle prime due equazioni si può togliere la dipendenza dalla variabile
+    trigonometrica <math|q<rsub|1>>:
+
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>14) >
-    <|input>
-      w2:solve([w1[1]],P)[1]$
-    </input>
+    <|unfolded-io>
+      eliminate([X,Y,eqTrig1],[s[1],c[1]])
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      >><around*|[|<around*|(|s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+2*L<rsub|2>*c<rsub|2>*s<rsub|2>*q<rsub|3>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>|)>*<around*|(|y<rsup|2>+x<rsup|2>-s<rsub|2><rsup|2>*q<rsub|3><rsup|2>-2*L<rsub|2>*c<rsub|2>*s<rsub|2>*q<rsub|3>-L<rsub|2><rsup|2>*c<rsub|2><rsup|2>|)>|]>>>
+    </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>15) >
     <|unfolded-io>
-      w2:factor(subst(P=(x^2+y^2),w2))
+      eq1:y^2+x^2-s[2]^2*q[3]^2-2*L[2]*c[2]*s[2]*q[3]-L[2]^2*c[2]^2
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
-      >>y<rsup|2>+x<rsup|2>=<around*|(|s<rsub|2>*q<rsub|3>+L<rsub|2>*c<rsub|2>|)><rsup|2>>>
+      >>y<rsup|2>+x<rsup|2>-s<rsub|2><rsup|2>*q<rsub|3><rsup|2>-2*L<rsub|2>*c<rsub|2>*s<rsub|2>*q<rsub|3>-L<rsub|2><rsup|2>*c<rsub|2><rsup|2>>>
     </unfolded-io>
 
-    \;
-
-    Considerando ora la terza equazione rispetto alla coordinata z, si trova:
-
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>16) >
-    <|input>
-      w3:L[1]-Z$
-    </input>
+    <|unfolded-io>
+      factor(eliminate([eq1,Z,eqTrig2],[s[2],c[2]]))
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
+      >><around*|[|q<rsub|3><rsup|4>*<around*|(|q<rsub|3><rsup|2>+L<rsub|2><rsup|2>|)><rsup|4>*<around*|(|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-q<rsub|3><rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>|)><rsup|2>*<around*|(|q<rsub|3><rsup|4>*z<rsup|4>-4*L<rsub|1>*q<rsub|3><rsup|4>*z<rsup|3>+2*q<rsub|3><rsup|4>*y<rsup|2>*z<rsup|2>-8*L<rsub|2><rsup|2>*q<rsub|3><rsup|2>*y<rsup|2>*z<rsup|2>+2*q<rsub|3><rsup|4>*x<rsup|2>*z<rsup|2>-8*L<rsub|2><rsup|2>*q<rsub|3><rsup|2>*x<rsup|2>*z<rsup|2>-2*q<rsub|3><rsup|6>*z<rsup|2>-2*L<rsub|2><rsup|2>*q<rsub|3><rsup|4>*z<rsup|2>+6*L<rsub|1><rsup|2>*q<rsub|3><rsup|4>*z<rsup|2>-4*L<rsub|1>*q<rsub|3><rsup|4>*y<rsup|2>*z+16*L<rsub|1>*L<rsub|2><rsup|2>*q<rsub|3><rsup|2>*y<rsup|2>*z-4*L<rsub|1>*q<rsub|3><rsup|4>*x<rsup|2>*z+16*L<rsub|1>*L<rsub|2><rsup|2>*q<rsub|3><rsup|2>*x<rsup|2>*z+4*L<rsub|1>*q<rsub|3><rsup|6>*z+4*L<rsub|1>*L<rsub|2><rsup|2>*q<rsub|3><rsup|4>*z-4*L<rsub|1><rsup|3>*q<rsub|3><rsup|4>*z+q<rsub|3><rsup|4>*y<rsup|4>+8*L<rsub|2><rsup|2>*q<rsub|3><rsup|2>*y<rsup|4>+16*L<rsub|2><rsup|4>*y<rsup|4>+2*q<rsub|3><rsup|4>*x<rsup|2>*y<rsup|2>+16*L<rsub|2><rsup|2>*q<rsub|3><rsup|2>*x<rsup|2>*y<rsup|2>+32*L<rsub|2><rsup|4>*x<rsup|2>*y<rsup|2>-2*q<rsub|3><rsup|6>*y<rsup|2>-10*L<rsub|2><rsup|2>*q<rsub|3><rsup|4>*y<rsup|2>+2*L<rsub|1><rsup|2>*q<rsub|3><rsup|4>*y<rsup|2>-8*L<rsub|2><rsup|4>*q<rsub|3><rsup|2>*y<rsup|2>-8*L<rsub|1><rsup|2>*L<rsub|2><rsup|2>*q<rsub|3><rsup|2>*y<rsup|2>+q<rsub|3><rsup|4>*x<rsup|4>+8*L<rsub|2><rsup|2>*q<rsub|3><rsup|2>*x<rsup|4>+16*L<rsub|2><rsup|4>*x<rsup|4>-2*q<rsub|3><rsup|6>*x<rsup|2>-10*L<rsub|2><rsup|2>*q<rsub|3><rsup|4>*x<rsup|2>+2*L<rsub|1><rsup|2>*q<rsub|3><rsup|4>*x<rsup|2>-8*L<rsub|2><rsup|4>*q<rsub|3><rsup|2>*x<rsup|2>-8*L<rsub|1><rsup|2>*L<rsub|2><rsup|2>*q<rsub|3><rsup|2>*x<rsup|2>+q<rsub|3><rsup|8>+2*L<rsub|2><rsup|2>*q<rsub|3><rsup|6>-2*L<rsub|1><rsup|2>*q<rsub|3><rsup|6>+L<rsub|2><rsup|4>*q<rsub|3><rsup|4>-2*L<rsub|1><rsup|2>*L<rsub|2><rsup|2>*q<rsub|3><rsup|4>+L<rsub|1><rsup|4>*q<rsub|3><rsup|4>|)>|]>>>
+    </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>17) >
     <|unfolded-io>
-      w3:w3^2
+      eq2:z^2-2*L[1]*z+y^2+x^2-q[3]^2-L[2]^2+L[1]^2
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
-      >><around*|(|L<rsub|1>-z|)><rsup|2>=<around*|(|c<rsub|2>*q<rsub|3>-L<rsub|2>*s<rsub|2>|)><rsup|2>>>
+      >>z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-q<rsub|3><rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>>>
     </unfolded-io>
+
+    L'espressione precedente mi permette di definire lo spazio operativo del
+    robot sferico di primo tipo:
+
+    <\equation*>
+      z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-q<rsub|3><rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>\<rightarrow\>
+    </equation*>
+
+    <\equation*>
+      \<rightarrow\><around*|(|L<rsub|1>-z|)><rsup|2>+x<rsup|2>+y<rsup|2>=L<rsub|2><rsup|2>+q<rsub|3><rsup|2>
+    </equation*>
+
+    che corrisponde ad una sfera di raggio
+    <math|<around*|(|L<rsub|2>+q<rsub|3>|)>> e di centro
+    (0,0,<math|L<rsub|1>>).
 
     \;
 
-    Da queste due equazioni (w<rsub|2> e w<rsub|3>) è possibile ricavare il
-    valore della variabile lineare <with|color|blue|q<rsub|3>>:
+    Sempre dall'espressione precedente è possibile calcolare la variabile
+    prismatica <math|q<rsub|3>>:
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>18) >
     <|unfolded-io>
-      w4:factor(w2+w3)
+      q3:solve([eq2],q[3])
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
-      >>z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>+L<rsub|1><rsup|2>=<around*|(|s<rsub|2><rsup|2>+c<rsub|2><rsup|2>|)>*<around*|(|q<rsub|3><rsup|2>+L<rsub|2><rsup|2>|)>>>
+      >><around*|[|q<rsub|3>=-<sqrt|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>>,q<rsub|3>=<sqrt|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>>|]>>>
     </unfolded-io>
 
-    <\input>
+    \;
+
+    2 soluzioni generiche per <math|q<rsub|3>>, mentre si ha unica soluzione
+    (SINGOLARITA') se <math|q<rsub|3><rsup|2>=L<rsub|2><rsup|2>>.
+
+    Ipotizzando il caso generico per <math|q<rsub|3 >> si possono calcolare
+    le altre variabili come segue:
+
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>19) >
-    <|input>
-      eq6:(s[2]^2)+(c[2]^2)-1$
-    </input>
+    <|unfolded-io>
+      solve([eq1,Z],[c[2],s[2]])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
+      >><around*|[|<around*|[|c<rsub|2>=-<frac|q<rsub|3>*z+L<rsub|2>*<sqrt|y<rsup|2>+x<rsup|2>>-L<rsub|1>*q<rsub|3>|q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>,s<rsub|2>=-<frac|-L<rsub|2>*z+q<rsub|3>*<sqrt|y<rsup|2>+x<rsup|2>>+L<rsub|1>*L<rsub|2>|q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>|]>,<around*|[|c<rsub|2>=<frac|-q<rsub|3>*z+L<rsub|2>*<sqrt|y<rsup|2>+x<rsup|2>>+L<rsub|1>*q<rsub|3>|q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>,s<rsub|2>=<frac|L<rsub|2>*z+q<rsub|3>*<sqrt|y<rsup|2>+x<rsup|2>>-L<rsub|1>*L<rsub|2>|q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>|]>|]>>>
+    </unfolded-io>
+
+    \;
+
+    Quindi la variabile <math|q<rsub|2>> ha 2 soluzioni GENERICHE per ogni
+    soluzione di <math|q<rsub|3>>,quindi in totale 4 soluzioni GENERICHE.
+
+    Mentre se vale la condizione <math|q<rsub|3><rsup|2>=L<rsub|2><rsup|2>>
+    allora si hanno infinite soluzioni (SINGOLARITA') dato dal fatto che
+    questa quantità appare al denominatore (ed anche come determinante nel
+    calcolo dell'inversa).
+
+    \;
+
+    Ora considerando sempre validà la condizione <math|q<rsub|3><rsup|2>
+    !=L<rsub|2><rsup|2>>, calcolata la variabile trigonometrica
+    <math|q<rsub|1>>:\ 
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>20) >
     <|unfolded-io>
-      w5:eliminate([w4,eq6],[c[2]^2])
+      solve([X,Y],[c[1],s[1]])[1]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
-      >><around*|[|-z<rsup|2>+2*L<rsub|1>*z-y<rsup|2>-x<rsup|2>+q<rsub|3><rsup|2>+L<rsub|2><rsup|2>-L<rsub|1><rsup|2>|]>>>
-    </unfolded-io>
+      \;
 
-    Tale equazione: <with|color|red|<math|-z<rsup|2>+2*L<rsub|1>*z-y<rsup|2>-x<rsup|2>+q<rsub|3><rsup|2>+L<rsub|2><rsup|2>-L<rsub|1><rsup|2>=0\<rightarrow\>x<rsup|2>+y<rsup|2>+<around*|(|L<rsub|1>-z|)><rsup|2>=q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>>
-    rappresenta una sfera centrata in (0,0,L<rsub|1>) e avente raggio pari a
-    <sqrt|q<rsup|2><rsub|3>+L<rsup|2><rsub|2>>. Ciò permette di definire uno
-    SPAZIO OPERATIVO CANDIDATO che è dato da tutti i punti esterni alla sfera
-    di centro (0,0,L<rsub|1>) e raggio L<rsub|2>.
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
+      >><around*|[|c<rsub|1>=<frac|x|s<rsub|2>*q<rsub|3>+L<rsub|2>*c<rsub|2>>,s<rsub|1>=<frac|y|s<rsub|2>*q<rsub|3>+L<rsub|2>*c<rsub|2>>|]>>>
+    </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>21) >
     <|unfolded-io>
-      q3:solve([w5[1]],q[3])
+      C1:(x/(s[2]*q[3]+L[2]*c[2]))
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
-      >><around*|[|q<rsub|3>=-<sqrt|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>>,q<rsub|3>=<sqrt|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>>|]>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
+      >><frac|x|s<rsub|2>*q<rsub|3>+L<rsub|2>*c<rsub|2>>>>
     </unfolded-io>
 
-    La <with|color|blue|variabile lineare q<rsub|3>> ha 2 SOLUZIONI
-    GENERICHE.
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>22) >
+    <|unfolded-io>
+      S1:(y/(s[2]*q[3]+L[2]*c[2]))
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
+      >><frac|y|s<rsub|2>*q<rsub|3>+L<rsub|2>*c<rsub|2>>>>
+    </unfolded-io>
 
-    E' presente un punto di SINGOLARITA' nel caso (x,y,z)=(0,0,L<rsub|1>) e
-    R=L<rsub|2> in cui si ha che q<rsub|3> ha una sola SOLUZIONE NULLA.
-
-    \;
-
-    Calcolo delle grandezze <with|color|blue|cos(q<rsub|2>)>,
-    <with|color|blue|sin(q<rsub|2>)> e infine della variabile trigonometrica
-    <with|color|blue|q<rsub|2>>:
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>23) >
+    <|unfolded-io>
+      q1:atan2(S1,C1)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
+      ><with|font-family|rm|atan2>><around*|(|<frac|y|s<rsub|2>*q<rsub|3>+L<rsub|2>*c<rsub|2>>,<frac|x|s<rsub|2>*q<rsub|3>+L<rsub|2>*c<rsub|2>>|)>>>
+    </unfolded-io>
 
     <\session|maxima|default>
-      <\unfolded-io>
-        <with|color|red|(<with|math-font-family|rm|%i>22) >
-      <|unfolded-io>
-        eq7:eliminate([Z,eq6],[c[2]])
-      <|unfolded-io>
-        <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
-        >><around*|[|z<rsup|2>+<around*|(|-2*L<rsub|2>*s<rsub|2>-2*L<rsub|1>|)>*z+<around*|(|s<rsub|2><rsup|2>-1|)>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>*s<rsub|2><rsup|2>+2*L<rsub|1>*L<rsub|2>*s<rsub|2>+L<rsub|1><rsup|2>|]>>>
-      </unfolded-io>
-
-      <\input>
-        <with|color|red|(<with|math-font-family|rm|%i>23) >
-      <|input>
-        S2:solve([eq7[1]],s[2])$
-      </input>
-
-      <\equation*>
-        <around*|[|s<rsub|2>=-<frac|q<rsub|3>*<sqrt|-z<rsup|2>+2*L<rsub|1>*z+q<rsub|3><rsup|2>+L<rsub|2><rsup|2>-L<rsub|1><rsup|2>>-L<rsub|2>*z+L<rsub|1>*L<rsub|2>|q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>,s<rsub|2>=<frac|q<rsub|3>*<sqrt|-z<rsup|2>+2*L<rsub|1>*z+q<rsub|3><rsup|2>+L<rsub|2><rsup|2>-L<rsub|1><rsup|2>>+L<rsub|2>*z-L<rsub|1>*L<rsub|2>|q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>|]>
-      </equation*>
-
-      <\unfolded-io>
-        <with|color|red|(<with|math-font-family|rm|%i>24) >
-      <|unfolded-io>
-        C2:solve([Z],c[2])[1]
-      <|unfolded-io>
-        <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o24>)
-        >>c<rsub|2>=-<frac|z-L<rsub|2>*s<rsub|2>-L<rsub|1>|q<rsub|3>>>>
-      </unfolded-io>
-
-      <\input>
-        <with|color|red|(<with|math-font-family|rm|%i>25) >
-      <|input>
-        q2[1]:atan2(S2[1],C2)$
-      </input>
-
       \;
-
-      <\equation*>
-        -<math-up|atan2><around*|(|<frac|q<rsub|3>*<sqrt|-z<rsup|2>+2*L<rsub|1>*z+q<rsub|3><rsup|2>+L<rsub|2><rsup|2>-L<rsub|1><rsup|2>>-L<rsub|2>*z+L<rsub|1>*L<rsub|2>|q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>,-<frac|z-L<rsub|2>*s<rsub|2>-L<rsub|1>|q<rsub|3>>|)>
-      </equation*>
-
-      <\input>
-        <with|color|red|(<with|math-font-family|rm|%i>26) >
-      <|input>
-        q2[2]:atan2(S2[2],C2)$
-      </input>
-
-      <\equation*>
-        =<math-up|atan2><around*|(|<frac|q<rsub|3>*<sqrt|-z<rsup|2>+2*L<rsub|1>*z+q<rsub|3><rsup|2>+L<rsub|2><rsup|2>-L<rsub|1><rsup|2>>+L<rsub|2>*z-L<rsub|1>*L<rsub|2>|q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>,-<frac|z-L<rsub|2>*s<rsub|2>-L<rsub|1>|q<rsub|3>>|)>
-      </equation*>
-
-      \;
-
-      La <with|color|blue|variabile trigonometrica q<rsub|2>> ha 4 soluzioni
-      (2 per ogni valore della variabile lineare q<rsub|3>.
-
-      Se q<rsup|2><rsub|3>+L<rsub|2><rsup|2>=0 (se e solo se
-      q<rsub|3>=L<rsub|2>=0) allora si ha un caso di SINGOLARITA' per il
-      quale la variabile trigonometrica q<rsub|2> ha INFINITE SOLUZIONI.
-
-      \;
-
-      Si calcolano ora i valori di <with|color|blue|cos(q<rsub|1>)>,
-      <with|color|blue|sin(q<rsub|1>)>, <with|color|blue|q<rsub|1>>:
-
-      <\unfolded-io>
-        <with|color|red|(<with|math-font-family|rm|%i>27) >
-      <|unfolded-io>
-        C1:solve([X],c[1])[1]
-      <|unfolded-io>
-        <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o27>)
-        >>c<rsub|1>=<frac|x|s<rsub|2>*q<rsub|3>+L<rsub|2>*c<rsub|2>>>>
-      </unfolded-io>
-
-      <\unfolded-io>
-        <with|color|red|(<with|math-font-family|rm|%i>28) >
-      <|unfolded-io>
-        S1:solve([Y],s[1])[1]
-      <|unfolded-io>
-        <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o28>)
-        >>s<rsub|1>=<frac|y|s<rsub|2>*q<rsub|3>+L<rsub|2>*c<rsub|2>>>>
-      </unfolded-io>
-
-      <\input>
-        <with|color|red|(<with|math-font-family|rm|%i>29) >
-      <|input>
-        q1:atan2(S1,C1)$
-      </input>
     </session>
   </session>
-
-  <\equation*>
-    <math-up|atan2><around*|(|<frac|y|s<rsub|2>*q<rsub|3>+L<rsub|2>*c<rsub|2>>,<frac|x|s<rsub|2>*q<rsub|3>+L<rsub|2>*c<rsub|2>>|)>
-  </equation*>
 
   Anche in questo caso si ha SINGOLARITA' se q<rsub|3>=L<rsub|2>=0.
 
@@ -1155,11 +1075,12 @@
 
   \;
 
-  <with|color|red|Procedura 6: Procedura per il calcolo della cinematica
-  inversa del ROBOT SPERICO (TIPO STANFORD) a partire dalle equazioni trovate
-  dalla cinematica diretta: <math|x=q<rsub|3>*c<rsub|1>*s<rsub|2>-L<rsub|2>*s<rsub|1>>,
-  <math|y=q<rsub|3>*s<rsub|1>*s<rsub|2>+L<rsub|2>*c<rsub|1>>,
-  <math|z=q<rsub|3>*c<rsub|2>+L<rsub|1>>.>
+  <\with|color|red>
+    Procedura 6: Procedura per il calcolo della cinematica inversa del ROBOT
+    SFERICO (TIPO STANFORD) a partire dalle equazioni trovate dalla
+    cinematica diretta: <math|x=q<rsub|3>*c<rsub|1>*s<rsub|2>-L<rsub|2>*s<rsub|1>>,
+    \ <math|y=q<rsub|3>*s<rsub|1>*s<rsub|2>+L<rsub|2>*c<rsub|1>>,<math|z=q<rsub|3>*c<rsub|2>+L<rsub|1>>.
+  </with>
 
   <\session|maxima|default>
     <\input>
@@ -1171,7 +1092,7 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>2) >
     <|input>
-      eq1:subst([cos(q[1])=c[1],sin(q[1])=s[1],cos(q[2])=c[2],sin(q[2])=s[2]],eq1)$
+      eq1:subst([cos(q[1])=c[1],sin(q[1])=s[1],sin(q[2])=s[2]],eq1)$
     </input>
 
     <\unfolded-io>
@@ -1192,7 +1113,7 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|input>
-      eq2:subst([cos(q[1])=c[1],sin(q[1])=s[1],cos(q[2])=c[2],sin(q[2])=s[2]],eq2)$
+      eq2:subst([cos(q[1])=c[1],sin(q[1])=s[1],sin(q[2])=s[2]],eq2)$
     </input>
 
     <\unfolded-io>
@@ -1228,231 +1149,212 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>10) >
     <|input>
-      e1:(s[1]^2)+(c[1]^2)-1$
+      eqTrig1:(s[1]^2)+(c[1]^2)-1$
     </input>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|input>
-      e2:(s[2]^2)+(c[2]^2)-1$
+      eqTrig2:(s[2]^2)+(c[2]^2)-1$
     </input>
 
     \;
 
-    Si fa sparire la variabile trigonometrica q<rsub|1> tramite le equazioni
-    x, y:
+    Si fa sparire la variabile trigonometrica q<rsub|1> dalle prime due
+    equazioni x, y:
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>12) >
     <|unfolded-io>
-      eq4:factor(X^2+Y^2)
+      eliminate([X,Y,eqTrig1],[s[1],c[1]])
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
-      >>y<rsup|2>+x<rsup|2>=<around*|(|s<rsub|1><rsup|2>+c<rsub|1><rsup|2>|)>*<around*|(|s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>|)>>>
+      >><around*|[|L<rsub|2><rsup|2>*<around*|(|s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>|)>*<around*|(|y<rsup|2>+x<rsup|2>-s<rsub|2><rsup|2>*q<rsub|3><rsup|2>-L<rsub|2><rsup|2>|)>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>13) >
     <|unfolded-io>
-      eq4:subst(x^2+y^2=P,eq4)
+      eq1:y^2+x^2-s[2]^2*q[3]^2-L[2]^2
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
-      >>P=<around*|(|s<rsub|1><rsup|2>+c<rsub|1><rsup|2>|)>*<around*|(|s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>|)>>>
+      >>y<rsup|2>+x<rsup|2>-s<rsub|2><rsup|2>*q<rsub|3><rsup|2>-L<rsub|2><rsup|2>>>
     </unfolded-io>
 
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>14) >
-    <|input>
-      eq4:eliminate([eq4,e1],[s[1]^2])$
-    </input>
+    <|unfolded-io>
+      eliminate([eq1,Z,eqTrig2],[s[2],c[2]])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      >><around*|[|q<rsub|3><rsup|8>*<around*|(|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-q<rsub|3><rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>|)><rsup|4>|]>>>
+    </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>15) >
     <|unfolded-io>
-      eq4:solve([eq4[1]],P)[1]
+      eq2:z^2-2*L[1]*z+y^2+x^2-q[3]^2-L[2]^2+L[1]^2
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
-      >>P=s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>>
+      >>z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-q<rsub|3><rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>>>
     </unfolded-io>
+
+    Dall'espressione calcolata precedentemente è possibile definire il valore
+    della variabile <math|q<rsub|3>>:
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>16) >
     <|unfolded-io>
-      eq4:subst(P=x^2+y^2,eq4)
+      q3:solve([eq2],q[3])
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
-      >>y<rsup|2>+x<rsup|2>=s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>>
+      >><around*|[|q<rsub|3>=-<sqrt|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>>,q<rsub|3>=<sqrt|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>>|]>>>
     </unfolded-io>
 
-    Prendo in considerazione la terza equazione z, da cui calcolo:
+    2 soluzioni GENERICHE per <math|q<rsub|3>> mentre ha una soluzione unica
+    (SINGOLARITA') se vale la condizione <math|x<rsup|2>+y<rsup|2>+<around*|(|z-L<rsub|1>|)><rsup|2>=L<rsub|2><rsup|2>>
+    .
 
-    <\input>
+    \;
+
+    Se la variabile lineare <math|q<rsub|3>> ha valore diverso da zero allora
+    posso calcolare <math|q<rsub|2>> come segue:
+
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>17) >
-    <|input>
-      eq5:Z-L[1]$
-    </input>
+    <|unfolded-io>
+      solve([eq1,Z],[s[2],c[2]])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
+      >><around*|[|<around*|[|s<rsub|2>=-<frac|<sqrt|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>>|q<rsub|3>>,c<rsub|2>=<frac|z-L<rsub|1>|q<rsub|3>>|]>,<around*|[|s<rsub|2>=<frac|<sqrt|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>>|q<rsub|3>>,c<rsub|2>=<frac|z-L<rsub|1>|q<rsub|3>>|]>|]>>>
+    </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>18) >
     <|unfolded-io>
-      eq5:eq5^2
+      S2[1]:-((sqrt(y^2+x^2-L[2]^2))/(q[3]))
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
-      >><around*|(|z-L<rsub|1>|)><rsup|2>=c<rsub|2><rsup|2>*q<rsub|3><rsup|2>>>
-    </unfolded-io>
+      \;
 
-    Dalla somma delle due equazioni (eq4, eq5) si può definire uno SPAZIO
-    OPERATIVO CANDIDATO.
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
+      >>-<frac|<sqrt|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>>|q<rsub|3>>>>
+    </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>19) >
     <|unfolded-io>
-      eq6:factor(eq4+eq5)
+      S2[2]:((sqrt(y^2+x^2-L[2]^2))/(q[3]))
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
-      >>z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>+L<rsub|1><rsup|2>=s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+c<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>>
+      >><frac|<sqrt|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>>|q<rsub|3>>>>
     </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>20) >
-    <|unfolded-io>
-      eq6:eliminate([eq6,e2],[s[2]^2])
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
-      >><around*|[|-z<rsup|2>+2*L<rsub|1>*z-y<rsup|2>-x<rsup|2>+q<rsub|3><rsup|2>+L<rsub|2><rsup|2>-L<rsub|1><rsup|2>|]>>>
-    </unfolded-io>
-
-    Da l'equazione eq<rsub|6> trovata se ne può ricavare la seguente:
-    <math|-z<rsup|2>+2*L<rsub|1>*z-y<rsup|2>-x<rsup|2>+q<rsub|3><rsup|2>+L<rsub|2><rsup|2>-L<rsub|1><rsup|2>=0\<rightarrow\>x<rsup|2>+y<rsup|2>+<around*|(|z-L<rsub|1>|)><rsup|2>=q<rsup|2><rsub|3>+L<rsub|2><rsup|2>>,
-    quest'ultima permette di definire uno SPAZIO OPERATIVO CANDIDATO che
-    corrisponde all'insieme di punti esterni ad una sfera di raggio
-    L<rsub|2>e centrata in (0,0,L<rsub|1>).
-
-    \;
-
-    Posso ora calcolare la variabile lineare q<rsub|3> come segue:
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>21) >
     <|unfolded-io>
-      q3:solve([eq6[1]],q[3])
+      C2:((z-L[1])/(q[3]))
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
-      >><around*|[|q<rsub|3>=-<sqrt|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>>,q<rsub|3>=<sqrt|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>>|]>>>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
+      >><frac|z-L<rsub|1>|q<rsub|3>>>>
     </unfolded-io>
-
-    la variabile lineare q<rsub|3> ha 2 SOLUZIONI GENERICHE, mentre ne ha una
-    se il radicando è nullo (caso di SINGOLARITA').
-
-    \;
-
-    Ora calcolo le grandezze <with|color|blue|cos(q<rsub|2>)>,
-    <with|color|blue|sin(q<rsub|2>)>, <with|color|blue|q<rsub|2>>:
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>22) >
     <|unfolded-io>
-      C2:solve([Z],c[2])[1]
+      q2[1]:atan2(S2[1],C2)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
-      >>c<rsub|2>=<frac|z-L<rsub|1>|q<rsub|3>>>>
+      >>-<math-up|atan2><around*|(|<frac|<sqrt|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>>|q<rsub|3>>,<frac|z-L<rsub|1>|q<rsub|3>>|)>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>23) >
     <|unfolded-io>
-      S2:solve([eq4],s[2])
+      q2[2]:atan2(S2[2],C2)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
-      >><around*|[|s<rsub|2>=-<frac|<sqrt|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>>|q<rsub|3>>,s<rsub|2>=<frac|<sqrt|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>>|q<rsub|3>>|]>>>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
+      ><with|font-family|rm|atan2>><around*|(|<frac|<sqrt|y<rsup|2>+x<rsup|2>-L<rsub|2><rsup|2>>|q<rsub|3>>,<frac|z-L<rsub|1>|q<rsub|3>>|)>>>
     </unfolded-io>
 
     \;
 
-    Studiando il dominio della radice si ottengono 2 condizioni: q<rsub|3>!=0
-    ed x<rsup|2>+y<rsup|2><math|\<geqslant\>>L<rsub|2><rsup|2>, quest'ultima
-    corrispondente all'equazione del cilindro.
+    Per la variabile trigonometrica <math|q<rsub|2>> si hanno 2 soluzioni
+    GENERICHE per ogni soluzione di <math|q<rsub|3>>, quindi in tutto 4
+    soluzioni GENERICHE.
 
-    Tale condizione si va ad aggiungere a quella precedente della sfera di
-    raggio L<rsub|2>, per cui si trova che lo SPAZIO OPERATIVO VERO è dato da
-    tutti i punti esterni al cilindro.
-
-    \;
-
-    Ora si calcolano i valori di <with|color|blue|cos(q<rsub|1>)>,
-    <with|color|blue|sin(q<rsub|1>)>, <with|color|blue|q<rsub|1>>:
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>24) >
-    <|unfolded-io>
-      eq7:eliminate([X,e1],[s[1]])
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o24>)
-      >><around*|[|x<rsup|2>-2*c<rsub|1>*s<rsub|2>*q<rsub|3>*x+c<rsub|1><rsup|2>*s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+<around*|(|c<rsub|1><rsup|2>-1|)>*L<rsub|2><rsup|2>|]>>>
-    </unfolded-io>
+    Si ha un'unica soluzione (SINGOLARITA') se vale la condizione
+    <math|x<rsup|2>+y<rsup|2>=L<rsub|2><rsup|2>>.
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>25) >
     <|unfolded-io>
-      C1:solve([eq7[1]],c[1])
+      solve([X,Y],[s[1],c[1]])[1]
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o25>)
-      >><around*|[|c<rsub|1>=-<frac|L<rsub|2>*<sqrt|-x<rsup|2>+s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>-s<rsub|2>*q<rsub|3>*x|s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>,c<rsub|1>=<frac|L<rsub|2>*<sqrt|-x<rsup|2>+s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>+s<rsub|2>*q<rsub|3>*x|s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>|]>>>
+      >><around*|[|s<rsub|1>=-<frac|L<rsub|2>*x-s<rsub|2>*q<rsub|3>*y|s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>,c<rsub|1>=<frac|L<rsub|2>*y+s<rsub|2>*q<rsub|3>*x|s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>26) >
     <|unfolded-io>
-      S1:solve([Y],s[1])[1]
+      S1:-((L[2]*x-s[2]*q[3]*y)/(s[2]^2*q[3]^2+L[2]^2))
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o26>)
-      >>s<rsub|1>=<frac|y-c<rsub|1>*L<rsub|2>|s<rsub|2>*q<rsub|3>>>>
+      >>-<frac|L<rsub|2>*x-s<rsub|2>*q<rsub|3>*y|s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>>>
     </unfolded-io>
 
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>27) >
-    <|input>
-      q1[1]:atan2(S1,C1[1])$
-    </input>
+    <|unfolded-io>
+      C1:((L[2]*y+s[2]*q[3]*x)/(s[2]^2*q[3]^2+L[2]^2))
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o27>)
+      >><frac|L<rsub|2>*y+s<rsub|2>*q<rsub|3>*x|s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>>>
+    </unfolded-io>
 
     \;
 
-    <\equation*>
-      <math-up|atan2><around*|(|<frac|y-c<rsub|1>*L<rsub|2>|s<rsub|2>*q<rsub|3>>,-<frac|L<rsub|2>*<sqrt|-x<rsup|2>+s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>-s<rsub|2>*q<rsub|3>*x|s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>|)>
-    </equation*>
+    \;
 
-    <\input>
+    Posso ora calcolare la variabile trigonometrica q<rsub|1> come segue:
+
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>28) >
-    <|input>
-      q1[2]:atan2(S1,C1[2])$
-    </input>
-
-    <\equation*>
-      <math-up|atan2><around*|(|<frac|y-c<rsub|1>*L<rsub|2>|s<rsub|2>*q<rsub|3>>,<frac|L<rsub|2>*<sqrt|-x<rsup|2>+s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>+s<rsub|2>*q<rsub|3>*x|s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>|)>
-    </equation*>
+    <|unfolded-io>
+      q1:atan2(S1,C1)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o28>)
+      >>-<math-up|atan2><around*|(|<frac|L<rsub|2>*x-s<rsub|2>*q<rsub|3>*y|s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>,<frac|L<rsub|2>*y+s<rsub|2>*q<rsub|3>*x|s<rsub|2><rsup|2>*q<rsub|3><rsup|2>+L<rsub|2><rsup|2>>|)>>>
+    </unfolded-io>
   </session>
 
   \;
 
   \;
 
+  \;
+
   <with|color|red|Procedura 7: Procedura per il calcolo della cinematica
-  inversa del ROBOT ANTROPOMORFO a partire dalle equazioni ottenute dalla
-  cinematica diretta: <math|x=c<rsub|1>*<around*|(|L<rsub|3>*c<rsub|23>+L<rsub|2>*c<rsub|2>|)>>,
-  <math|y=s<rsub|1>*<around*|(|L<rsub|3>*c<rsub|23>+L<rsub|2>*c<rsub|2>|)>>,
+  inversa del ROBOT ANTROPOMORFO a partire dalle equazioni seguenti:
+  <math|x=L<rsub|3>*c<rsub|1>*c<rsub|23>+L<rsub|2>*c<rsub|1>*c<rsub|2>>,
+  <math|y=L<rsub|3>*s<rsub|1>*c<rsub|23>+L<rsub|2>*s<rsub|1>*c<rsub|2>>,
   <math|z=L<rsub|3>*s<rsub|23>+L<rsub|2>*s<rsub|2>+L<rsub|1>>.>
 
   <\session|maxima|default>
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>1) >
     <|input>
-      eq1:L[3]*cos(q[1])*cos(q[2])*cos(q[3])-L[3]*cos(q[1])*sin(q[2])*sin(q[3])+L[2]*cos(q[1])*cos(q[2])-x$
+      eq1:L[3]*cos(q[1])*cos(q[2]+q[3])+L[2]*cos(q[1])*cos(q[2])-x$
     </input>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>2) >
     <|input>
-      eq1:subst([cos(q[1])=c[1],sin(q[1])=s[1],cos(q[2])=c[2],sin(q[2])=s[2],cos(q[3])=c[3],sin(q[3])=s[3]],eq1)$
+      eq1:subst([cos(q[1])=c[1],cos(q[2])=c[2],cos(q[2]+q[3])=c[23]],eq1)$
     </input>
 
     <\unfolded-io>
@@ -1461,19 +1363,19 @@
       X:solve([eq1],x)[1]
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
-      >>x=-c<rsub|1>*s<rsub|2>*L<rsub|3>*s<rsub|3>+c<rsub|1>*c<rsub|2>*L<rsub|3>*c<rsub|3>+c<rsub|1>*L<rsub|2>*c<rsub|2>>>
+      >>x=c<rsub|1>*L<rsub|3>*c<rsub|23>+c<rsub|1>*L<rsub|2>*c<rsub|2>>>
     </unfolded-io>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>4) >
     <|input>
-      eq2:L[3]*sin(q[1])*cos(q[2])*cos(q[3])-L[3]*sin(q[1])*sin(q[2])*sin(q[3])+L[2]*sin(q[1])*cos(q[2])-y$
+      eq2:L[3]*sin(q[1])*cos(q[2]+q[3])+L[2]*sin(q[1])*cos(q[2])-y$
     </input>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|input>
-      eq2:subst([cos(q[1])=c[1],sin(q[1])=s[1],cos(q[2])=c[2],sin(q[2])=s[2],cos(q[3])=c[3],sin(q[3])=s[3]],eq2)$
+      eq2:subst([sin(q[1])=s[1],cos(q[2])=c[2],cos(q[2]+q[3])=c[23]],eq2)$
     </input>
 
     <\unfolded-io>
@@ -1482,19 +1384,19 @@
       Y:solve([eq2],y)[1]
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
-      >>y=-s<rsub|1>*s<rsub|2>*L<rsub|3>*s<rsub|3>+s<rsub|1>*c<rsub|2>*L<rsub|3>*c<rsub|3>+s<rsub|1>*L<rsub|2>*c<rsub|2>>>
+      >>y=s<rsub|1>*L<rsub|3>*c<rsub|23>+s<rsub|1>*L<rsub|2>*c<rsub|2>>>
     </unfolded-io>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>7) >
     <|input>
-      eq3:L[3]*cos(q[2])*sin(q[3])+L[3]*cos(q[3])*sin(q[2])+L[2]*sin(q[2])+L[1]-z$
+      eq3:L[3]*sin(q[2]+q[3])+L[2]*sin(q[2])+L[1]-z$
     </input>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|input>
-      eq3:subst([cos(q[2])=c[2],sin(q[2])=s[2],cos(q[3])=c[3],sin(q[3])=s[3]],eq3)$
+      eq3:subst([sin(q[2])=s[2],sin(q[2]+q[3])=s[23]],eq3)$
     </input>
 
     <\unfolded-io>
@@ -1503,333 +1405,336 @@
       Z:solve([eq3],z)[1]
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
-      >>z=c<rsub|2>*L<rsub|3>*s<rsub|3>+s<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2>*s<rsub|2>+L<rsub|1>>>
+      >>z=L<rsub|3>*s<rsub|23>+L<rsub|2>*s<rsub|2>+L<rsub|1>>>
     </unfolded-io>
 
     \;
 
-    Considerando le prime due equazioni si ottiene che:
+    Nella terzo espressione (lungo Z) non vi è dipendenza dalla variabile
+    trigonometrica <math|q<rsub|1>>, allora prendo le altre due espressioni e
+    la tolgo anche da queste:
 
-    <\unfolded-io>
+    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>10) >
-    <|unfolded-io>
-      eq4:factor(X^2+Y^2)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
-      >>y<rsup|2>+x<rsup|2>=<around*|(|s<rsub|1><rsup|2>+c<rsub|1><rsup|2>|)>*<around*|(|s<rsub|2>*L<rsub|3>*s<rsub|3>-c<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2>*c<rsub|2>|)><rsup|2>>>
-    </unfolded-io>
+    <|input>
+      eqTrig1:(s[1]^2)+(c[1]^2)-1$
+    </input>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|input>
-      e1:(s[1]^2)+(c[1]^2)-1$
+      eqTrig2:(s[2]^2)+(c[2]^2)-1$
     </input>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>12) >
     <|input>
-      e2:(s[2]^2)+(c[2]^2)-1$
+      eqTrig3:(s[3]^2)+(c[3]^2)-1$
     </input>
 
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>13) >
-    <|input>
-      e3:(s[3]^2)+(c[3]^2)-1$
-    </input>
+    <|unfolded-io>
+      eliminate([X,Y,eqTrig1],[s[1],c[1]])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
+      >><around*|[|<around*|(|L<rsub|3><rsup|2>*c<rsub|23><rsup|2>+2*L<rsub|2>*c<rsub|2>*L<rsub|3>*c<rsub|23>+L<rsub|2><rsup|2>*c<rsub|2><rsup|2>|)>*<around*|(|y<rsup|2>+x<rsup|2>-L<rsub|3><rsup|2>*c<rsub|23><rsup|2>-2*L<rsub|2>*c<rsub|2>*L<rsub|3>*c<rsub|23>-L<rsub|2><rsup|2>*c<rsub|2><rsup|2>|)>|]>>>
+    </unfolded-io>
+
+    \;
+
+    Per ottenere conti più fattibili vado a sostituire <math|\<rho\><rsup|2>>
+    alla quantità <math|<around*|(|x<rsup|2>+y<rsup|2>|)>> e ne calcolo poi
+    le due soluzioni distinte: <math|>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>14) >
     <|unfolded-io>
-      eq5:subst(x^2+y^2=P,eq4)
+      eq1:rho^2-L[3]^2*c[23]^2-2*L[2]*c[2]*L[3]*c[23]-L[2]^2*c[2]^2
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
-      >>P=<around*|(|s<rsub|1><rsup|2>+c<rsub|1><rsup|2>|)>*<around*|(|s<rsub|2>*L<rsub|3>*s<rsub|3>-c<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2>*c<rsub|2>|)><rsup|2>>>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      >>\<rho\><rsup|2>-L<rsub|3><rsup|2>*c<rsub|23><rsup|2>-2*L<rsub|2>*c<rsub|2>*L<rsub|3>*c<rsub|23>-L<rsub|2><rsup|2>*c<rsub|2><rsup|2>>>
     </unfolded-io>
 
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>15) >
-    <|input>
-      eq5:eliminate([eq5,e1],[(s[1])^2])$
-    </input>
+    <|unfolded-io>
+      eq1:subst([c[23]=c[2]*c[3]-s[2]*s[3]],eq1)
+    <|unfolded-io>
+      \;
 
-    <\input>
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
+      >>\<rho\><rsup|2>-L<rsub|3><rsup|2>*<around*|(|c<rsub|2>*c<rsub|3>-s<rsub|2>*s<rsub|3>|)><rsup|2>-2*L<rsub|2>*c<rsub|2>*L<rsub|3>*<around*|(|c<rsub|2>*c<rsub|3>-s<rsub|2>*s<rsub|3>|)>-L<rsub|2><rsup|2>*c<rsub|2><rsup|2>>>
+    </unfolded-io>
+
+    Ora mi scrivo le quantità <math|c<rsub|23>> =
+    <math|c<rsub|2>*c<rsub|3>-s<rsub|2>*s<rsub|3>> e
+    <math|s<rsub|23>=s<rsub|2>*c<rsub|3>+s<rsub|3>*c<rsub|2>> e vado a
+    cancellare la variabile trigonometrica <math|q<rsub|2>>:
+
+    Siccome nell'andare ad eliminare i parametri <math|s<rsub|2>,c<rsub|2>>
+    si hanno pagine e pagine di equazioni di gradi maggiore al secondo,
+    allora vado a calcolare le due soluzioni di \<rho\> e ne studio solo una,
+    tanto i risultati per quanto riguarda l'altra sono uguali in modulo ma
+    opposti in segno.
+
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>16) >
-    <|input>
-      eq5:solve([eq5[1]],P)[1]$
-    </input>
+    <|unfolded-io>
+      solve([eq1],rho)
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
+      >><around*|[|\<rho\>=-s<rsub|2>*L<rsub|3>*s<rsub|3>+c<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2>*c<rsub|2>,\<rho\>=s<rsub|2>*L<rsub|3>*s<rsub|3>-c<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2>*c<rsub|2>|]>>>
+    </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>17) >
     <|unfolded-io>
-      eq5:factor(eq5)
+      eq1:rho=s[2]*L[3]*s[3]-c[2]*L[3]*c[3]-L[2]*c[2]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
-      >>P=<around*|(|s<rsub|2>*L<rsub|3>*s<rsub|3>-c<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2>*c<rsub|2>|)><rsup|2>>>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
+      >>\<rho\>=s<rsub|2>*L<rsub|3>*s<rsub|3>-c<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2>*c<rsub|2>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>18) >
     <|unfolded-io>
-      eq5:subst(P=x^2+y^2,eq5)
+      Z:subst([s[23]=s[2]*c[3]+s[3]*c[2]],Z)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
-      >>y<rsup|2>+x<rsup|2>=<around*|(|s<rsub|2>*L<rsub|3>*s<rsub|3>-c<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2>*c<rsub|2>|)><rsup|2>>>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
+      >>z=L<rsub|3>*<around*|(|c<rsub|2>*s<rsub|3>+s<rsub|2>*c<rsub|3>|)>+L<rsub|2>*s<rsub|2>+L<rsub|1>>>
     </unfolded-io>
-
-    \;
-
-    Dalla terza equazione si ottiene:
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>19) >
     <|unfolded-io>
-      eq6:Z-L[1]
+      eliminate([eq1,Z,eqTrig2],[c[2],s[2]])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
-      >>z-L<rsub|1>=c<rsub|2>*L<rsub|3>*s<rsub|3>+s<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2>*s<rsub|2>>>
-    </unfolded-io>
+      \;
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>20) >
-    <|unfolded-io>
-      eq6:factor(eq6^2)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
-      >><around*|(|z-L<rsub|1>|)><rsup|2>=<around*|(|c<rsub|2>*L<rsub|3>*s<rsub|3>+s<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2>*s<rsub|2>|)><rsup|2>>>
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
+      >><around*|[|<around*|(|L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>|)>*<around*|(|L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>|)>*<around*|(|z<rsup|2>-2*L<rsub|1>*z+\<rho\><rsup|2>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>-L<rsub|3><rsup|2>*c<rsub|3><rsup|2>-2*L<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>|)>|]>>>
     </unfolded-io>
 
     \;
 
-    Considerandole insieme è possibile ottenere uno SPAZIO OPERATIVO
-    CANDIDATO per tale robot:
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>20) >
+    <|unfolded-io>
+      eq2:z^2-2*L[1]*z+rho^2-L[3]^2*s[3]^2-L[3]^2*c[3]^2-2*L[2]*L[3]*c[3]-L[2]^2+L[1]^2
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
+      >>z<rsup|2>-2*L<rsub|1>*z+\<rho\><rsup|2>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>-L<rsub|3><rsup|2>*c<rsub|3><rsup|2>-2*L<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>>>
+    </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>21) >
     <|unfolded-io>
-      eq7:factor(eq5+eq6)
+      eliminate([eq2,eqTrig3],[s[3]])[1]
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
-      >>z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>+L<rsub|1><rsup|2>=<around*|(|s<rsub|2><rsup|2>+c<rsub|2><rsup|2>|)>*<around*|(|L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>|)>>>
+      >><around*|(|z<rsup|2>-2*L<rsub|1>*z+\<rho\><rsup|2>-2*L<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|3><rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>|)><rsup|2>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>22) >
     <|unfolded-io>
-      eq8:eliminate([eq7,e2,e3],[(s[2])^2,(s[3])^2])[1]
+      eq2:z^2-2*L[1]*z+rho^2-2*L[2]*L[3]*c[3]-L[3]^2-L[2]^2+L[1]^2
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
-      >>-z<rsup|2>+2*L<rsub|1>*z-y<rsup|2>-x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|3><rsup|2>+L<rsub|2><rsup|2>-L<rsub|1><rsup|2>>>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
+      >>z<rsup|2>-2*L<rsub|1>*z+\<rho\><rsup|2>-2*L<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|3><rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>>>
     </unfolded-io>
 
     \;
 
-    Da tale equazione si ricava <with|color|blue|<math|x<rsup|2>+y<rsup|2>+<around*|(|z-L<rsub|1>|)><rsup|2>=L<rsup|2><rsub|2>+L<rsup|2><rsub|3>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>>>
-    che permette di definire uno SPAZIO OPERATIVO CANDIDATO rappresentato da
-    una sfera cava con raggio minore \|L<rsub|2>-L<rsub|3>\|, raggio maggiore
-    (L<rsub|2>+L<rsub|3>) e centrato in (0,0,L<rsub|1>).
+    Prendendo in considerazione l'equazione eq2 è possibile calcolare la
+    quantità cos(<math|q<rsub|3>>) e definire anche lo spazio operativo:
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>23) >
+    <|unfolded-io>
+      C3:solve([eq2],c[3])[1]
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
+      >>c<rsub|3>=<frac|z<rsup|2>-2*L<rsub|1>*z+\<rho\><rsup|2>-L<rsub|3><rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>|2*L<rsub|2>*L<rsub|3>>>>
+    </unfolded-io>
+
+    \;
+
+    Tale equazione è esistente se e solo se la quantità a destra dell'uguale
+    è compresa tra -1 ed 1, in particolare si ha:
+
+    <\equation*>
+      -1\<leqslant\><frac|z<rsup|2>-2*L<rsub|1>*z+\<rho\><rsup|2>-L<rsub|3><rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>|2*L<rsub|2>*L<rsub|3>>\<leqslant\>1
+    </equation*>
+
+    <\equation*>
+      -2*L<rsub|2>*L<rsub|3>\<leqslant\>z<rsup|2>-2*L<rsub|1>*z+\<rho\><rsup|2>-L<rsub|3><rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>\<leqslant\>2*L<rsub|2>*L<rsub|3>
+    </equation*>
+
+    <\equation*>
+      -2*L<rsub|2>*L<rsub|3>+L<rsub|3><rsup|2>+L<rsub|2><rsup|2>\<leqslant\>x<rsup|2>+y<rsup|2>+<around*|(|z-L<rsub|1>|)><rsup|2>\<leqslant\>2*L<rsub|2>*L<rsub|3>+L<rsub|3><rsup|2>+L<rsub|2><rsup|2>
+    </equation*>
+
+    <\equation*>
+      <around*|(|L<rsub|2>-L<rsub|3>|)><rsup|2>\<leqslant\>x<rsup|2>+y<rsup|2>+<around*|(|z-L<rsub|1>|)><rsup|2>\<leqslant\><around*|(|L<rsub|2>+L<rsub|3>|)><rsup|2>
+    </equation*>
+
+    Allora lo spazio operativo candidato è la sfera la sfera cava con raggio
+    minore <math|<around*|\||L<rsub|2>-L<rsub|3>|\|>> e raggio maggiore
+    (<math|L<rsub|2>+L<rsub|3>>) e centrata in (0,0,<math|L<rsub|1>>).
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>24) >
+    <|unfolded-io>
+      S3:solve([eqTrig3],s[3])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o24>)
+      >><around*|[|s<rsub|3>=-<sqrt|1-c<rsub|3><rsup|2>>,s<rsub|3>=<sqrt|1-c<rsub|3><rsup|2>>|]>>>
+    </unfolded-io>
 
     \;
 
     Posso calcolare la variabile trigonometrica <with|color|blue|q<rsub|3>>
     come segue:
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>23) >
-    <|unfolded-io>
-      C3:solve([eq8],c[3])[1]
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
-      >>c<rsub|3>=<frac|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-L<rsub|3><rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>|2*L<rsub|2>*L<rsub|3>>>>
-    </unfolded-io>
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>25) >
+    <|input>
+      q3:atan2(S3[1],C3)$
+    </input>
 
-    Il coseno ha soluzione se e solo se tutta la quantità a destra
-    dell'equazione è in modulo minore o uguale ad 1, risolvendo tale
-    disuguaglianza si trovano le relazioni che identificano il raggio minore
-    e maggiore della sfera cava.\ 
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>24) >
-    <|unfolded-io>
-      eq9:eliminate([eq7,e2],[(s[2])^2])[1]
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o24>)
-      >>-z<rsup|2>+2*L<rsub|1>*z-y<rsup|2>-x<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>-L<rsub|1><rsup|2>>>
-    </unfolded-io>
+    <\textput>
+      <\equation*>
+        -<math-up|atan2><around*|(|<sqrt|1-c<rsub|3><rsup|2>>,<frac|z<rsup|2>-2*L<rsub|1>*z+\<rho\><rsup|2>-L<rsub|3><rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>|2*L<rsub|2>*L<rsub|3>>|)>
+      </equation*>
+    </textput>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>26) >
     <|input>
-      S3:solve([eq9],s[3])$
+      q3:atan2(S3[2],C3)$
     </input>
 
-    <\equation*>
-      s<rsub|3>=-<frac|<sqrt|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-L<rsub|3><rsup|2>*c<rsub|3><rsup|2>-2*L<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>>|L<rsub|3>>
-    </equation*>
+    <\textput>
+      <\equation*>
+        <math-up|atan2><around*|(|<sqrt|1-c<rsub|3><rsup|2>>,<frac|z<rsup|2>-2*L<rsub|1>*z+\<rho\><rsup|2>-L<rsub|3><rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>|2*L<rsub|2>*L<rsub|3>>|)>
+      </equation*>
+    </textput>
 
-    <\equation*>
-      s<rsub|3>=<frac|<sqrt|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-L<rsub|3><rsup|2>*c<rsub|3><rsup|2>-2*L<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>>|L<rsub|3>>
-    </equation*>
+    La variabile trigonometrica <math|q<rsub|3>> ha 2 soluzioni GENERICHE che
+    diventano una (SINGOLARITA') se la quantità di <math|c<rsub|3>> è in
+    modulo uguale ad 1.
 
-    <\input>
+    \;
+
+    Ora calcolo la variabile trigonometrica <math|q<rsub|2>> tenendo conto
+    dell'equazioni eq1 e Z:\ 
+
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>28) >
-    <|input>
-      q3[1]:atan2(S3[1],C3)$
-    </input>
+    <|unfolded-io>
+      solve([eq1,Z],[c[2],s[2]])[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o28>)
+      >><around*|[|c<rsub|2>=-<frac|L<rsub|3>*s<rsub|3>*<around*|(|L<rsub|1>-z|)>+<around*|(|L<rsub|3>*c<rsub|3>+L<rsub|2>|)>*\<rho\>|L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>>,s<rsub|2>=<frac|L<rsub|3>*c<rsub|3>*<around*|(|z-L<rsub|1>|)>+L<rsub|2>*<around*|(|z-L<rsub|1>|)>+L<rsub|3>*s<rsub|3>*\<rho\>|L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>>|]>>>
+    </unfolded-io>
 
-    <\equation*>
-      -<math-up|atan2><around*|(|<frac|<sqrt|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-L<rsub|3><rsup|2>*c<rsub|3><rsup|2>-2*L<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>>|L<rsub|3>>,<frac|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-L<rsub|3><rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>|2*L<rsub|2>*L<rsub|3>>|)>
-    </equation*>
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>29) >
+    <|unfolded-io>
+      C2:-((L[3]*s[3]*(L[1]-z)+(L[3]*c[3]+L[2])*rho)/(L[3]^2*s[3]^2+L[3]^2*c[3]^2+2*L[2]*L[3]*c[3]+L[2]^2))
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o29>)
+      >>-<frac|L<rsub|3>*s<rsub|3>*<around*|(|L<rsub|1>-z|)>+<around*|(|L<rsub|3>*c<rsub|3>+L<rsub|2>|)>*\<rho\>|L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>>>>
+    </unfolded-io>
 
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>30) >
-    <|input>
-      q3[2]:atan2(S3[2],C3)$
-    </input>
+    <|unfolded-io>
+      S2:((L[3]*c[3]*(z-L[1])+L[2]*(z-L[1])+L[3]*s[3]*rho)/(L[3]^2*s[3]^2+L[3]^2*c[3]^2+2*L[2]*L[3]*c[3]+L[2]^2))
+    <|unfolded-io>
+      \;
 
-    <\equation*>
-      <math-up|atan2><around*|(|<frac|<sqrt|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-L<rsub|3><rsup|2>*c<rsub|3><rsup|2>-2*L<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>>|L<rsub|3>>,<frac|z<rsup|2>-2*L<rsub|1>*z+y<rsup|2>+x<rsup|2>-L<rsub|3><rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>|2*L<rsub|2>*L<rsub|3>>|)>
-    </equation*>
-
-    \;
-
-    Quindi la variabile trigonometrica q<rsub|3> ha 2 SOLUZIONI GENERICHE, ha
-    INFINITE SOLUZIONI se le lunghezze L<rsub|2>, L<rsub|3> sono nulle,
-    poichè la funzione atan2 non è definita.
-
-    \;
-
-    Posso ora calcolare la variabile trigonometrica
-    <with|color|blue|q<rsub|2>>:
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o30>)
+      >><frac|L<rsub|3>*c<rsub|3>*<around*|(|z-L<rsub|1>|)>+L<rsub|2>*<around*|(|z-L<rsub|1>|)>+L<rsub|3>*s<rsub|3>*\<rho\>|L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>>>>
+    </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>31) >
     <|unfolded-io>
-      w1:eliminate([eq5,e2],[s[2]])[1]
+      q2:atan2(S2,C2)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o31>)
-      >>y<rsup|4>+<around*|(|2*x<rsup|2>+<around*|(|2*c<rsub|2><rsup|2>-2|)>*L<rsub|3><rsup|2>*s<rsub|3><rsup|2>-2*c<rsub|2><rsup|2>*L<rsub|3><rsup|2>*c<rsub|3><rsup|2>-4*L<rsub|2>*c<rsub|2><rsup|2>*L<rsub|3>*c<rsub|3>-2*L<rsub|2><rsup|2>*c<rsub|2><rsup|2>|)>*y<rsup|2>+x<rsup|4>+<around*|(|<around*|(|2*c<rsub|2><rsup|2>-2|)>*L<rsub|3><rsup|2>*s<rsub|3><rsup|2>-2*c<rsub|2><rsup|2>*L<rsub|3><rsup|2>*c<rsub|3><rsup|2>-4*L<rsub|2>*c<rsub|2><rsup|2>*L<rsub|3>*c<rsub|3>-2*L<rsub|2><rsup|2>*c<rsub|2><rsup|2>|)>*x<rsup|2>+<around*|(|c<rsub|2><rsup|4>-2*c<rsub|2><rsup|2>+1|)>*L<rsub|3><rsup|4>*s<rsub|3><rsup|4>+<around*|(|<around*|(|2*c<rsub|2><rsup|4>-2*c<rsub|2><rsup|2>|)>*L<rsub|3><rsup|4>*c<rsub|3><rsup|2>+<around*|(|4*L<rsub|2>*c<rsub|2><rsup|4>-4*L<rsub|2>*c<rsub|2><rsup|2>|)>*L<rsub|3><rsup|3>*c<rsub|3>+<around*|(|2*L<rsub|2><rsup|2>*c<rsub|2><rsup|4>-2*L<rsub|2><rsup|2>*c<rsub|2><rsup|2>|)>*L<rsub|3><rsup|2>|)>*s<rsub|3><rsup|2>+c<rsub|2><rsup|4>*L<rsub|3><rsup|4>*c<rsub|3><rsup|4>+4*L<rsub|2>*c<rsub|2><rsup|4>*L<rsub|3><rsup|3>*c<rsub|3><rsup|3>+6*L<rsub|2><rsup|2>*c<rsub|2><rsup|4>*L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+4*L<rsub|2><rsup|3>*c<rsub|2><rsup|4>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|4>*c<rsub|2><rsup|4>>>
+      ><with|font-family|rm|atan2>><around*|(|<frac|L<rsub|3>*c<rsub|3>*<around*|(|z-L<rsub|1>|)>+L<rsub|2>*<around*|(|z-L<rsub|1>|)>+L<rsub|3>*s<rsub|3>*\<rho\>|L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>>,-<frac|L<rsub|3>*s<rsub|3>*<around*|(|L<rsub|1>-z|)>+<around*|(|L<rsub|3>*c<rsub|3>+L<rsub|2>|)>*\<rho\>|L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>>|)>>>
     </unfolded-io>
 
-    <\input>
+    <math|q<rsub|2>> ha quindi 4 soluzioni GENERICHE, mentre può avere
+    infinite soluzioni (SINGOLARITA') se l'end-effector si trova nell'origine
+    del robot.
+
+    \;
+
+    Posso ora calcolare la variabile trigonometrica
+    <with|color|blue|q<rsub|1>>:
+
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>33) >
-    <|input>
-      C2:solve([w1],c[2])$
-    </input>
+    <|unfolded-io>
+      solve([X,Y],[c[1],s[1]])[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o33>)
+      >><around*|[|c<rsub|1>=<frac|x|L<rsub|3>*c<rsub|23>+L<rsub|2>*c<rsub|2>>,s<rsub|1>=<frac|y|L<rsub|3>*c<rsub|23>+L<rsub|2>*c<rsub|2>>|]>>>
+    </unfolded-io>
 
-    <\equation*>
-      c<rsub|2>=-<frac|<sqrt|2*L<rsub|3><rsup|2>*c<rsub|3>*s<rsub|3>*<sqrt|-y<rsup|4>-2*x<rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-x<rsup|4>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>>+2*L<rsub|2>*L<rsub|3>*s<rsub|3>*<sqrt|-y<rsup|4>-2*x<rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-x<rsup|4>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>+L<rsub|3><rsup|4>*s<rsub|3><rsup|4>+L<rsub|3><rsup|4>*c<rsub|3><rsup|2>*s<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3><rsup|3>*c<rsub|3>*s<rsub|3><rsup|2>+L<rsub|2><rsup|2>*L<rsub|3><rsup|2>*s<rsub|3><rsup|2>>|L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>>
-    </equation*>
-
-    \;
-
-    <\equation*>
-      c<rsub|2>=<frac|<sqrt|2*L<rsub|3><rsup|2>*c<rsub|3>*s<rsub|3>*<sqrt|-y<rsup|4>-2*x<rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-x<rsup|4>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>>+2*L<rsub|2>*L<rsub|3>*s<rsub|3>*<sqrt|-y<rsup|4>-2*x<rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-x<rsup|4>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>+L<rsub|3><rsup|4>*s<rsub|3><rsup|4>+L<rsub|3><rsup|4>*c<rsub|3><rsup|2>*s<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3><rsup|3>*c<rsub|3>*s<rsub|3><rsup|2>+L<rsub|2><rsup|2>*L<rsub|3><rsup|2>*s<rsub|3><rsup|2>>|L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>>
-    </equation*>
-
-    \;
-
-    <\equation*>
-      c<rsub|2>=-<frac|<sqrt|-2*L<rsub|3><rsup|2>*c<rsub|3>*s<rsub|3>*<sqrt|-y<rsup|4>-2*x<rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-x<rsup|4>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>>-2*L<rsub|2>*L<rsub|3>*s<rsub|3>*<sqrt|-y<rsup|4>-2*x<rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-x<rsup|4>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>+L<rsub|3><rsup|4>*s<rsub|3><rsup|4>+L<rsub|3><rsup|4>*c<rsub|3><rsup|2>*s<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3><rsup|3>*c<rsub|3>*s<rsub|3><rsup|2>+L<rsub|2><rsup|2>*L<rsub|3><rsup|2>*s<rsub|3><rsup|2>>|L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>>
-    </equation*>
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>34) >
+    <|unfolded-io>
+      C1:(x/(L[3]*c[23]+L[2]*c[2]))
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o34>)
+      >><frac|x|L<rsub|3>*c<rsub|23>+L<rsub|2>*c<rsub|2>>>>
+    </unfolded-io>
 
     \;
-
-    <\equation*>
-      c<rsub|2>=<frac|<sqrt|-2*L<rsub|3><rsup|2>*c<rsub|3>*s<rsub|3>*<sqrt|-y<rsup|4>-2*x<rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-x<rsup|4>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>>-2*L<rsub|2>*L<rsub|3>*s<rsub|3>*<sqrt|-y<rsup|4>-2*x<rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-x<rsup|4>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>+L<rsub|3><rsup|4>*s<rsub|3><rsup|4>+L<rsub|3><rsup|4>*c<rsub|3><rsup|2>*s<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3><rsup|3>*c<rsub|3>*s<rsub|3><rsup|2>+L<rsub|2><rsup|2>*L<rsub|3><rsup|2>*s<rsub|3><rsup|2>>|L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>>
-    </equation*>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>35) >
     <|unfolded-io>
-      S2:solve([Z],s[2])[1]
+      S1:(y/(L[3]*c[23]+L[2]*c[2]))
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o35>)
-      >>s<rsub|2>=<frac|z-c<rsub|2>*L<rsub|3>*s<rsub|3>-L<rsub|1>|L<rsub|3>*c<rsub|3>+L<rsub|2>>>>
-    </unfolded-io>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>44) >
-    <|input>
-      q2[1]:atan2(S2,C2[1])$
-    </input>
-
-    <\equation*>
-      <math-up|atan2><around*|(|<frac|z-c<rsub|2>*L<rsub|3>*s<rsub|3>-L<rsub|1>|L<rsub|3>*c<rsub|3>+L<rsub|2>>,-<frac|<sqrt|2*L<rsub|3><rsup|2>*c<rsub|3>*s<rsub|3>*<sqrt|-y<rsup|4>-2*x<rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-x<rsup|4>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>>+2*L<rsub|2>*L<rsub|3>*s<rsub|3>*<sqrt|-y<rsup|4>-2*x<rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-x<rsup|4>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>+L<rsub|3><rsup|4>*s<rsub|3><rsup|4>+L<rsub|3><rsup|4>*c<rsub|3><rsup|2>*s<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3><rsup|3>*c<rsub|3>*s<rsub|3><rsup|2>+L<rsub|2><rsup|2>*L<rsub|3><rsup|2>*s<rsub|3><rsup|2>>|L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>>|)>
-    </equation*>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>46) >
-    <|input>
-      q2[2]:atan2(S2,C2[2])$
-    </input>
-
-    <\equation*>
-      <math-up|atan2><around*|(|<frac|z-c<rsub|2>*L<rsub|3>*s<rsub|3>-L<rsub|1>|L<rsub|3>*c<rsub|3>+L<rsub|2>>,<frac|<sqrt|2*L<rsub|3><rsup|2>*c<rsub|3>*s<rsub|3>*<sqrt|-y<rsup|4>-2*x<rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-x<rsup|4>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>>+2*L<rsub|2>*L<rsub|3>*s<rsub|3>*<sqrt|-y<rsup|4>-2*x<rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-x<rsup|4>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>+L<rsub|3><rsup|4>*s<rsub|3><rsup|4>+L<rsub|3><rsup|4>*c<rsub|3><rsup|2>*s<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3><rsup|3>*c<rsub|3>*s<rsub|3><rsup|2>+L<rsub|2><rsup|2>*L<rsub|3><rsup|2>*s<rsub|3><rsup|2>>|L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>>|)>
-    </equation*>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>48) >
-    <|input>
-      q2[3]:atan2(S2,C2[3])$
-    </input>
-
-    <\equation*>
-      <math-up|atan2><around*|(|<frac|z-c<rsub|2>*L<rsub|3>*s<rsub|3>-L<rsub|1>|L<rsub|3>*c<rsub|3>+L<rsub|2>>,-<frac|<sqrt|-2*L<rsub|3><rsup|2>*c<rsub|3>*s<rsub|3>*<sqrt|-y<rsup|4>-2*x<rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-x<rsup|4>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>>-2*L<rsub|2>*L<rsub|3>*s<rsub|3>*<sqrt|-y<rsup|4>-2*x<rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-x<rsup|4>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>+L<rsub|3><rsup|4>*s<rsub|3><rsup|4>+L<rsub|3><rsup|4>*c<rsub|3><rsup|2>*s<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3><rsup|3>*c<rsub|3>*s<rsub|3><rsup|2>+L<rsub|2><rsup|2>*L<rsub|3><rsup|2>*s<rsub|3><rsup|2>>|L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>>|)>
-    </equation*>
-
-    \;
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>50) >
-    <|input>
-      q2[4]:atan2(S2,C2[4])$
-    </input>
-
-    <\equation*>
-      <math-up|atan2><around*|(|<frac|z-c<rsub|2>*L<rsub|3>*s<rsub|3>-L<rsub|1>|L<rsub|3>*c<rsub|3>+L<rsub|2>>,<frac|<sqrt|-2*L<rsub|3><rsup|2>*c<rsub|3>*s<rsub|3>*<sqrt|-y<rsup|4>-2*x<rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-x<rsup|4>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>>-2*L<rsub|2>*L<rsub|3>*s<rsub|3>*<sqrt|-y<rsup|4>-2*x<rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-x<rsup|4>+L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*y<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*y<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*y<rsup|2>+L<rsub|2><rsup|2>*y<rsup|2>-L<rsub|3><rsup|2>*s<rsub|3><rsup|2>*x<rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>*x<rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>*x<rsup|2>+L<rsub|2><rsup|2>*x<rsup|2>+L<rsub|3><rsup|4>*s<rsub|3><rsup|4>+L<rsub|3><rsup|4>*c<rsub|3><rsup|2>*s<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3><rsup|3>*c<rsub|3>*s<rsub|3><rsup|2>+L<rsub|2><rsup|2>*L<rsub|3><rsup|2>*s<rsub|3><rsup|2>>|L<rsub|3><rsup|2>*s<rsub|3><rsup|2>+L<rsub|3><rsup|2>*c<rsub|3><rsup|2>+2*L<rsub|2>*L<rsub|3>*c<rsub|3>+L<rsub|2><rsup|2>>|)>
-    </equation*>
-
-    \;
-
-    La variabile trigonometrica q<rsub|2> ha 4 SOLUZIONI GENERALI, mentre ci
-    sono INFINITE SOLUZIONI se valgono le coordinate (x,y,z)=(0,0,L<rsub|1>).
-
-    \;
-
-    Calcolo adesso la variabile trigonometrica q<rsub|1>:
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>51) >
-    <|unfolded-io>
-      C1:solve([X],c[1])[1]
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o51>)
-      >>c<rsub|1>=-<frac|x|s<rsub|2>*L<rsub|3>*s<rsub|3>-c<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2>*c<rsub|2>>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o35>)
+      >><frac|y|L<rsub|3>*c<rsub|23>+L<rsub|2>*c<rsub|2>>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>52) >
+      <with|color|red|(<with|math-font-family|rm|%i>36) >
     <|unfolded-io>
-      S1:solve([Y],s[1])[1]
+      q1:atan2(S1,C1)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o52>)
-      >>s<rsub|1>=-<frac|y|s<rsub|2>*L<rsub|3>*s<rsub|3>-c<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2>*c<rsub|2>>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o36>)
+      ><with|font-family|rm|atan2>><around*|(|<frac|y|L<rsub|3>*c<rsub|23>+L<rsub|2>*c<rsub|2>>,<frac|x|L<rsub|3>*c<rsub|23>+L<rsub|2>*c<rsub|2>>|)>>>
     </unfolded-io>
 
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>54) >
-    <|input>
-      q1:atan2(S1,C1)$
-    </input>
+    \;
+
+    Quindi la variabile trigonometrica ha 1 soluzione GENERICA per ogni
+    scelta di <math|q<rsub|3>>.
   </session>
-
-  <\equation*>
-    -<math-up|atan2><around*|(|<frac|y|s<rsub|2>*L<rsub|3>*s<rsub|3>-c<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2>*c<rsub|2>>,-<frac|x|s<rsub|2>*L<rsub|3>*s<rsub|3>-c<rsub|2>*L<rsub|3>*c<rsub|3>-L<rsub|2>*c<rsub|2>>|)>
-  </equation*>
-
-  \;
 
   \;
 
@@ -1898,8 +1803,40 @@
     <|unfolded-io>
       Z:solve([eq3],z)[1]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
       >>z=c<rsub|2>*L<rsub|3>>>
+    </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>10) >
+    <|input>
+      eqTrig1:(sin(q[1])^2)+(cos(q[1])^2)-1$
+    </input>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>11) >
+    <|unfolded-io>
+      eqTrig1:subst([sin(q[1])=s[1],cos(q[1])=c[1]],eqTrig1)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
+      >>s<rsub|1><rsup|2>+c<rsub|1><rsup|2>-1>>
+    </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>12) >
+    <|input>
+      eqTrig2:(sin(q[2])^2)+(cos(q[2])^2)-1$
+    </input>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>13) >
+    <|unfolded-io>
+      eqTrig2:subst([sin(q[2])=s[2],cos(q[2])=c[2]],eqTrig2)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
+      >>s<rsub|2><rsup|2>+c<rsub|2><rsup|2>-1>>
     </unfolded-io>
 
     \;
@@ -1908,135 +1845,104 @@
     trigonometrica q<rsub|1>:
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>10) >
-    <|unfolded-io>
-      eq4:factor(X^2+Y^2)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
-      >>y<rsup|2>+x<rsup|2>=<around*|(|s<rsub|1><rsup|2>+c<rsub|1><rsup|2>|)>*s<rsub|2><rsup|2>*L<rsub|3><rsup|2>>>
-    </unfolded-io>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>11) >
-    <|input>
-      e1:(s[1]^2)+(c[1]^2)-1$
-    </input>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>12) >
-    <|input>
-      e2:(s[2]^2)+(c[2]^2)-1$
-    </input>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>13) >
-    <|input>
-      eq4:subst(x^2+y^2=P,eq4)$
-    </input>
-
-    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>14) >
     <|unfolded-io>
-      eq4:eliminate([eq4,e1],[s[1]^2])[1]
+      eliminate([X,Y,eqTrig1],[c[1],s[1]])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
-      >>s<rsub|2><rsup|2>*L<rsub|3><rsup|2>-P>>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      >><around*|[|s<rsub|2><rsup|2>*L<rsub|3><rsup|2>*<around*|(|y<rsup|2>+x<rsup|2>-s<rsub|2><rsup|2>*L<rsub|3><rsup|2>|)>|]>>>
     </unfolded-io>
 
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>15) >
-    <|input>
-      eq4:solve([eq4],P)[1]$
-    </input>
+    <|unfolded-io>
+      eq1:y^2+x^2-s[2]^2*L[3]^2
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
+      >>y<rsup|2>+x<rsup|2>-s<rsub|2><rsup|2>*L<rsub|3><rsup|2>>>
+    </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>16) >
     <|unfolded-io>
-      eq5:subst(P=x^2+y^2,eq4)
+      eliminate([eq1,Z,eqTrig2],[c[2],s[2]])
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
-      >>y<rsup|2>+x<rsup|2>=s<rsub|2><rsup|2>*L<rsub|3><rsup|2>>>
+      >><around*|[|L<rsub|3><rsup|4>*<around*|(|z<rsup|2>+y<rsup|2>+x<rsup|2>-L<rsub|3><rsup|2>|)><rsup|2>|]>>>
     </unfolded-io>
+
+    <\textput>
+      Dall'espressione precedente di trova lo spazio operativo del polso
+      sferico che è dale dall'equazione <math|z<rsup|2>+y<rsup|2>+x<rsup|2>=L<rsub|3><rsup|2>>,
+      la quale appunto permette di definire come spazio operativo una sfera
+      di centro (0,0,0) e raggio <math|L<rsub|3>>.
+    </textput>
 
     \;
 
-    Adesso considero la terza equazione z prendendone il quadrato:
+    Dall'equazione eq1 è possibile trovare quanto vale il
+    <math|sin<around*|(|q<rsub|2>|)>> mentre dall'equazione Z è possibile
+    calcolare <math|cos<around*|(|q<rsub|2>|)>>, infine si potrà definire
+    quanto vale la variabile trigonometrica <math|q<rsub|2>>.
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>17) >
     <|unfolded-io>
-      eq6:Z^2
+      C2:solve([Z],c[2])[1]
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
-      >>z<rsup|2>=c<rsub|2><rsup|2>*L<rsub|3><rsup|2>>>
-    </unfolded-io>
-
-    \;
-
-    Considerando ora le equazioni eq5 e eq6 posso eliminare la variabile
-    trigonometrica q<rsub|2> e definire per il polso sperico uno SPAZIO
-    OPERATIVO CANDIDATO:
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>18) >
-    <|unfolded-io>
-      eq7:factor(eq5+eq6)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
-      >>z<rsup|2>+y<rsup|2>+x<rsup|2>=<around*|(|s<rsub|2><rsup|2>+c<rsub|2><rsup|2>|)>*L<rsub|3><rsup|2>>>
+      >>c<rsub|2>=<frac|z|L<rsub|3>>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>19) >
     <|unfolded-io>
-      eq7:eliminate([eq7,e2],[s[2]^2])[1]
+      S2[1]:solve([eq1],s[2])[1]
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
-      >>-z<rsup|2>-y<rsup|2>-x<rsup|2>+L<rsub|3><rsup|2>>>
+      >>s<rsub|2>=-<frac|<sqrt|y<rsup|2>+x<rsup|2>>|L<rsub|3>>>>
     </unfolded-io>
-
-    \;
-
-    Tale equazione (<math|x<rsup|2>+y<rsup|2>+z<rsup|2>=L<rsup|2><rsub|3>>)
-    permettte di definire uno SPAZIO OPERATIVO CANDIDATO che corrisponde ad
-    una sfera di centro (0,0,0) e raggio L<rsub|3>.
-
-    \;
-
-    Calcolo adesso il valore della <with|color|blue|variabile trigonometrica
-    q<rsub|2>>:
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>20) >
     <|unfolded-io>
-      C2:solve([Z],c[2])[1]
+      S2[2]:solve([eq1],s[2])[2]
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
-      >>c<rsub|2>=<frac|z|L<rsub|3>>>>
+      >>s<rsub|2>=<frac|<sqrt|y<rsup|2>+x<rsup|2>>|L<rsub|3>>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>21) >
     <|unfolded-io>
-      S2:solve([eq5],s[2])[1]
+      q2[1]:atan2(S2[1],C2)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
-      >>s<rsub|2>=-<frac|<sqrt|y<rsup|2>+x<rsup|2>>|L<rsub|3>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>22) >
-    <|unfolded-io>
-      q2:atan2(S2,C2)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
       ><with|font-family|rm|atan2>><around*|(|s<rsub|2>,c<rsub|2>|)>=<math-up|atan2><around*|(|s<rsub|2>,<frac|z|L<rsub|3>>|)>=<around*|(|-<math-up|atan2><around*|(|<frac|<sqrt|y<rsup|2>+x<rsup|2>>|L<rsub|3>>,c<rsub|2>|)>=-<math-up|atan2><around*|(|<frac|<sqrt|y<rsup|2>+x<rsup|2>>|L<rsub|3>>,<frac|z|L<rsub|3>>|)>|)>>>
     </unfolded-io>
 
     \;
 
-    Ora calcolo il valore della <with|color|blue|variabile trigonometrica
-    q<rsub|1>>:
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>22) >
+    <|unfolded-io>
+      q2[2]:atan2(S2[2],C2)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
+      ><with|font-family|rm|atan2>><around*|(|s<rsub|2>,c<rsub|2>|)>=<math-up|atan2><around*|(|s<rsub|2>,<frac|z|L<rsub|3>>|)>=<around*|(|<math-up|atan2><around*|(|<frac|<sqrt|y<rsup|2>+x<rsup|2>>|L<rsub|3>>,c<rsub|2>|)>=<math-up|atan2><around*|(|<frac|<sqrt|y<rsup|2>+x<rsup|2>>|L<rsub|3>>,<frac|z|L<rsub|3>>|)>|)>>>
+    </unfolded-io>
+
+    Quindi la variabile trigonometrica <math|q<rsub|2>> ha 2 soluzioni
+    GENERICHE.
+
+    \;
+
+    Adesso prendendo in considerazione le prime due equazioni è possibile
+    definire in successione le quantità <math|sin<around*|(|q<rsub|1>|)>,cos<around*|(|q<rsub|1>|)>,q<rsub|1>>:
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>23) >
@@ -2064,14 +1970,13 @@
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o25>)
       ><with|font-family|rm|atan2>><around*|(|s<rsub|1>,c<rsub|1>|)>=<math-up|atan2><around*|(|s<rsub|1>,<frac|x|s<rsub|2>*L<rsub|3>>|)>=<around*|(|<math-up|atan2><around*|(|<frac|y|s<rsub|2>*L<rsub|3>>,c<rsub|1>|)>=<math-up|atan2><around*|(|<frac|y|s<rsub|2>*L<rsub|3>>,<frac|x|s<rsub|2>*L<rsub|3>>|)>|)>>>
     </unfolded-io>
+
+    \;
+
+    La variabile trigonometrica <math|q<rsub|1>> ha 1 soluzione generica per
+    ogni valore di <math|sin<around*|(|q<rsub|2>|)>>, quindi in totale ha 2
+    soluzioni GENERICHE.
   </session>
-
-  \;
-
-  Quindi entrambe le variabili trigonometriche q<rsub|1> e q<rsub|2> hanno 1
-  SOLUZIONE GENERICA, mentre se la lunghezza del terzo link L<rsub|3> è nulla
-  allora le due variabili trigonometriche hanno INFINITE SOLUZIONI poichè la
-  funzione atan2 non è definita.
 </body>
 
 <\initial>
