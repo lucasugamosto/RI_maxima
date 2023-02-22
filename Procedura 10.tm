@@ -7,7 +7,7 @@
   DELLA MATRICE DI ROTAZIONE (calcolo diretto) E PER IL CALCOLO DELLA MATRICE
   ANTISIMMETRICA (calcolo inverso).
 
-  <with|color|black|Procedura che prende in ingresso un versore e genera la
+  <with|color|black|Procedura che prende in ingresso un vettore e genera la
   matrice di rotazione R tramite la parametrizzazione di Cayley, se possibile
   (quindi controllare se la matrice I-S(a) è o meno invertibile, cioè ha
   determinante diverso da zero).>
@@ -16,9 +16,67 @@
   <math|R<rsub|w>=<around*|(|I+S<around*|(|w|)>|)>*<around*|(|1-S<around*|(|w|)>|)><rsup|-1>>
   dato il vettore <math|w>.
 
+  Dati in input angolo e versore, si calcola il valore di \<alpha\> per cui
+  si otttiene l'angolo desiderato e si moltiplica per il versore, così da
+  avere il vettore associato che si inserisce all'interno del codice.
+
   <\session|maxima|default>
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>1) >
+    <|unfolded-io>
+      eq1:(2*alpha)/(1+alpha^2) = sqrt(3)/2
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o1>)
+      >><frac|2*\<alpha\>|\<alpha\><rsup|2>+1>=<frac|<sqrt|3>|2>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>2) >
+    <|unfolded-io>
+      value:solve([eq1],alpha)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
+      >><around*|[|\<alpha\>=<frac|1|<sqrt|3>>,\<alpha\>=<sqrt|3>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>3) >
+    <|unfolded-io>
+      eq2:(1-alpha^2)/(1+alpha^2) = 1/2
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
+      >><frac|1-\<alpha\><rsup|2>|\<alpha\><rsup|2>+1>=<frac|1|2>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>4) >
+    <|unfolded-io>
+      value2:solve([eq2],alpha)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
+      >><around*|[|\<alpha\>=-<frac|1|<sqrt|3>>,\<alpha\>=<frac|1|<sqrt|3>>|]>>>
+    </unfolded-io>
+
+    \;
+
+    Quindi per avere come angolo \<theta\> la quantità \<pi\>/3 devo
+    scegliere \<alpha\>=1/<sqrt|3>.
+
+    Successivamente definisco il vettore da passare in input alla funzione
+    che calcola R nel seguente modo, dove
+    e=versore=[1/<sqrt|2>,1/<sqrt|2>,0]<math|<rsup|T>>.
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>5) >
+    <|unfolded-io>
+      vettore:(1/sqrt(3))*matrix([1/sqrt(2)],[1/sqrt(2)],[0])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      >><matrix|<tformat|<table|<row|<cell|<frac|1|<sqrt|2>*<sqrt|3>>>>|<row|<cell|<frac|1|<sqrt|2>*<sqrt|3>>>>|<row|<cell|0>>>>>>>
+    </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>6) >
     <|input>
       calcoloR(vettore):=block(
 
@@ -63,42 +121,19 @@
       )$
     </input>
 
-    \;
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>7) >
+    <|unfolded-io>
+      R:calcoloR(vettore)
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|3|4>>|<cell|<frac|1|4>>|<cell|<frac|<sqrt|3>|2<rsup|<frac|3|2>>>>>|<row|<cell|<frac|1|4>>|<cell|<frac|3|4>>|<cell|-<frac|<sqrt|3>|2<rsup|<frac|3|2>>>>>|<row|<cell|-<frac|<sqrt|3>|2<rsup|<frac|3|2>>>>|<cell|<frac|<sqrt|3>|2<rsup|<frac|3|2>>>>|<cell|<frac|1|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0.75>|<cell|0.25>|<cell|0.6123724356957944>>|<row|<cell|0.25>|<cell|0.75>|<cell|-0.6123724356957944>>|<row|<cell|-0.6123724356957944>|<cell|0.6123724356957944>|<cell|0.5>>>>>|]>>>
+    </unfolded-io>
   </session>
 
-  \;
-
-  \;
-
-  \;
-
-  \;
-
-  \;
-
   <\with|color|black>
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
     Procedura che prende in ingresso una matrice, controlla se sia di
     rotazione, ed in caso affermativo genera una matrice anti-simmetrica S,
     da cui trovare poi il versore che funge da asse di rotazione.
@@ -110,11 +145,11 @@
 
   <\session|maxima|default>
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>2) >
+      <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|input>
-      calcoloAsse(R):=block(
+      calcoloAsseAngolo(R):=block(
 
-      [transposeR,finalR,II,det,RpII,RmII,RpIIInv,S,e],
+      [transposeR,finalR,II,det,RpII,RmII,RpIIInv,S,e,norma2,Seno,Coseno,theta],
 
       \;
 
@@ -173,13 +208,24 @@
 
       e:(1/norma2)*e,
 
-      return(e)
+      \;
+
+      /*calcolo angolo di rotazione utilizzando alpha (che corrisponde alla
+      norma2 del vettore trovato prima*/
+
+      Seno:(2*norma2)/(1+norma2^2),
+
+      Coseno:(1-norma2^2)/(1+norma2^2),
+
+      theta:ATAN2(Seno,Coseno),
+
+      return([e,theta])
 
       )$
     </input>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>3) >
+      <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|input>
       ATAN2(y,x):=block(
 
@@ -202,270 +248,42 @@
       )$
     </input>
 
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    La funzione \PcalcoloAngolo\Q riceve in ingreso la matrice di rotazione
-    generata tramite la parametrizzazione di Cayley e definisce l'angolo
-    implicito che la crea:
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>4) >
-    <|input>
-      calcoloAngolo(R):=block(
-
-      [transposeR,finalR,II,det,Coseno,Seno,angolo],
-
-      \;
-
-      /*controllare che il parametro in ingresso sia di tipo matriciale*/
-
-      if scalarp(vettore) = true or listp(vettore) = true then return(-1),
-
-      \;
-
-      /*controllare che la matrice in ingresso abbia come asse di rotazione
-      uno tra Ex, Ey, Ez*/
-
-      if R[1,1] # 1 and R[2,2] # 1 and R[3,3] # 1 then return(-1),
-
-      \;
-
-      /*verificare che la matrice R in ingresso sia una matrice di
-      rotazione*/
-
-      transposeR:trigreduce(transpose(R)),
-
-      finalR:trigsimp(trigreduce(factor(R.transposeR))),
-
-      II:matrix([1,0,0],[0,1,0],[0,0,1]),
-
-      if finalR # II then return(0),
-
-      det:trigsimp(determinant(R)),
-
-      if det = 0 then return(0),
-
-      \;
-
-      /*controllare a quale delle tre matrici di rotazione Rx,Ry,Rz
-      assomiglia la matrice R inserita in ingresso*/
-
-      if R[1,1] = 1 then [Coseno,Seno]:[R[2,2],R[3,2]]
-
-      else if R[2,2] = 1 then [Coseno,Seno]:[R[1,1],R[1,3]]
-
-      else if R[3,3] = 1 then [Coseno,Seno]:[R[1,1],R[2,1]],
-
-      \;
-
-      /*calcolare l'angolo di rotazione associato ad R*/
-
-      angolo:atan2(Seno,Coseno),
-
-      angolo:trigreduce(angolo),
-
-      radAngolo:float(angolo),
-
-      return([R,angolo,radAngolo])
-
-      )$
-    </input>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>5) >
-    <|unfolded-io>
-      R:calcoloR(matrix([5],[0],[0]))
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|-<frac|12|13>>|<cell|-<frac|5|13>>>|<row|<cell|0>|<cell|<frac|5|13>>|<cell|-<frac|12|13>>>>>>,<matrix|<tformat|<table|<row|<cell|1.0>|<cell|0.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|-0.9230769230769231>|<cell|-0.3846153846153846>>|<row|<cell|0.0>|<cell|0.3846153846153846>|<cell|-0.9230769230769231>>>>>|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>6) >
-    <|unfolded-io>
-      calcoloAsse(R[1])
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
-      >><matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>7) >
-    <|unfolded-io>
-      calcoloAsse(R[2])
-    <|unfolded-io>
-      \;
-
-      rat: replaced 1.0 by 1/1 = 1.0
-
-      \;
-
-      rat: replaced 0.0 by 0/1 = 0.0
-
-      \;
-
-      rat: replaced 0.0 by 0/1 = 0.0
-
-      \;
-
-      rat: replaced 0.0 by 0/1 = 0.0
-
-      \;
-
-      rat: replaced 1.0 by 1/1 = 1.0
-
-      \;
-
-      rat: replaced 0.0 by 0/1 = 0.0
-
-      \;
-
-      rat: replaced 0.0 by 0/1 = 0.0
-
-      \;
-
-      rat: replaced 0.0 by 0/1 = 0.0
-
-      \;
-
-      rat: replaced 1.0 by 1/1 = 1.0
-
-      \;
-
-      rat: replaced 1.0 by 1/1 = 1.0
-
-      \;
-
-      rat: replaced 2.0 by 2/1 = 2.0
-
-      \;
-
-      rat: replaced 0.0 by 0/1 = 0.0
-
-      \;
-
-      rat: replaced 0.0 by 0/1 = 0.0
-
-      \;
-
-      rat: replaced 0.0 by 0/1 = 0.0
-
-      \;
-
-      rat: replaced 0.07692307692307687 by 1/13 = 0.07692307692307693
-
-      \;
-
-      rat: replaced -0.3846153846153846 by -5/13 = -0.3846153846153846
-
-      \;
-
-      rat: replaced 0.0 by 0/1 = 0.0
-
-      \;
-
-      rat: replaced 0.3846153846153846 by 5/13 = 0.3846153846153846
-
-      \;
-
-      rat: replaced 0.07692307692307687 by 1/13 = 0.07692307692307693
-
-      \;
-
-      rat: replaced 0.0 by 0/1 = 0.0
-
-      \;
-
-      rat: replaced 0.0 by 0/1 = 0.0
-
-      \;
-
-      rat: replaced 0.0 by 0/1 = 0.0
-
-      \;
-
-      rat: replaced 0.0 by 0/1 = 0.0
-
-      \;
-
-      rat: replaced -1.923076923076923 by -25/13 = -1.923076923076923
-
-      \;
-
-      rat: replaced -0.3846153846153846 by -5/13 = -0.3846153846153846
-
-      \;
-
-      rat: replaced 0.0 by 0/1 = 0.0
-
-      \;
-
-      rat: replaced 0.3846153846153846 by 5/13 = 0.3846153846153846
-
-      \;
-
-      rat: replaced -1.923076923076923 by -25/13 = -1.923076923076923
-
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
-      >><matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>8) >
-    <|unfolded-io>
-      R1:calcoloR(matrix([1],[0],[0]))
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-1>>|<row|<cell|0>|<cell|1>|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|1.0>|<cell|0.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|0.0>|<cell|-1.0>>|<row|<cell|0.0>|<cell|1.0>|<cell|0.0>>>>>|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>9) >
-    <|unfolded-io>
-      calcoloAsse(R[1])
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
-      >><matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>>>
-    </unfolded-io>
-
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>10) >
     <|unfolded-io>
-      calcoloAngolo(R[1])
+      calcoloAsseAngolo(R[1])
     <|unfolded-io>
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|-<frac|12|13>>|<cell|-<frac|5|13>>>|<row|<cell|0>|<cell|<frac|5|13>>|<cell|-<frac|12|13>>>>>>,\<pi\>-arctan
-      <around*|(|<frac|5|12>|)>,2.746801533890031|]>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|1|<sqrt|2>>>>|<row|<cell|<frac|1|<sqrt|2>>>>|<row|<cell|0>>>>>,<frac|\<pi\>|3>|]>>>
     </unfolded-io>
 
-    <\unfolded-io>
+    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>11) >
-    <|unfolded-io>
-      calcoloAngolo(R1[1])
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-1>>|<row|<cell|0>|<cell|1>|<cell|0>>>>>,<frac|\<pi\>|2>,1.570796326794897|]>>>
-    </unfolded-io>
+    <|input>
+      \;
+    </input>
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
+
+    \;
   </session>
 
   \;

@@ -4,7 +4,7 @@
 
 <\body>
   PROCEDURE PER IL CALCOLO DELLE MATRICE DI INERZIA RELATIVE A VARIE FIGURE
-  GEOMETRICHE COME SFERA,CILINDRO,PARALLELEPIPEDO, CAVI E NON.
+  GEOMETRICHE COME SFERA,CILINDRO,PARALLELEPIPEDO, CAVI E NON CAVI.
 
   <with|color|red|Procedura 1: Procedura per il calcolo della matrice
   d'inerzia di un PARALLELEPIPEDO DI LATI A, B, C.>
@@ -26,7 +26,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>2) >
     <|unfolded-io>
-      SS:S(x,y,z)
+      Smatrix:S(x,y,z)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|-z>|<cell|y>>|<row|<cell|z>|<cell|0>|<cell|-x>>|<row|<cell|-y>|<cell|x>|<cell|0>>>>>>>
@@ -35,7 +35,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
     <|unfolded-io>
-      SS_T:transpose(SS)
+      transposeSmatrix:transpose(Smatrix)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|z>|<cell|-y>>|<row|<cell|-z>|<cell|0>|<cell|x>>|<row|<cell|y>|<cell|-x>|<cell|0>>>>>>>
@@ -43,24 +43,28 @@
 
     \;
 
-    Verifico che la matrice SS sia una matrice anti-simmetrica, controllando
-    che vale la proprietà. Se si ha riscontro positivo ritorna il prodotto
-    della matrice S e la sua trasposta, altrimenti torna 0.
+    Verifico che la matrice S sia una matrice anti-simmetrica, controllando
+    che vale la condizione S+S<math|<rsup|T>>=0. Se si ha riscontro positivo
+    ritorna il prodotto della matrice S e S<math|<rsup|T>>, altrimenti torna
+    0.
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>4) >
     <|input>
-      control_matrix(mat,mat_T):=block(
+      controlMatrix(mat,transposeMat):=block(
 
-      [mat_identità,mat_finale],
+      [II,finalMatrix],
 
-      mat_identità:0*ident(3),
+      /*in questo caso la matrice II viene intesa come matrice identità e non
+      delle inerzie*/
 
-      mat_finale:mat+mat_T,
+      II:0*ident(3),
 
-      if mat_finale # mat_identità then return(0),
+      finalMatrix:mat+transposeMat,
 
-      S1:mat_T.mat,
+      if finalMatrix # II then return(0),
+
+      S1:transposeMat.mat,
 
       return(S1)
 
@@ -70,11 +74,14 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|unfolded-io>
-      S1:control_matrix(SS,SS_T)
+      S1:controlMatrix(Smatrix,transposeSmatrix)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
       >><matrix|<tformat|<table|<row|<cell|z<rsup|2>+y<rsup|2>>|<cell|-x*y>|<cell|-x*z>>|<row|<cell|-x*y>|<cell|z<rsup|2>+x<rsup|2>>|<cell|-y*z>>|<row|<cell|-x*z>|<cell|-y*z>|<cell|y<rsup|2>+x<rsup|2>>>>>>>>
     </unfolded-io>
+
+    Gli elementi sulla diagonale principale di tale matrice danno luogo ai
+    MOMENTI D'INERZIA.
 
     \;
 
@@ -93,45 +100,62 @@
 
     \;
 
-    Calcolo tutti gli elementi della matrice di inerzia come segue:
+    Calcolare i MOMENTI D'INERZIA (e quindi la MATRICE DI INERZIA) integrando
+    gli elementi della matrice S1 rispetto ai tre assi x,y,z. Infine si
+    moltiplica il risultato per la densità volumetrica dell'oggetto in esame
+    che è pari a M/V.
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>7) >
     <|input>
-      II:0*ident(3)$
+      calcoloMatriceDiInerzia(V,S1):=block(
+
+      [II,i,j],
+
+      \;
+
+      /*in questo algoritmo con II si indica la matrice d'inerzia*/
+
+      II:0*ident(3),
+
+      \;
+
+      /*calcolo dei momenti d'inerzia*/
+
+      for i:1 thru 3 do(
+
+      \ for j:1 thru 3 do(
+
+      \ \ II[i,j]:integrate(integrate(integrate(S1[i,j],x,-A/2,A/2),y,-B/2,B/2),z,-C/2,C/2),
+
+      \ \ II[i,j]:factor(expand((M/V)*II[i,j]))
+
+      \ )
+
+      ),
+
+      return(II)
+
+      )$
     </input>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|unfolded-io>
-      for i:1 thru 3 do (
-
-      \ for j:1 thru 3 do (
-
-      \ \ II[i,j]:factor(expand(integrate(integrate(integrate(S1[i,j],x,-A/2,A/2),y,-B/2,B/2),z,-C/2,C/2)*(M/V)))
-
-      \ )
-
-      )
+      II:calcoloMatriceDiInerzia(V,S1)
     <|unfolded-io>
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
-      >><math-bf|done>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>9) >
-    <|unfolded-io>
-      II
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
       >><matrix|<tformat|<table|<row|<cell|<frac|<around*|(|C<rsup|2>+B<rsup|2>|)>*M|12>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|<around*|(|C<rsup|2>+A<rsup|2>|)>*M|12>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|<around*|(|B<rsup|2>+A<rsup|2>|)>*M|12>>>>>>>>
     </unfolded-io>
   </session>
 
-  Avendo scento gli assi x, y, z lungo i 3 piani di simmetria allora gli
-  elementi fuori diagonale principale sono tutti nulli.
+  Che corrisponde alla matrice di inerzia del parallelepipedo di lati A,B,C
+  riferita al baricentro.
+
+  Avendo scelto gli assi x,y,z lungo i tre piani di simmetria allora gli
+  elementi fuori diagonale principale sono tutti nulli
 
   \;
 
@@ -151,7 +175,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>2) >
     <|unfolded-io>
-      SS:S(x,y,z)
+      Smatrix:S(x,y,z)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|-z>|<cell|y>>|<row|<cell|z>|<cell|0>|<cell|-x>>|<row|<cell|-y>|<cell|x>|<cell|0>>>>>>>
@@ -160,7 +184,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
     <|unfolded-io>
-      SS_T:transpose(SS)
+      transposeSmatrix:transpose(Smatrix)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|z>|<cell|-y>>|<row|<cell|-z>|<cell|0>|<cell|x>>|<row|<cell|y>|<cell|-x>|<cell|0>>>>>>>
@@ -169,17 +193,20 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>4) >
     <|input>
-      control_matrix(mat,mat_T):=block(
+      controlMatrix(mat,transposeMat):=block(
 
-      [mat_identità,mat_finale],
+      [II,finalMatrix],
 
-      mat_identità:0*ident(3),
+      /*in questo caso la matrice II viene intesa come matrice identità e non
+      delle inerzie*/
 
-      mat_finale:mat+mat_T,
+      II:0*ident(3),
 
-      if mat_finale # mat_identità then return(0),
+      finalMatrix:mat+transposeMat,
 
-      S1:mat_T.mat,
+      if finalMatrix # II then return(0),
+
+      S1:transposeMat.mat,
 
       return(S1)
 
@@ -189,7 +216,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|unfolded-io>
-      S1:control_matrix(SS,SS_T)
+      S1:controlMatrix(Smatrix,transposeSmatrix)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
       >><matrix|<tformat|<table|<row|<cell|z<rsup|2>+y<rsup|2>>|<cell|-x*y>|<cell|-x*z>>|<row|<cell|-x*y>|<cell|z<rsup|2>+x<rsup|2>>|<cell|-y*z>>|<row|<cell|-x*z>|<cell|-y*z>|<cell|y<rsup|2>+x<rsup|2>>>>>>>>
@@ -197,9 +224,13 @@
 
     \;
 
+    \;
+
+    CALCOLO VOLUME CILINDRO (PASSAGGI):
+
     Ora si deve calcolare il volume del cilindro e per farlo bisogna
-    introdurre le coordinate colindriche nel seguente modo: considero 'z'
-    come l'asse di rotazione del cilindro e gli assi x, y nel piano, dov
+    introdurre le coordinate cilindriche nel seguente modo: considero 'z'
+    come l'asse di rotazione del cilindro e gli assi x, y nel piano, dove
     generano un cerchio di raggio minimo 0 e massimo R.
 
     <\input>
@@ -207,6 +238,14 @@
     <|input>
       Rz:matrix([cos(alpha),-sin(alpha),0],[sin(alpha),cos(alpha),0],[0,0,1])$
     </input>
+
+    \;
+
+    Il punto 'p' per noi ha coordinate (x,y,z), queste coordinate devo
+    ottenerle come immagine della matrice Rz moltiplicata per un opportuno
+    vettore. Questo vettore deve, con una delle componenti, generare l'asse
+    del sistema e con l'altra andare a moltiplicare per la matrice del piano
+    x,y.
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>7) >
@@ -231,32 +270,39 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|input>
-      dp:0*ident(3)$
+      matriceJacobiana(p):=block(
+
+      [J,i,j],
+
+      J:0*ident(3),
+
+      for i:1 thru 3 do(
+
+      \ /*il primo indice dell'elemento J[i,j] indica la riga mentre il
+      secondo la colonna,
+
+      \ mentre nell'elemento p[i,1] si indica solo la riga poichè questo è un
+      vettore di dimensione 3x1*/
+
+      \ J[i,1]:diff(p[i,1],rho),
+
+      \ J[i,2]:diff(p[i,1],alpha),
+
+      \ J[i,3]:diff(p[i,1],h)
+
+      ),
+
+      return(J)
+
+      )$
     </input>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|unfolded-io>
-      for i:1 thru 3 do (
-
-      \ dp[i,1]:diff(p[i,1],rho),
-
-      \ dp[i,2]:diff(p[i,1],alpha),
-
-      \ dp[i,3]:diff(p[i,1],h)
-
-      )
+      J:matriceJacobiana(p)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
-      >><math-bf|done>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>10) >
-    <|unfolded-io>
-      dp
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
       >><matrix|<tformat|<table|<row|<cell|cos
       <around*|(|\<alpha\>|)>>|<cell|-sin
       <around*|(|\<alpha\>|)>*\<rho\>>|<cell|0>>|<row|<cell|sin
@@ -271,15 +317,18 @@
     Ora calcolo il determinante dello jacobiano:
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>11) >
+      <with|color|red|(<with|math-font-family|rm|%i>10) >
     <|unfolded-io>
-      Ddp:trigreduce(factor(determinant(dp)))
+      determinantJ:trigreduce(factor(determinant(J)))
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
       >>\<rho\>>>
     </unfolded-io>
+
+    Si considera il determinante quando si fa un cambio di coordinate perchè
+    il determinante ci dice il legame che c'è tra il prodotto degli elementi
+    delle prime coordinate e il prodotto degli elementi delle secondo
+    coordinate.
 
     \;
 
@@ -287,96 +336,83 @@
     trovate:
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>12) >
+      <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|unfolded-io>
-      V:expand(integrate(integrate(integrate(1*Ddp,alpha,0,2*%pi),rho,0,R),h,-H/2,H/2))
+      V:expand(integrate(integrate(integrate(1*determinantJ,alpha,0,2*%pi),rho,0,R),h,-H/2,H/2))
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
       >>\<pi\>*H*R<rsup|2>>>
     </unfolded-io>
 
     \;
 
-    Calcolo la matrice di inerzia del cilindro di raggio R ed altezza H:
+    \;
+
+    \;
+
+    Calcolo la MATRICE DI INERZIA del cilindro di raggio R ed altezza H:
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>13) >
+      <with|color|red|(<with|math-font-family|rm|%i>12) >
     <|input>
-      S2:0*ident(3)$
-    </input>
+      calcoloMatriceDiInerzia(S1,V):=block(
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>14) >
-    <|unfolded-io>
-      for i:1 thru 3 do (
+      [S2,II,i,j],
 
-      \ for j:1 thru 3 do (
+      \;
+
+      /*calcolo della matrice 'S.transposeS' in coordinate cilindriche,
+      andando a prendere la matrice S1 che indica la stessa quantità solo in
+      coordinate lineari e sostituire i valori del vettore 'p' ad essa*/
+
+      S2:0*ident(3),
+
+      for i:1 thru 3 do(
+
+      \ for j:1 thru 3 do(
 
       \ \ S2[i,j]:subst([x=p[1,1],y=p[2,1],z=p[3,1]],S1[i,j])
 
       \ )
 
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
-      >><math-bf|done>>>
-    </unfolded-io>
+      ),
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>15) >
-    <|unfolded-io>
-      S2
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
-      >><matrix|<tformat|<table|<row|<cell|sin
-      <around*|(|\<alpha\>|)><rsup|2>*\<rho\><rsup|2>+h<rsup|2>>|<cell|-cos
-      <around*|(|\<alpha\>|)>*sin <around*|(|\<alpha\>|)>*\<rho\><rsup|2>>|<cell|-cos
-      <around*|(|\<alpha\>|)>*h*\<rho\>>>|<row|<cell|-cos
-      <around*|(|\<alpha\>|)>*sin <around*|(|\<alpha\>|)>*\<rho\><rsup|2>>|<cell|cos
-      <around*|(|\<alpha\>|)><rsup|2>*\<rho\><rsup|2>+h<rsup|2>>|<cell|-sin
-      <around*|(|\<alpha\>|)>*h*\<rho\>>>|<row|<cell|-cos
-      <around*|(|\<alpha\>|)>*h*\<rho\>>|<cell|-sin
-      <around*|(|\<alpha\>|)>*h*\<rho\>>|<cell|sin
-      <around*|(|\<alpha\>|)><rsup|2>*\<rho\><rsup|2>+cos
-      <around*|(|\<alpha\>|)><rsup|2>*\<rho\><rsup|2>>>>>>>>
-    </unfolded-io>
+      \;
 
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>16) >
-    <|input>
-      II:0*ident(3)$
-    </input>
+      /*calcolo della matrice di inerzia II*/
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>17) >
-    <|unfolded-io>
-      for i:1 thru 3 do (
+      II:0*ident(3),
 
-      \ for j:1 thru 3 do (
+      for i:1 thru 3 do(
 
-      \ \ II[i,j]:factor(expand(integrate(integrate(integrate(S2[i,j]*Ddp,alpha,0,2*%pi),rho,0,R),h,-H/2,H/2)*(M/V)))
+      \ for j:1 thru 3 do(
+
+      \ \ II[i,j]:integrate(integrate(integrate(S2[i,j]*determinantJ,alpha,0,2*%pi),rho,0,R),h,-H/2,H/2),
+
+      \ \ II[i,j]:factor(expand((M/V)*II[i,j]))
 
       \ )
 
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
-      >><math-bf|done>>>
-    </unfolded-io>
+      ),
+
+      return(II)
+
+      )$
+    </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>18) >
+      <with|color|red|(<with|math-font-family|rm|%i>13) >
     <|unfolded-io>
-      II
+      II:calcoloMatriceDiInerzia(S1,V)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
       >><matrix|<tformat|<table|<row|<cell|<frac|M*<around*|(|3*R<rsup|2>+H<rsup|2>|)>|12>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|M*<around*|(|3*R<rsup|2>+H<rsup|2>|)>|12>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|M*R<rsup|2>|2>>>>>>>>
     </unfolded-io>
 
-    Gli elementi in coordinate (x,x) ed (y,y) sono uguali poichè sono
-    simmetriche nel piano (x,y) mentre la componente (z,z) è diverso perchè
+    I momenti d'inerzia in coordinate (1,1) ed (2,2) sono uguali poichè sono
+    simmetriche nel piano (x,y) mentre la componente (3,3) è diverso perchè
     il cilindro ha una simmetria diversa rispetto all'asse z.
   </session>
 
@@ -395,7 +431,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>2) >
     <|unfolded-io>
-      SS:S(x,y,z)
+      Smatrix:S(x,y,z)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|-z>|<cell|y>>|<row|<cell|z>|<cell|0>|<cell|-x>>|<row|<cell|-y>|<cell|x>|<cell|0>>>>>>>
@@ -404,7 +440,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
     <|unfolded-io>
-      SS_T:transpose(SS)
+      transposeSmatrix:transpose(Smatrix)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|z>|<cell|-y>>|<row|<cell|-z>|<cell|0>|<cell|x>>|<row|<cell|y>|<cell|-x>|<cell|0>>>>>>>
@@ -413,17 +449,20 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>4) >
     <|input>
-      control_matrix(mat,mat_T):=block(
+      controlMatrix(mat,transposeMat):=block(
 
-      [mat_identità,mat_finale],
+      [II,finalMatrix],
 
-      mat_identità:0*ident(3),
+      /*in questo caso la matrice II viene intesa come matrice identità e non
+      delle inerzie*/
 
-      mat_finale:mat+mat_T,
+      II:0*ident(3),
 
-      if mat_finale # mat_identità then return(0),
+      finalMatrix:mat+transposeMat,
 
-      S1:mat_T.mat,
+      if finalMatrix # II then return(0),
+
+      S1:transposeMat.mat,
 
       return(S1)
 
@@ -433,40 +472,52 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|unfolded-io>
-      S1:control_matrix(SS,SS_T)
+      S1:controlMatrix(Smatrix,transposeSmatrix)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
       >><matrix|<tformat|<table|<row|<cell|z<rsup|2>+y<rsup|2>>|<cell|-x*y>|<cell|-x*z>>|<row|<cell|-x*y>|<cell|z<rsup|2>+x<rsup|2>>|<cell|-y*z>>|<row|<cell|-x*z>|<cell|-y*z>|<cell|y<rsup|2>+x<rsup|2>>>>>>>>
     </unfolded-io>
 
+    \;
+
+    \;
+
     Ora bisogna definire le coordinate sferiche, per farlo si prendono due
-    matrici di rotazione qualsiasi, per esempio Rx ed Ry.
+    matrici di rotazione qualsiasi, nel nostro caso svelgo
+    <math|R<rsub|z>,R<rsub|y>>.
+
+    \;
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>6) >
     <|input>
-      Rx:matrix([1,0,0],[0,cos(alpha),-sin(alpha)],[0,sin(alpha),cos(alpha)])$
+      Rz:matrix([cos(alpha),-sin(alpha),0],[sin(alpha),cos(alpha),0],[0,0,1])$
     </input>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>7) >
     <|input>
-      Ry:matrix([cos(beta),0,sin(beta)],[0,1,0],[-sin(beta),0,cos(beta)])$
+      Ry:matrix([cos(beta),0,-sin(beta)],[0,1,0],[sin(beta),0,cos(beta)])$
     </input>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|unfolded-io>
-      p:(Rx.Ry).matrix([0],[0],[rho])
+      p:(Rz.Ry).(matrix([rho],[0],[0]))
     <|unfolded-io>
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
-      >><matrix|<tformat|<table|<row|<cell|sin
-      <around*|(|\<beta\>|)>*\<rho\>>>|<row|<cell|-sin
-      <around*|(|\<alpha\>|)>*cos <around*|(|\<beta\>|)>*\<rho\>>>|<row|<cell|cos
-      <around*|(|\<alpha\>|)>*cos <around*|(|\<beta\>|)>*\<rho\>>>>>>>>
+      >><matrix|<tformat|<table|<row|<cell|cos <around*|(|\<alpha\>|)>*cos
+      <around*|(|\<beta\>|)>*\<rho\>>>|<row|<cell|sin
+      <around*|(|\<alpha\>|)>*cos <around*|(|\<beta\>|)>*\<rho\>>>|<row|<cell|sin
+      <around*|(|\<beta\>|)>*\<rho\>>>>>>>>
     </unfolded-io>
+
+    Dove il range delle variabili <math|\<alpha\>,\<beta\>,\<rho\>> sono:
+    <math|\<alpha\> \<epsilon\><around*|[|0,2*\<pi\>|)>>, <math|\<beta\>
+    \<epsilon\> <around*|[|-\<pi\>/2,\<pi\>/2|]>>,<math|\<rho\>
+    \<epsilon\><around*|[|0,infinite|)>>
 
     \;
 
@@ -477,100 +528,121 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|input>
-      dp:0*ident(3)$
+      matriceJacobiana(p):=block(
+
+      [J,i,j],
+
+      J:0*ident(3),
+
+      for i:1 thru 3 do(
+
+      \ /*il primo indice dell'elemento J[i,j] indica la riga mentre il
+      secondo la colonna,
+
+      \ mentre nell'elemento p[i,1] si indica solo la riga poichè questo è un
+      vettore di dimensione 3x1*/
+
+      \ J[i,1]:diff(p[i,1],alpha),
+
+      \ J[i,2]:diff(p[i,1],beta),
+
+      \ J[i,3]:diff(p[i,1],rho)
+
+      ),
+
+      return(J)
+
+      )$
     </input>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>10) >
     <|unfolded-io>
-      for i:1 thru 3 do (
-
-      \ dp[i,1]:diff(p[i,1],alpha),
-
-      \ dp[i,2]:diff(p[i,1],beta),
-
-      \ dp[i,3]:diff(p[i,1],rho)
-
-      )
+      J:matriceJacobiana(p)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
-      >><math-bf|done>>>
+      >><matrix|<tformat|<table|<row|<cell|-sin <around*|(|\<alpha\>|)>*cos
+      <around*|(|\<beta\>|)>*\<rho\>>|<cell|-cos <around*|(|\<alpha\>|)>*sin
+      <around*|(|\<beta\>|)>*\<rho\>>|<cell|cos <around*|(|\<alpha\>|)>*cos
+      <around*|(|\<beta\>|)>>>|<row|<cell|cos <around*|(|\<alpha\>|)>*cos
+      <around*|(|\<beta\>|)>*\<rho\>>|<cell|-sin <around*|(|\<alpha\>|)>*sin
+      <around*|(|\<beta\>|)>*\<rho\>>|<cell|sin <around*|(|\<alpha\>|)>*cos
+      <around*|(|\<beta\>|)>>>|<row|<cell|0>|<cell|cos
+      <around*|(|\<beta\>|)>*\<rho\>>|<cell|sin <around*|(|\<beta\>|)>>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|unfolded-io>
-      dp
+      determinantJ:trigreduce(factor(determinant(J)))
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
-      >><matrix|<tformat|<table|<row|<cell|0>|<cell|cos
-      <around*|(|\<beta\>|)>*\<rho\>>|<cell|sin
-      <around*|(|\<beta\>|)>>>|<row|<cell|-cos <around*|(|\<alpha\>|)>*cos
-      <around*|(|\<beta\>|)>*\<rho\>>|<cell|sin <around*|(|\<alpha\>|)>*sin
-      <around*|(|\<beta\>|)>*\<rho\>>|<cell|-sin <around*|(|\<alpha\>|)>*cos
-      <around*|(|\<beta\>|)>>>|<row|<cell|-sin <around*|(|\<alpha\>|)>*cos
-      <around*|(|\<beta\>|)>*\<rho\>>|<cell|-cos <around*|(|\<alpha\>|)>*sin
-      <around*|(|\<beta\>|)>*\<rho\>>|<cell|cos <around*|(|\<alpha\>|)>*cos
-      <around*|(|\<beta\>|)>>>>>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>12) >
-    <|unfolded-io>
-      Ddp:trigreduce(factor(determinant(dp)))
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
       >>cos <around*|(|\<beta\>|)>*\<rho\><rsup|2>>>
     </unfolded-io>
-
-    \;
 
     \;
 
     Calcolo ora il volume della sfera:
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>13) >
+      <with|color|red|(<with|math-font-family|rm|%i>12) >
     <|unfolded-io>
-      V:expand(integrate(integrate(integrate(1*Ddp,alpha,0,2*%pi),beta,-%pi/2,%pi/2),rho,0,R))
+      V:expand(integrate(integrate(integrate(1*determinantJ,alpha,0,2*%pi),beta,-%pi/2,%pi/2),rho,0,R))
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
       >><frac|4*\<pi\>*R<rsup|3>|3>>>
     </unfolded-io>
 
-    Calcolo ora la matrice di inerzia della sfera di raggio R:
+    \;
+
+    Calcolo ora la MATRICE DI INERZIA della sfera di raggio R:
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>14) >
+      <with|color|red|(<with|math-font-family|rm|%i>13) >
     <|input>
-      S2:0*ident(3)$
-    </input>
+      calcoloMatriceDiInerzia(S1,V):=block(
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>15) >
-    <|unfolded-io>
-      for i:1 thru 3 do (
+      [S2,II,i,j],
 
-      \ for j:1 thru 3 do (
+      \;
+
+      /*calcolo della matrice 'S.transposeS' in coordinate sferiche, andando
+      a prendere la matrice S1 che indica la stessa quantità solo in
+      coordinate lineari e sostituire i valori del vettore 'p' ad essa*/
+
+      S2:0*ident(3),
+
+      for i:1 thru 3 do(
+
+      \ for j:1 thru 3 do(
 
       \ \ S2[i,j]:subst([x=p[1,1],y=p[2,1],z=p[3,1]],S1[i,j])
 
       \ )
 
-      )
-    <|unfolded-io>
+      ),
+
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
-      >><math-bf|done>>>
-    </unfolded-io>
+      /*calcolo della matrice di inerzia II*/
 
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>16) >
-    <|input>
-      S2$
+      II:0*ident(3),
+
+      for i:1 thru 3 do(
+
+      \ for j:1 thru 3 do(
+
+      \ \ II[i,j]:integrate(integrate(integrate(S2[i,j]*determinantJ,alpha,0,2*%pi),beta,-%pi/2,%pi/2),rho,0,R),
+
+      \ \ II[i,j]:factor(expand((M/V)*II[i,j]))
+
+      \ )
+
+      ),
+
+      return(II)
+
+      )$
     </input>
 
     <\equation*>
@@ -599,51 +671,28 @@
       <around*|(|\<beta\>|)><rsup|2>*\<rho\><rsup|2>>>>>>
     </equation*>
 
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>17) >
-    <|input>
-      II:0*ident(3)$
-    </input>
-
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>18) >
+      <with|color|red|(<with|math-font-family|rm|%i>14) >
     <|unfolded-io>
-      for i:1 thru 3 do (
-
-      \ for j:1 thru 3 do (
-
-      \ \ II[i,j]:factor(expand(integrate(integrate(integrate(S2[i,j]*Ddp,alpha,0,2*%pi),beta,-%pi/2,%pi/2),rho,0,R)*(M/V)))
-
-      \ )
-
-      )
+      II:calcoloMatriceDiInerzia(S1,V)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
-      >><math-bf|done>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>19) >
-    <|unfolded-io>
-      II
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
       >><matrix|<tformat|<table|<row|<cell|<frac|2*M*R<rsup|2>|5>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|2*M*R<rsup|2>|5>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|2*M*R<rsup|2>|5>>>>>>>>
     </unfolded-io>
 
-    Questa è la matrice di inerzia della sfera, esatta poichè tutti i termini
-    sulla diagonale principale sono uguali tra loro.
+    Questa è la matrice di inerzia della sfera piena, inoltre si può
+    affermare che è esatta poichè tutti i termini sulla diagonale principale
+    sono uguali tra loro.
   </session>
 
   \;
 
-  <with|color|red|Procedura 4: Procedura per il calcolo della matrice di
-  inerzia del parallelepipedo cavo. Per farlo calcolo la matrice di inerzia
-  del parallelepipedo pieno di lati A, B, C e di quello più piccolo di lati
-  a, b, c (a\<less\>A,b\<less\>B,c\<less\>C) e poi alla seconda sottraggo la
-  prima.>
+  <\with|color|red>
+    Procedura 4: Procedura per il calcolo della matrice di inerzia del
+    parallelepipedo cavo di lati maggiori A, B e di lati minori \ a, b
+    (a\<less\>A,b\<less\>B). Il lato C (quello lungo Z) è uguale per
+    entrambi.
+  </with>
 
   <\session|maxima|default>
     <\input>
@@ -655,7 +704,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>2) >
     <|unfolded-io>
-      SS:S(x,y,z)
+      Smatrix:S(x,y,z)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|-z>|<cell|y>>|<row|<cell|z>|<cell|0>|<cell|-x>>|<row|<cell|-y>|<cell|x>|<cell|0>>>>>>>
@@ -664,7 +713,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
     <|unfolded-io>
-      SS_T:transpose(SS)
+      transposeSmatrix:transpose(Smatrix)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|z>|<cell|-y>>|<row|<cell|-z>|<cell|0>|<cell|x>>|<row|<cell|y>|<cell|-x>|<cell|0>>>>>>>
@@ -673,17 +722,20 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>4) >
     <|input>
-      control_matrix(mat,mat_T):=block(
+      controlMatrix(mat,transposeMat):=block(
 
-      [mat_identità,mat_finale],
+      [II,finalMatrix],
 
-      mat_identità:0*ident(3),
+      /*in questo caso la matrice II viene intesa come matrice identità e non
+      delle inerzie*/
 
-      mat_finale:mat+mat_T,
+      II:0*ident(3),
 
-      if mat_finale # mat_identità then return(0),
+      finalMatrix:mat+transposeMat,
 
-      S1:mat_T.mat,
+      if finalMatrix # II then return(0),
+
+      S1:transposeMat.mat,
 
       return(S1)
 
@@ -693,7 +745,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|unfolded-io>
-      S1:control_matrix(SS,SS_T)
+      S1:controlMatrix(Smatrix,transposeSmatrix)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
       >><matrix|<tformat|<table|<row|<cell|z<rsup|2>+y<rsup|2>>|<cell|-x*y>|<cell|-x*z>>|<row|<cell|-x*y>|<cell|z<rsup|2>+x<rsup|2>>|<cell|-y*z>>|<row|<cell|-x*z>|<cell|-y*z>|<cell|y<rsup|2>+x<rsup|2>>>>>>>>
@@ -701,116 +753,106 @@
 
     \;
 
-    Adesso calcolo la matrice di inerzia del parallelepipedo di lati A, B, C,
-    considerando l'asse x lungo il lato A, l'asse y lungo il lato B, l'asse z
-    lungo il lato C:
+    \;
+
+    Calcolare il VOLUME del parallelepipedo interno di massa <math|M<rsub|1>>
+    e di lati a(lungo x), b(lungo y), C(lungo z):
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>6) >
     <|unfolded-io>
-      V[1]:expand(integrate(integrate(integrate(1,x,-A/2,A/2),y,-B/2,B/2),z,-C/2,C/2))
+      V:expand(integrate(integrate(integrate(1,x,-a/2,a/2),y,-b/2,b/2),z,-C/2,C/2))
     <|unfolded-io>
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
-      >>A*B*C>>
+      >>C*a*b>>
     </unfolded-io>
+
+    \;
+
+    Calcolare la MATRICE DI INERZIA del parallelepipedo interno di massa
+    <math|M<rsub|1>> e di lati a(lungo x), b(lungo y), C(lungo z),
+    utilizzando le coordinate lineari:
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>7) >
     <|input>
-      II:0*ident(3)$
+      calcoloMatriceDiInerzia(S1,M,V,latoX,latoY,latoZ):=block(
+
+      [II,i,j],
+
+      II:0*ident(3),
+
+      for i:1 thru 3 do(
+
+      \ for j:1 thru 3 do(
+
+      \ \ II[i,j]:integrate(integrate(integrate(S1[i,j],x,-latoX/2,latoX/2),y,-latoY/2,latoY/2),z,-latoZ/2,latoZ/2),
+
+      \ \ II[i,j]:factor(expand((M/V)*II[i,j]))
+
+      \ )
+
+      ),
+
+      return(II)
+
+      )$
     </input>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|unfolded-io>
-      for i:1 thru 3 do (
-
-      \ for j:1 thru 3 do (
-
-      \ \ II[i,j]:factor(expand(integrate(integrate(integrate(S1[i,j],x,-A/2,A/2),y,-B/2,B/2),z,-C/2,C/2)*(M[1]/V[1])))
-
-      \ )
-
-      )
+      II:calcoloMatriceDiInerzia(S1,M[1],V,a,b,C)
     <|unfolded-io>
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
-      >><math-bf|done>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>9) >
-    <|unfolded-io>
-      II
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|M<rsub|1>*<around*|(|C<rsup|2>+B<rsup|2>|)>|12>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|M<rsub|1>*<around*|(|C<rsup|2>+A<rsup|2>|)>|12>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|M<rsub|1>*<around*|(|B<rsup|2>+A<rsup|2>|)>|12>>>>>>>>
+      >><matrix|<tformat|<table|<row|<cell|<frac|M<rsub|1>*<around*|(|b<rsup|2>+C<rsup|2>|)>|12>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|M<rsub|1>*<around*|(|a<rsup|2>+C<rsup|2>|)>|12>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|M<rsub|1>*<around*|(|b<rsup|2>+a<rsup|2>|)>|12>>>>>>>>
     </unfolded-io>
 
     \;
 
-    Adesso calcolo la matrice di inerzia del parallelepipedo più piccolo
-    (interno a quello più grande e con lo stesso asse di simmetria z) di lati
-    a, b, c:
+    \;
+
+    Adesso si calcola il VOLUME del parallelepipedo grande di massa
+    <math|M<rsub|2>\<gtr\>M<rsub|1>> e di lati A(lungo x), B(lungo y) e
+    C(lungo z).
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>9) >
+    <|unfolded-io>
+      V:expand(integrate(integrate(integrate(1,x,-A/2,A/2),y,-B/2,B/2),z,-C/2,C/2))
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
+      >>A*B*C>>
+    </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>10) >
     <|unfolded-io>
-      V[2]:expand(integrate(integrate(integrate(1,x,-a/2,a/2),y,-b/2,b/2),z,-c/2,c/2))
+      II2:calcoloMatriceDiInerzia(S1,M[2],V,A,B,C)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
+      >><matrix|<tformat|<table|<row|<cell|<frac|M<rsub|2>*<around*|(|C<rsup|2>+B<rsup|2>|)>|12>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|M<rsub|2>*<around*|(|C<rsup|2>+A<rsup|2>|)>|12>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|M<rsub|2>*<around*|(|B<rsup|2>+A<rsup|2>|)>|12>>>>>>>>
+    </unfolded-io>
+
+    \;
+
+    Ora calcolo la MATRICE DI INERZIA del parallelepipedo cavo per
+    sottrazione.
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>11) >
+    <|unfolded-io>
+      finalII:fullratsimp(II2-II)
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
-      >>a*b*c>>
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
+      >><matrix|<tformat|<table|<row|<cell|-<frac|M<rsub|1>*b<rsup|2>+<around*|(|M<rsub|1>-M<rsub|2>|)>*C<rsup|2>-M<rsub|2>*B<rsup|2>|12>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|-<frac|M<rsub|1>*a<rsup|2>+<around*|(|M<rsub|1>-M<rsub|2>|)>*C<rsup|2>-M<rsub|2>*A<rsup|2>|12>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-<frac|M<rsub|1>*b<rsup|2>+M<rsub|1>*a<rsup|2>-M<rsub|2>*B<rsup|2>-M<rsub|2>*A<rsup|2>|12>>>>>>>>
     </unfolded-io>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>11) >
-    <|input>
-      II2:0*ident(3)$
-    </input>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>12) >
-    <|unfolded-io>
-      for i:1 thru 3 do (
-
-      \ for j:1 thru 3 do (
-
-      \ \ II2[i,j]:factor(expand(integrate(integrate(integrate(S1[i,j],x,-a/2,a/2),y,-b/2,b/2),z,-c/2,c/2)*(M[2]/V[2])))
-
-      \ )
-
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
-      >><math-bf|done>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>13) >
-    <|unfolded-io>
-      II2
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|M<rsub|2>*<around*|(|c<rsup|2>+b<rsup|2>|)>|12>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|M<rsub|2>*<around*|(|c<rsup|2>+a<rsup|2>|)>|12>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|M<rsub|2>*<around*|(|b<rsup|2>+a<rsup|2>|)>|12>>>>>>>>
-    </unfolded-io>
-
-    Ora calcolo la matrice di inerzia del parallelepipedo cavo per
-    sottrazione.
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>14) >
-    <|input>
-      II_finale:factor(II-II2)$
-    </input>
-
-    <\equation*>
-      <matrix|<tformat|<table|<row|<cell|-<frac|M<rsub|2>*c<rsup|2>+M<rsub|2>*b<rsup|2>-M<rsub|1>*C<rsup|2>-M<rsub|1>*B<rsup|2>|12>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|-<frac|M<rsub|2>*c<rsup|2>+M<rsub|2>*a<rsup|2>-M<rsub|1>*C<rsup|2>-M<rsub|1>*A<rsup|2>|12>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-<frac|M<rsub|2>*b<rsup|2>+M<rsub|2>*a<rsup|2>-M<rsub|1>*B<rsup|2>-M<rsub|1>*A<rsup|2>|12>>>>>>
-    </equation*>
   </session>
 
   \;
@@ -818,10 +860,9 @@
   \;
 
   <with|color|red|Procedura 5: Procedura per il calcolo della matrice di
-  inerzia di un cilindro cavo, adottando la sottrazione delle matrici di
-  inerzia. Sia R il raggio del cilindro grande, mentre r il raggio del
-  cilindro più piccolo interno a quello grande e con cui condivide l'asse di
-  simmetria.>
+  inerzia di un cilindro cavo. Sia \PR\Q il raggio del cilindro grande,
+  mentre \Pr\Q il raggio del cilindro più piccolo interno a quello grande e
+  con cui condivide l'asse di simmetria.>
 
   <\session|maxima|default>
     <\input>
@@ -833,7 +874,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>2) >
     <|unfolded-io>
-      SS:S(x,y,z)
+      Smatrix:S(x,y,z)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|-z>|<cell|y>>|<row|<cell|z>|<cell|0>|<cell|-x>>|<row|<cell|-y>|<cell|x>|<cell|0>>>>>>>
@@ -842,7 +883,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
     <|unfolded-io>
-      SS_T:transpose(SS)
+      transposeSmatrix:transpose(Smatrix)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|z>|<cell|-y>>|<row|<cell|-z>|<cell|0>|<cell|x>>|<row|<cell|y>|<cell|-x>|<cell|0>>>>>>>
@@ -851,17 +892,20 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>4) >
     <|input>
-      control_matrix(mat,mat_T):=block(
+      controlMatrix(mat,transposeMat):=block(
 
-      [mat_identità,mat_finale],
+      [II,finalMatrix],
 
-      mat_identità:0*ident(3),
+      /*in questo caso la matrice II viene intesa come matrice identità e non
+      delle inerzie*/
 
-      mat_finale:mat+mat_T,
+      II:0*ident(3),
 
-      if mat_finale # mat_identità then return(0),
+      finalMatrix:mat+transposeMat,
 
-      S1:mat_T.mat,
+      if finalMatrix # II then return(0),
+
+      S1:transposeMat.mat,
 
       return(S1)
 
@@ -871,7 +915,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|unfolded-io>
-      S1:control_matrix(SS,SS_T)
+      S1:controlMatrix(Smatrix,transposeSmatrix)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
       >><matrix|<tformat|<table|<row|<cell|z<rsup|2>+y<rsup|2>>|<cell|-x*y>|<cell|-x*z>>|<row|<cell|-x*y>|<cell|z<rsup|2>+x<rsup|2>>|<cell|-y*z>>|<row|<cell|-x*z>|<cell|-y*z>|<cell|y<rsup|2>+x<rsup|2>>>>>>>>
@@ -879,9 +923,11 @@
 
     \;
 
+    \;
+
     Ora introduco le coordinate cilindriche nel seguente modo:
 
-    Prendo l'asse z come asse di rotazione del cilindro e gli assi x,y nel
+    Scelgo l'asse z come asse di rotazione del cilindro e gli assi x,y nel
     piano, dove generano un cerchio di raggio che va da 0 ad R.
 
     <\input>
@@ -909,37 +955,45 @@
 
     \;
 
-    Calcolo lo jacobiano di p e in seguito il determinante dello jacobiano:
+    Calcolo della matrice jacobiana associata al cambio di variabili e il
+    determinante di quest'ultima:
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|input>
-      dp:0*ident(3)$
+      matriceJacobiana(p):=block(
+
+      [J,i,j],
+
+      J:0*ident(3),
+
+      for i:1 thru 3 do(
+
+      \ /*il primo indice dell'elemento J[i,j] indica la riga mentre il
+      secondo la colonna,
+
+      \ mentre nell'elemento p[i,1] si indica solo la riga poichè questo è un
+      vettore di dimensione 3x1*/
+
+      \ J[i,1]:diff(p[i,1],rho),
+
+      \ J[i,2]:diff(p[i,1],alpha),
+
+      \ J[i,3]:diff(p[i,1],h)
+
+      ),
+
+      return(J)
+
+      )$
     </input>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|unfolded-io>
-      for i:1 thru 3 do (
-
-      \ dp[i,1]:diff(p[i,1],rho),
-
-      \ dp[i,2]:diff(p[i,1],alpha),
-
-      \ dp[i,3]:diff(p[i,1],h)
-
-      )
+      J:matriceJacobiana(p)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
-      >><math-bf|done>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>10) >
-    <|unfolded-io>
-      dp
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
       >><matrix|<tformat|<table|<row|<cell|cos
       <around*|(|\<alpha\>|)>>|<cell|-sin
       <around*|(|\<alpha\>|)>*\<rho\>>|<cell|0>>|<row|<cell|sin
@@ -947,173 +1001,92 @@
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>11) >
+      <with|color|red|(<with|math-font-family|rm|%i>10) >
     <|unfolded-io>
-      Ddp:trigreduce(factor(determinant(dp)))
+      determinantJ:trigsimp(determinant(J))
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
       >>\<rho\>>>
     </unfolded-io>
 
     \;
 
-    Calcolo il volume del cilindro di raggio R (cilindro grande):
+    Calcolo il VOLUME del cilindro cavo di raggio minore \Pr\Q e raggio
+    maggiore \PR\Q ed altezza H:
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>12) >
+      <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|unfolded-io>
-      V1:expand(integrate(integrate(integrate(1*Ddp,alpha,0,2*%pi),rho,0,R),h,-H/2,H/2))
+      V:expand(integrate(integrate(integrate(1*determinantJ,alpha,0,2*%pi),rho,r,R),h,-H/2,H/2))
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
-      >>\<pi\>*H*R<rsup|2>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
+      >>\<pi\>*H*R<rsup|2>-\<pi\>*H*r<rsup|2>>>
     </unfolded-io>
 
     \;
 
-    Calcolo la matrice di inerzia del cilindro di raggio R (cilindro grande):
+    Calcolo la MATRICE DI INERZIA del cilindro cavo:
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>13) >
+      <with|color|red|(<with|math-font-family|rm|%i>12) >
     <|input>
-      S2:0*ident(3)$
-    </input>
+      calcoloMatriceDiInerzia(S1,V):=block(
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>14) >
-    <|unfolded-io>
-      for i:1 thru 3 do (
+      [S2,II,i,j],
 
-      \ for j:1 thru 3 do (
+      \;
+
+      /*calcolo della matrice 'S.transposeS' in coordinate cilindriche,
+      andando a prendere la matrice S1 che indica la stessa quantità solo in
+      coordinate lineari e sostituire i valori del vettore 'p' ad essa*/
+
+      S2:0*ident(3),
+
+      for i:1 thru 3 do(
+
+      \ for j:1 thru 3 do(
 
       \ \ S2[i,j]:subst([x=p[1,1],y=p[2,1],z=p[3,1]],S1[i,j])
 
       \ )
 
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
-      >><math-bf|done>>>
-    </unfolded-io>
+      ),
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>15) >
-    <|unfolded-io>
-      S2
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
-      >><matrix|<tformat|<table|<row|<cell|sin
-      <around*|(|\<alpha\>|)><rsup|2>*\<rho\><rsup|2>+h<rsup|2>>|<cell|-cos
-      <around*|(|\<alpha\>|)>*sin <around*|(|\<alpha\>|)>*\<rho\><rsup|2>>|<cell|-cos
-      <around*|(|\<alpha\>|)>*h*\<rho\>>>|<row|<cell|-cos
-      <around*|(|\<alpha\>|)>*sin <around*|(|\<alpha\>|)>*\<rho\><rsup|2>>|<cell|cos
-      <around*|(|\<alpha\>|)><rsup|2>*\<rho\><rsup|2>+h<rsup|2>>|<cell|-sin
-      <around*|(|\<alpha\>|)>*h*\<rho\>>>|<row|<cell|-cos
-      <around*|(|\<alpha\>|)>*h*\<rho\>>|<cell|-sin
-      <around*|(|\<alpha\>|)>*h*\<rho\>>|<cell|sin
-      <around*|(|\<alpha\>|)><rsup|2>*\<rho\><rsup|2>+cos
-      <around*|(|\<alpha\>|)><rsup|2>*\<rho\><rsup|2>>>>>>>>
-    </unfolded-io>
+      \;
 
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>16) >
-    <|input>
-      II1:0*ident(3)$
-    </input>
+      /*calcolo della matrice di inerzia II*/
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>17) >
-    <|unfolded-io>
-      for i:1 thru 3 do (
+      II:0*ident(3),
 
-      \ for j:1 thru 3 do (
+      for i:1 thru 3 do(
 
-      \ \ II1[i,j]:factor(expand(integrate(integrate(integrate(S2[i,j]*Ddp,alpha,0,2*%pi),rho,0,R),h,-H/2,H/2)*(M[1]/V1)))
+      \ for j:1 thru 3 do(
+
+      \ \ II[i,j]:integrate(integrate(integrate(S2[i,j]*determinantJ,alpha,0,2*%pi),rho,r,R),h,-H/2,H/2),
+
+      \ \ II[i,j]:factor(expand((M/V)*II[i,j]))
 
       \ )
 
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
-      >><math-bf|done>>>
-    </unfolded-io>
+      ),
+
+      return(II)
+
+      )$
+    </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>18) >
+      <with|color|red|(<with|math-font-family|rm|%i>13) >
     <|unfolded-io>
-      II1
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|M<rsub|1>*<around*|(|3*R<rsup|2>+H<rsup|2>|)>|12>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|M<rsub|1>*<around*|(|3*R<rsup|2>+H<rsup|2>|)>|12>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|M<rsub|1>*R<rsup|2>|2>>>>>>>>
-    </unfolded-io>
-
-    \;
-
-    Calcolo ora il volume e la matrice di inerzia del cilindro di raggio r
-    (cilindro piccolo):
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>19) >
-    <|unfolded-io>
-      V2:expand(integrate(integrate(integrate(1*Ddp,alpha,0,2*%pi),rho,0,r),h,-H/2,H/2))
+      II:calcoloMatriceDiInerzia(S1,V)
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
-      >>\<pi\>*H*r<rsup|2>>>
-    </unfolded-io>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>20) >
-    <|input>
-      II2:0*ident(3)$
-    </input>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>21) >
-    <|unfolded-io>
-      for i:1 thru 3 do (
-
-      \ for j:1 thru 3 do (
-
-      \ \ II2[i,j]:factor(expand(integrate(integrate(integrate(S2[i,j]*Ddp,alpha,0,2*%pi),rho,0,r),h,-H/2,H/2)*(M[2]/V2)))
-
-      \ )
-
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
-      >><math-bf|done>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>22) >
-    <|unfolded-io>
-      II2
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|M<rsub|2>*<around*|(|3*r<rsup|2>+H<rsup|2>|)>|12>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|M<rsub|2>*<around*|(|3*r<rsup|2>+H<rsup|2>|)>|12>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|M<rsub|2>*r<rsup|2>|2>>>>>>>>
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
+      >><matrix|<tformat|<table|<row|<cell|<frac|M*<around*|(|3*r<rsup|2>+3*R<rsup|2>+H<rsup|2>|)>|12>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|M*<around*|(|3*r<rsup|2>+3*R<rsup|2>+H<rsup|2>|)>|12>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|M*<around*|(|r<rsup|2>+R<rsup|2>|)>|2>>>>>>>>
     </unfolded-io>
 
     \;
-
-    \;
-
-    Matrice dell'inerzia del cilindro cavo di raggio inferiore r e di raggio
-    superiore R:
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>24) >
-    <|input>
-      II_finale:factor(II1-II2)$
-    </input>
-
-    <\equation*>
-      <matrix|<tformat|<table|<row|<cell|-<frac|3*M<rsub|2>*r<rsup|2>-3*M<rsub|1>*R<rsup|2>+M<rsub|2>*H<rsup|2>-M<rsub|1>*H<rsup|2>|12>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|-<frac|3*M<rsub|2>*r<rsup|2>-3*M<rsub|1>*R<rsup|2>+M<rsub|2>*H<rsup|2>-M<rsub|1>*H<rsup|2>|12>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-<frac|M<rsub|2>*r<rsup|2>-M<rsub|1>*R<rsup|2>|2>>>>>>
-    </equation*>
   </session>
 
   \;
@@ -1133,7 +1106,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>2) >
     <|unfolded-io>
-      SS:S(x,y,z)
+      Smatrix:S(x,y,z)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|-z>|<cell|y>>|<row|<cell|z>|<cell|0>|<cell|-x>>|<row|<cell|-y>|<cell|x>|<cell|0>>>>>>>
@@ -1142,7 +1115,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
     <|unfolded-io>
-      SS_T:transpose(SS)
+      transposeSmatrix:transpose(Smatrix)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|z>|<cell|-y>>|<row|<cell|-z>|<cell|0>|<cell|x>>|<row|<cell|y>|<cell|-x>|<cell|0>>>>>>>
@@ -1151,17 +1124,20 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>4) >
     <|input>
-      control_matrix(mat,mat_T):=block(
+      controlMatrix(mat,transposeMat):=block(
 
-      [mat_identità,mat_finale],
+      [II,finalMatrix],
 
-      mat_identità:0*ident(3),
+      /*in questo caso la matrice II viene intesa come matrice identità e non
+      delle inerzie*/
 
-      mat_finale:mat+mat_T,
+      II:0*ident(3),
 
-      if mat_finale # mat_identità then return(0),
+      finalMatrix:mat+transposeMat,
 
-      S1:mat_T.mat,
+      if finalMatrix # II then return(0),
+
+      S1:transposeMat.mat,
 
       return(S1)
 
@@ -1171,11 +1147,13 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|unfolded-io>
-      S1:control_matrix(SS,SS_T)
+      S1:controlMatrix(Smatrix,transposeSmatrix)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
       >><matrix|<tformat|<table|<row|<cell|z<rsup|2>+y<rsup|2>>|<cell|-x*y>|<cell|-x*z>>|<row|<cell|-x*y>|<cell|z<rsup|2>+x<rsup|2>>|<cell|-y*z>>|<row|<cell|-x*z>|<cell|-y*z>|<cell|y<rsup|2>+x<rsup|2>>>>>>>>
     </unfolded-io>
+
+    \;
 
     \;
 
@@ -1187,6 +1165,13 @@
     <|input>
       Rz:matrix([cos(alpha),-sin(alpha),0],[sin(alpha),cos(alpha),0],[0,0,1])$
     </input>
+
+    \;
+
+    <\textput>
+      Avendo preso <math|R<rsub|z>> come matrice di rotazione allora si
+      prende ora Ry rispetto a -\<beta\>.
+    </textput>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>7) >
@@ -1208,37 +1193,54 @@
       <around*|(|\<beta\>|)>*\<rho\>>>>>>>>
     </unfolded-io>
 
+    \;
+
+    Dove il range delle variabili <math|\<alpha\>,\<beta\>,\<rho\>> sono:
+    <math|\<alpha\> \<epsilon\><around*|[|0,2*\<pi\>|)>>, <math|\<beta\>
+    \<epsilon\> <around*|[|-\<pi\>/2,\<pi\>/2|]>>,<math|\<rho\>
+    \<epsilon\><around*|[|0,infinite|)>>
+
+    \;
+
+    Ora calcolo la matrice jacobiana J e successivamente il determinante
+    della matrice:
+
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|input>
-      dp:0*ident(3)$
+      matriceJacobiana(p):=block(
+
+      [J,i,j],
+
+      J:0*ident(3),
+
+      for i:1 thru 3 do(
+
+      \ /*il primo indice dell'elemento J[i,j] indica la riga mentre il
+      secondo la colonna,
+
+      \ mentre nell'elemento p[i,1] si indica solo la riga poichè questo è un
+      vettore di dimensione 3x1*/
+
+      \ J[i,1]:diff(p[i,1],alpha),
+
+      \ J[i,2]:diff(p[i,1],beta),
+
+      \ J[i,3]:diff(p[i,1],rho)
+
+      ),
+
+      return(J)
+
+      )$
     </input>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>10) >
     <|unfolded-io>
-      for i:1 thru 3 do (
-
-      \ dp[i,1]:diff(p[i,1],alpha),
-
-      \ dp[i,2]:diff(p[i,1],beta),
-
-      \ dp[i,3]:diff(p[i,1],rho)
-
-      )
+      J:matriceJacobiana(p)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
-      >><math-bf|done>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>11) >
-    <|unfolded-io>
-      dp
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
       >><matrix|<tformat|<table|<row|<cell|-sin <around*|(|\<alpha\>|)>*cos
       <around*|(|\<beta\>|)>*\<rho\>>|<cell|-cos <around*|(|\<alpha\>|)>*sin
       <around*|(|\<beta\>|)>*\<rho\>>|<cell|cos <around*|(|\<alpha\>|)>*cos
@@ -1250,286 +1252,89 @@
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>12) >
+      <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|unfolded-io>
-      Ddp:trigreduce(factor(determinant(dp)))
+      determinantJ:trigsimp(determinant(J))
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
       >>cos <around*|(|\<beta\>|)>*\<rho\><rsup|2>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>13) >
+      <with|color|red|(<with|math-font-family|rm|%i>12) >
     <|unfolded-io>
-      V_sfera:expand(integrate(integrate(integrate(1*Ddp,alpha,0,2*%pi),beta,-%pi/2,%pi/2),rho,0,R))
+      V:expand(integrate(integrate(integrate(1*determinantJ,alpha,0,2*%pi),beta,-%pi/2,%pi/2),rho,r,R))
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
-      >><frac|4*\<pi\>*R<rsup|3>|3>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
+      >><frac|4*\<pi\>*R<rsup|3>|3>-<frac|4*\<pi\>*r<rsup|3>|3>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>14) >
+      <with|color|red|(<with|math-font-family|rm|%i>13) >
     <|input>
-      S2:0*ident(3)$
-    </input>
+      calcoloMatriceDiInerzia(S1,V):=block(
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>15) >
-    <|unfolded-io>
-      for i:1 thru 3 do (
+      [S2,II,i,j],
 
-      \ for j:1 thru 3 do (
+      \;
+
+      /*calcolo della matrice 'S.transposeS' in coordinate sferiche, andando
+      a prendere la matrice S1 che indica la stessa quantità solo in
+      coordinate lineari e sostituire i valori del vettore 'p' ad essa*/
+
+      S2:0*ident(3),
+
+      for i:1 thru 3 do(
+
+      \ for j:1 thru 3 do(
 
       \ \ S2[i,j]:subst([x=p[1,1],y=p[2,1],z=p[3,1]],S1[i,j])
 
       \ )
 
-      )
-    <|unfolded-io>
+      ),
+
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
-      >><math-bf|done>>>
-    </unfolded-io>
+      /*calcolo della matrice di inerzia II*/
 
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>16) >
-    <|input>
-      S2$
-    </input>
+      II:0*ident(3),
 
-    <\equation*>
-      <matrix|<tformat|<table|<row|<cell|sin
-      <around*|(|\<beta\>|)><rsup|2>*\<rho\><rsup|2>+sin
-      <around*|(|\<alpha\>|)><rsup|2>*cos
-      <around*|(|\<beta\>|)><rsup|2>*\<rho\><rsup|2>>|<cell|-cos
-      <around*|(|\<alpha\>|)>*sin <around*|(|\<alpha\>|)>*cos
-      <around*|(|\<beta\>|)><rsup|2>*\<rho\><rsup|2>>|<cell|-cos
-      <around*|(|\<alpha\>|)>*cos <around*|(|\<beta\>|)>*sin
-      <around*|(|\<beta\>|)>*\<rho\><rsup|2>>>|<row|<cell|-cos
-      <around*|(|\<alpha\>|)>*sin <around*|(|\<alpha\>|)>*cos
-      <around*|(|\<beta\>|)><rsup|2>*\<rho\><rsup|2>>|<cell|sin
-      <around*|(|\<beta\>|)><rsup|2>*\<rho\><rsup|2>+cos
-      <around*|(|\<alpha\>|)><rsup|2>*cos
-      <around*|(|\<beta\>|)><rsup|2>*\<rho\><rsup|2>>|<cell|-sin
-      <around*|(|\<alpha\>|)>*cos <around*|(|\<beta\>|)>*sin
-      <around*|(|\<beta\>|)>*\<rho\><rsup|2>>>|<row|<cell|-cos
-      <around*|(|\<alpha\>|)>*cos <around*|(|\<beta\>|)>*sin
-      <around*|(|\<beta\>|)>*\<rho\><rsup|2>>|<cell|-sin
-      <around*|(|\<alpha\>|)>*cos <around*|(|\<beta\>|)>*sin
-      <around*|(|\<beta\>|)>*\<rho\><rsup|2>>|<cell|sin
-      <around*|(|\<alpha\>|)><rsup|2>*cos
-      <around*|(|\<beta\>|)><rsup|2>*\<rho\><rsup|2>+cos
-      <around*|(|\<alpha\>|)><rsup|2>*cos
-      <around*|(|\<beta\>|)><rsup|2>*\<rho\><rsup|2>>>>>>
-    </equation*>
+      for i:1 thru 3 do(
 
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>17) >
-    <|input>
-      II_sfera:0*ident(3)$
-    </input>
+      \ for j:1 thru 3 do(
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>18) >
-    <|unfolded-io>
-      for i:1 thru 3 do (
+      \ \ II[i,j]:integrate(integrate(integrate(S2[i,j]*determinantJ,alpha,0,2*%pi),beta,-%pi/2,%pi/2),rho,r,R),
 
-      \ for j:1 thru 3 do (
-
-      \ \ II_sfera[i,j]:factor(expand(integrate(integrate(integrate(S2[i,j]*Ddp,alpha,0,2*%pi),beta,-%pi/2,%pi/2),rho,0,R)*(M[sfera]/V_sfera)))
+      \ \ II[i,j]:factor(expand((M/V)*II[i,j]))
 
       \ )
 
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
-      >><math-bf|done>>>
-    </unfolded-io>
+      ),
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>19) >
-    <|unfolded-io>
-      II_sfera
-    <|unfolded-io>
-      \;
+      return(II)
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|2*R<rsup|2>*M<rsub|<math-up|sfera>>|5>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|2*R<rsup|2>*M<rsub|<math-up|sfera>>|5>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|2*R<rsup|2>*M<rsub|<math-up|sfera>>|5>>>>>>>>
-    </unfolded-io>
+      )$
+    </input>
 
     \;
 
-    \;
-
-    Ora calcolo la matrice di inerzia del cilindro di raggio r e di altezza H
-    pari al diametro della sfera, quindi H = 2*R.
-
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>20) >
+      <with|color|red|(<with|math-font-family|rm|%i>14) >
     <|unfolded-io>
-      p2:Rz.matrix([rho],[0],[h])
+      II:calcoloMatriceDiInerzia(S1,V)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
-      >><matrix|<tformat|<table|<row|<cell|cos
-      <around*|(|\<alpha\>|)>*\<rho\>>>|<row|<cell|sin
-      <around*|(|\<alpha\>|)>*\<rho\>>>|<row|<cell|h>>>>>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      >><matrix|<tformat|<table|<row|<cell|<frac|2*M*<around*|(|r<rsup|4>+R*r<rsup|3>+R<rsup|2>*r<rsup|2>+R<rsup|3>*r+R<rsup|4>|)>|5*<around*|(|r<rsup|2>+R*r+R<rsup|2>|)>>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|2*M*<around*|(|r<rsup|4>+R*r<rsup|3>+R<rsup|2>*r<rsup|2>+R<rsup|3>*r+R<rsup|4>|)>|5*<around*|(|r<rsup|2>+R*r+R<rsup|2>|)>>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|2*M*<around*|(|r<rsup|4>+R*r<rsup|3>+R<rsup|2>*r<rsup|2>+R<rsup|3>*r+R<rsup|4>|)>|5*<around*|(|r<rsup|2>+R*r+R<rsup|2>|)>>>>>>>>>
     </unfolded-io>
-
-    \;
-
-    h va da -H/2 = -2R/2 = -R a H/2 = 2R/2 = R, \<rho\> va da 0 a r,
-    \<alpha\> va da 0 a 2\<pi\>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>21) >
-    <|input>
-      dp:0*ident(3)$
-    </input>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>22) >
-    <|unfolded-io>
-      for i:1 thru 3 do (
-
-      \ dp[i,1]:diff(p2[i,1],rho),
-
-      \ dp[i,2]:diff(p2[i,1],alpha),
-
-      \ dp[i,3]:diff(p2[i,1],h)
-
-      )
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
-      >><math-bf|done>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>23) >
-    <|unfolded-io>
-      dp
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
-      >><matrix|<tformat|<table|<row|<cell|cos
-      <around*|(|\<alpha\>|)>>|<cell|-sin
-      <around*|(|\<alpha\>|)>*\<rho\>>|<cell|0>>|<row|<cell|sin
-      <around*|(|\<alpha\>|)>>|<cell|cos <around*|(|\<alpha\>|)>*\<rho\>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>24) >
-    <|unfolded-io>
-      Ddp:trigreduce(factor(determinant(dp)))
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o24>)
-      >>\<rho\>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>25) >
-    <|unfolded-io>
-      V_cilindro:expand(integrate(integrate(integrate(1*Ddp,alpha,0,2*%pi),rho,0,r),h,-R,R))
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o25>)
-      >>2*\<pi\>*R*r<rsup|2>>>
-    </unfolded-io>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>26) >
-    <|input>
-      S2:0*ident(3)$
-    </input>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>27) >
-    <|unfolded-io>
-      for i:1 thru 3 do (
-
-      \ for j:1 thru 3 do (
-
-      \ \ S2[i,j]:subst([x=p2[1,1],y=p2[2,1],z=p2[3,1]],S1[i,j])
-
-      \ )
-
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o27>)
-      >><math-bf|done>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>28) >
-    <|unfolded-io>
-      S2
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o28>)
-      >><matrix|<tformat|<table|<row|<cell|sin
-      <around*|(|\<alpha\>|)><rsup|2>*\<rho\><rsup|2>+h<rsup|2>>|<cell|-cos
-      <around*|(|\<alpha\>|)>*sin <around*|(|\<alpha\>|)>*\<rho\><rsup|2>>|<cell|-cos
-      <around*|(|\<alpha\>|)>*h*\<rho\>>>|<row|<cell|-cos
-      <around*|(|\<alpha\>|)>*sin <around*|(|\<alpha\>|)>*\<rho\><rsup|2>>|<cell|cos
-      <around*|(|\<alpha\>|)><rsup|2>*\<rho\><rsup|2>+h<rsup|2>>|<cell|-sin
-      <around*|(|\<alpha\>|)>*h*\<rho\>>>|<row|<cell|-cos
-      <around*|(|\<alpha\>|)>*h*\<rho\>>|<cell|-sin
-      <around*|(|\<alpha\>|)>*h*\<rho\>>|<cell|sin
-      <around*|(|\<alpha\>|)><rsup|2>*\<rho\><rsup|2>+cos
-      <around*|(|\<alpha\>|)><rsup|2>*\<rho\><rsup|2>>>>>>>>
-    </unfolded-io>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>29) >
-    <|input>
-      II_cilindro:0*ident(3)$
-    </input>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>30) >
-    <|unfolded-io>
-      for i:1 thru 3 do (
-
-      \ for j:1 thru 3 do (
-
-      \ \ II_cilindro[i,j]:factor(expand(integrate(integrate(integrate(S2[i,j]*Ddp,alpha,0,2*%pi),rho,0,r),h,-R,R)*(M[cilindro]/V_cilindro)))
-
-      \ )
-
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o30>)
-      >><math-bf|done>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>31) >
-    <|unfolded-io>
-      II_cilindro
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o31>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|M<rsub|<math-up|cilindro>>*<around*|(|3*r<rsup|2>+4*R<rsup|2>|)>|12>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|M<rsub|<math-up|cilindro>>*<around*|(|3*r<rsup|2>+4*R<rsup|2>|)>|12>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|M<rsub|<math-up|cilindro>>*r<rsup|2>|2>>>>>>>>
-    </unfolded-io>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>32) >
-    <|input>
-      II_finale:factor(II_sfera-II_cilindro)$
-    </input>
-
-    <\equation*>
-      <matrix|<tformat|<table|<row|<cell|<frac|24*R<rsup|2>*M<rsub|<math-up|sfera>>-15*M<rsub|<math-up|cilindro>>*r<rsup|2>-20*R<rsup|2>*M<rsub|<math-up|cilindro>>|60>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|24*R<rsup|2>*M<rsub|<math-up|sfera>>-15*M<rsub|<math-up|cilindro>>*r<rsup|2>-20*R<rsup|2>*M<rsub|<math-up|cilindro>>|60>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|4*R<rsup|2>*M<rsub|<math-up|sfera>>-5*M<rsub|<math-up|cilindro>>*r<rsup|2>|10>>>>>>
-    </equation*>
   </session>
 </body>
 
 <\initial>
   <\collection>
+    <associate|page-height|auto>
     <associate|page-medium|paper>
+    <associate|page-type|a3>
+    <associate|page-width|auto>
   </collection>
 </initial>

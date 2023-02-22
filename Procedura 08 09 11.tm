@@ -465,240 +465,48 @@
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>9) >
-    <|unfolded-io>
-      R1controllo:matriceDiRotazione(matrix([1/sqrt(2)],[1/sqrt(2)],[0]),sqrt(2)*%pi-2*%pi)
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|cos
-      <around*|(|<sqrt|2>*\<pi\>|)>+1|2>>|<cell|-<frac|cos
-      <around*|(|<sqrt|2>*\<pi\>|)>-1|2>>|<cell|<frac|sin
-      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>>|<row|<cell|-<frac|cos
-      <around*|(|<sqrt|2>*\<pi\>|)>-1|2>>|<cell|<frac|cos
-      <around*|(|<sqrt|2>*\<pi\>|)>+1|2>>|<cell|-<frac|sin
-      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>>|<row|<cell|-<frac|sin
-      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>|<cell|<frac|sin
-      <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>|<cell|cos
-      <around*|(|<sqrt|2>*\<pi\>|)>>>>>>,<matrix|<tformat|<table|<row|<cell|0.3668723289792922>|<cell|0.6331276710207079>|<cell|-0.6815820173810371>>|<row|<cell|0.6331276710207079>|<cell|0.3668723289792922>|<cell|0.6815820173810371>>|<row|<cell|0.6815820173810371>|<cell|-0.6815820173810371>|<cell|-0.2662553420414157>>>>>|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>10) >
     <|unfolded-io>
-      R2:matriceDiRotazione(matrix([2],[0],[1]),%pi/2)
+      R4:matriceDiRotazione(matrix([1],[0],[0]),%pi/6)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|cos
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>+4|5>>|<cell|-<frac|sin
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>|<cell|-<frac|2*cos
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>-2|5>>>|<row|<cell|<frac|sin
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>|<cell|cos
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>>|<cell|-<frac|2*sin
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>>|<row|<cell|-<frac|2*cos
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>-2|5>>|<cell|<frac|2*sin
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>|<cell|<frac|4*cos
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>+1|5>>>>>>,<matrix|<tformat|<table|<row|<cell|0.6135935152373545>|<cell|0.1620589775117936>|<cell|0.7728129695252911>>|<row|<cell|-0.1620589775117936>|<cell|-0.9320324238132276>|<cell|0.3241179550235873>>|<row|<cell|0.7728129695252911>|<cell|-0.3241179550235873>|<cell|-0.5456259390505821>>>>>|]>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|<sqrt|3>|2>>|<cell|-<frac|1|2>>>|<row|<cell|0>|<cell|<frac|1|2>>|<cell|<frac|<sqrt|3>|2>>>>>>,<matrix|<tformat|<table|<row|<cell|1.0>|<cell|0.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|0.8660254037844386>|<cell|-0.5>>|<row|<cell|0.0>|<cell|0.5>|<cell|0.8660254037844386>>>>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|unfolded-io>
-      calcoloAngolo(R2[1])
+      calcoloAngolo(R4[1])
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|2|<sqrt|5>>>>|<row|<cell|0>>|<row|<cell|<frac|1|<sqrt|5>>>>>>>,arctan
-      <around*|(|<frac|sin <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|cos
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>>|)>-2*\<pi\>,<frac|<sqrt|5>*\<pi\>|2>-2*\<pi\>,-2.770777941659223|]>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,<frac|\<pi\>|6>,<frac|\<pi\>|6>,0.5235987755982988|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>12) >
     <|unfolded-io>
-      R2controllo:matriceDiRotazione(matrix([2/sqrt(5)],[0],[1/sqrt(5)]),((sqrt(5)*%pi)/2)-2*%pi)
+      R4controllo:matriceDiRotazione(matrix([1],[0],[0]),%pi/6)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|cos
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>+4|5>>|<cell|-<frac|sin
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>|<cell|-<frac|2*cos
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>-2|5>>>|<row|<cell|<frac|sin
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>|<cell|cos
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>>|<cell|-<frac|2*sin
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>>|<row|<cell|-<frac|2*cos
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>-2|5>>|<cell|<frac|2*sin
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>|<sqrt|5>>>|<cell|<frac|4*cos
-      <around*|(|<frac|<sqrt|5>*\<pi\>|2>|)>+1|5>>>>>>,<matrix|<tformat|<table|<row|<cell|0.6135935152373545>|<cell|0.1620589775117936>|<cell|0.7728129695252911>>|<row|<cell|-0.1620589775117936>|<cell|-0.9320324238132276>|<cell|0.3241179550235873>>|<row|<cell|0.7728129695252911>|<cell|-0.3241179550235873>|<cell|-0.5456259390505821>>>>>|]>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|<sqrt|3>|2>>|<cell|-<frac|1|2>>>|<row|<cell|0>|<cell|<frac|1|2>>|<cell|<frac|<sqrt|3>|2>>>>>>,<matrix|<tformat|<table|<row|<cell|1.0>|<cell|0.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|0.8660254037844386>|<cell|-0.5>>|<row|<cell|0.0>|<cell|0.5>|<cell|0.8660254037844386>>>>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>13) >
     <|unfolded-io>
-      R4:matriceDiRotazione(matrix([1],[0],[0]),%pi/6)
+      R:matriceDiRotazione(matrix([1/sqrt(2)],[1/sqrt(2)],[0]),%pi/3)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|<sqrt|3>|2>>|<cell|-<frac|1|2>>>|<row|<cell|0>|<cell|<frac|1|2>>|<cell|<frac|<sqrt|3>|2>>>>>>,<matrix|<tformat|<table|<row|<cell|1.0>|<cell|0.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|0.8660254037844386>|<cell|-0.5>>|<row|<cell|0.0>|<cell|0.5>|<cell|0.8660254037844386>>>>>|]>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|3|4>>|<cell|<frac|1|4>>|<cell|<frac|<sqrt|3>|2<rsup|<frac|3|2>>>>>|<row|<cell|<frac|1|4>>|<cell|<frac|3|4>>|<cell|-<frac|<sqrt|3>|2<rsup|<frac|3|2>>>>>|<row|<cell|-<frac|<sqrt|3>|2<rsup|<frac|3|2>>>>|<cell|<frac|<sqrt|3>|2<rsup|<frac|3|2>>>>|<cell|<frac|1|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0.75>|<cell|0.25>|<cell|0.6123724356957944>>|<row|<cell|0.25>|<cell|0.75>|<cell|-0.6123724356957944>>|<row|<cell|-0.6123724356957944>|<cell|0.6123724356957944>|<cell|0.5>>>>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>14) >
     <|unfolded-io>
-      calcoloAngolo(R4[1])
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,<frac|\<pi\>|6>,<frac|\<pi\>|6>,0.5235987755982988|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>15) >
-    <|unfolded-io>
-      R4controllo:matriceDiRotazione(matrix([1],[0],[0]),%pi/6)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|<sqrt|3>|2>>|<cell|-<frac|1|2>>>|<row|<cell|0>|<cell|<frac|1|2>>|<cell|<frac|<sqrt|3>|2>>>>>>,<matrix|<tformat|<table|<row|<cell|1.0>|<cell|0.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|0.8660254037844386>|<cell|-0.5>>|<row|<cell|0.0>|<cell|0.5>|<cell|0.8660254037844386>>>>>|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>16) >
-    <|unfolded-io>
-      R5:matriceDiRotazione(matrix([1],[1],[-1]),(2*%pi)/3)
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|2*cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|<frac|<sqrt|3>*sin
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|<frac|<sqrt|3>*sin
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-1|3>>>|<row|<cell|-<frac|<sqrt|3>*sin
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-1|3>>|<cell|<frac|2*cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|-<frac|<sqrt|3>*sin
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>>|<row|<cell|-<frac|<sqrt|3>*sin
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|<frac|<sqrt|3>*sin
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-1|3>>|<cell|<frac|2*cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>>>>>,<matrix|<tformat|<table|<row|<cell|-0.2561369739606306>|<cell|0.3583892312942261>|<cell|-0.8977477426664047>>|<row|<cell|0.8977477426664047>|<cell|-0.2561369739606306>|<cell|-0.3583892312942261>>|<row|<cell|-0.3583892312942261>|<cell|-0.8977477426664047>|<cell|-0.2561369739606306>>>>>|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>17) >
-    <|unfolded-io>
-      calcoloAngolo(R5[1])
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|1|<sqrt|3>>>>|<row|<cell|<frac|1|<sqrt|3>>>>|<row|<cell|-<frac|1|<sqrt|3>>>>>>>,arctan
-      <around*|(|<frac|sin <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>|cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>>|)>-2*\<pi\>,<frac|2*\<pi\>|<sqrt|3>>-2*\<pi\>,-2.65558657871115|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>18) >
-    <|unfolded-io>
-      R5controllo:matriceDiRotazione(matrix([1/sqrt(3)],[1/sqrt(3)],[-1/sqrt(3)]),((2*%pi)/(sqrt(3)))-2*%pi)
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|2*cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|<frac|<sqrt|3>*sin
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|<frac|<sqrt|3>*sin
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-1|3>>>|<row|<cell|-<frac|<sqrt|3>*sin
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-1|3>>|<cell|<frac|2*cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|-<frac|<sqrt|3>*sin
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>>|<row|<cell|-<frac|<sqrt|3>*sin
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>|<cell|<frac|<sqrt|3>*sin
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>-1|3>>|<cell|<frac|2*cos
-      <around*|(|<frac|2*\<pi\>|<sqrt|3>>|)>+1|3>>>>>>,<matrix|<tformat|<table|<row|<cell|-0.2561369739606306>|<cell|0.3583892312942261>|<cell|-0.8977477426664047>>|<row|<cell|0.8977477426664047>|<cell|-0.2561369739606306>|<cell|-0.3583892312942261>>|<row|<cell|-0.3583892312942261>|<cell|-0.8977477426664047>|<cell|-0.2561369739606306>>>>>|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>19) >
-    <|unfolded-io>
-      R6:matriceDiRotazione(matrix([1],[0],[0]),%pi/4)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|1|<sqrt|2>>>|<cell|-<frac|1|<sqrt|2>>>>|<row|<cell|0>|<cell|<frac|1|<sqrt|2>>>|<cell|<frac|1|<sqrt|2>>>>>>>,<matrix|<tformat|<table|<row|<cell|1.0>|<cell|0.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|0.7071067811865475>|<cell|-0.7071067811865475>>|<row|<cell|0.0>|<cell|0.7071067811865475>|<cell|0.7071067811865475>>>>>|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>20) >
-    <|unfolded-io>
-      calcoloAngolo(R6[1])
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,<frac|\<pi\>|4>,<frac|\<pi\>|4>,0.7853981633974483|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>21) >
-    <|unfolded-io>
-      R:matriceDiRotazione(matrix([1],[2],[-1]),%pi/6)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|5*cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+1|6>>|<cell|<frac|<sqrt|6>*sin
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-2*cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2|6>>|<cell|<frac|2*<sqrt|6>*sin
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-1|6>>>|<row|<cell|-<frac|<sqrt|6>*sin
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2*cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-2|6>>|<cell|<frac|cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2|3>>|<cell|-<frac|<sqrt|6>*sin
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-2*cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2|6>>>|<row|<cell|-<frac|2*<sqrt|6>*sin
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+1|6>>|<cell|<frac|<sqrt|6>*sin
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2*cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-2|6>>|<cell|<frac|5*cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+1|6>>>>>>,<matrix|<tformat|<table|<row|<cell|0.4035595854039173>|<cell|0.6299816914498911>|<cell|0.6635229683036996>>|<row|<cell|-0.152829359773025>|<cell|0.7614238341615669>|<cell|-0.6299816914498911>>|<row|<cell|-0.9020991341421327>|<cell|0.152829359773025>|<cell|0.4035595854039173>>>>>|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>22) >
-    <|unfolded-io>
       calcoloAngolo(R[1])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|1|<sqrt|6>>>>|<row|<cell|<frac|<sqrt|6>|3>>>|<row|<cell|-<frac|1|<sqrt|6>>>>>>>,arctan
-      <around*|(|<frac|sin <around*|(|<frac|\<pi\>|<sqrt|6>>|)>|cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>>|)>,<frac|\<pi\>|<sqrt|6>>,1.282549830161864|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>23) >
-    <|unfolded-io>
-      R:matriceDiRotazione(matrix([1/sqrt(6)], [sqrt(6)/3],
-      [-1/sqrt(6)]),%pi/sqrt(6))
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|5*cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+1|6>>|<cell|<frac|<sqrt|6>*sin
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-2*cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2|6>>|<cell|<frac|2*<sqrt|6>*sin
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-1|6>>>|<row|<cell|-<frac|<sqrt|6>*sin
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2*cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-2|6>>|<cell|<frac|cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2|3>>|<cell|-<frac|<sqrt|6>*sin
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-2*cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2|6>>>|<row|<cell|-<frac|2*<sqrt|6>*sin
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+1|6>>|<cell|<frac|<sqrt|6>*sin
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+2*cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>-2|6>>|<cell|<frac|5*cos
-      <around*|(|<frac|\<pi\>|<sqrt|6>>|)>+1|6>>>>>>,<matrix|<tformat|<table|<row|<cell|0.4035595854039173>|<cell|0.6299816914498911>|<cell|0.6635229683036996>>|<row|<cell|-0.152829359773025>|<cell|0.7614238341615669>|<cell|-0.6299816914498911>>|<row|<cell|-0.9020991341421327>|<cell|0.152829359773025>|<cell|0.4035595854039173>>>>>|]>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|1|<sqrt|2>>>>|<row|<cell|<frac|1|<sqrt|2>>>>|<row|<cell|0>>>>>,<frac|\<pi\>|3>,<frac|\<pi\>|3>,1.047197551196598|]>>>
     </unfolded-io>
   </session>
 
