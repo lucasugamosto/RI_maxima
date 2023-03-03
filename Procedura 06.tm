@@ -268,7 +268,7 @@
     delle matrici degli autovalori e degli autovettori.
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>11) >
+      <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|input>
       matriceDiRotazione(vettore,angolo):=block(
 
@@ -325,14 +325,20 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>12) >
+      <with|color|red|(<with|math-font-family|rm|%i>6) >
     <|unfolded-io>
       R:matriceDiRotazione(matrix([1],[0],[0]),theta)
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
-      >><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|\<mathe\><rsup|-\<mathi\>*\<vartheta\>>*<around*|(|\<mathe\><rsup|2*\<mathi\>*\<vartheta\>>+1|)>|2>>|<cell|<frac|\<mathe\><rsup|-\<mathi\>*\<vartheta\>>*<around*|(|\<mathi\>*\<mathe\><rsup|2*\<mathi\>*\<vartheta\>>-\<mathi\>|)>|2>>>|<row|<cell|0>|<cell|-<frac|\<mathe\><rsup|-\<mathi\>*\<vartheta\>>*<around*|(|\<mathi\>*\<mathe\><rsup|2*\<mathi\>*\<vartheta\>>-\<mathi\>|)>|2>>|<cell|<frac|\<mathe\><rsup|-\<mathi\>*\<vartheta\>>*<around*|(|\<mathe\><rsup|2*\<mathi\>*\<vartheta\>>+1|)>|2>>>>>>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|cos
+      <around*|(|\<vartheta\>|)>>|<cell|-sin
+      <around*|(|\<vartheta\>|)>>>|<row|<cell|0>|<cell|sin
+      <around*|(|\<vartheta\>|)>>|<cell|cos
+      <around*|(|\<vartheta\>|)>>>>>>,<matrix|<tformat|<table|<row|<cell|1.0>|<cell|0.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|cos
+      <around*|(|\<vartheta\>|)>>|<cell|-1.0*sin
+      <around*|(|\<vartheta\>|)>>>|<row|<cell|0.0>|<cell|sin
+      <around*|(|\<vartheta\>|)>>|<cell|cos
+      <around*|(|\<vartheta\>|)>>>>>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -340,7 +346,9 @@
     <|unfolded-io>
       R:matriceDiRotazione(matrix([0],[1],[0]),%pi)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|-1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-1>>>>>,<matrix|<tformat|<table|<row|<cell|-1.0>|<cell|0.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|1.0>|<cell|0.0>>|<row|<cell|0.0>|<cell|0.0>|<cell|-1.0>>>>>|]>>>
     </unfolded-io>
 
@@ -390,12 +398,6 @@
       <around*|(|<sqrt|2>*\<pi\>|)>|<sqrt|2>>>|<cell|<frac|cos
       <around*|(|<sqrt|2>*\<pi\>|)>+1|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0.3668723289792922>|<cell|0.6815820173810371>|<cell|0.6331276710207079>>|<row|<cell|-0.6815820173810371>|<cell|-0.2662553420414157>|<cell|0.6815820173810371>>|<row|<cell|0.6331276710207079>|<cell|-0.6815820173810371>|<cell|0.3668723289792922>>>>>|]>>>
     </unfolded-io>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>11) >
-    <|input>
-      \;
-    </input>
   </session>
 
   \;

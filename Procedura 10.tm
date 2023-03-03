@@ -24,37 +24,65 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>1) >
     <|unfolded-io>
-      eq1:(2*alpha)/(1+alpha^2) = sqrt(3)/2
+      eq1:(2*alpha)/(1+alpha^2) = sin(sqrt(3)/2)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o1>)
-      >><frac|2*\<alpha\>|\<alpha\><rsup|2>+1>=<frac|<sqrt|3>|2>>>
+      >><frac|2*\<alpha\>|\<alpha\><rsup|2>+1>=sin
+      <around*|(|<frac|<sqrt|3>|2>|)>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>2) >
+      <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|unfolded-io>
       value:solve([eq1],alpha)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
-      >><around*|[|\<alpha\>=<frac|1|<sqrt|3>>,\<alpha\>=<sqrt|3>|]>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      >><around*|[|\<alpha\>=-<frac|<sqrt|1-sin
+      <around*|(|<frac|<sqrt|3>|2>|)><rsup|2>>-1|sin
+      <around*|(|<frac|<sqrt|3>|2>|)>>,\<alpha\>=<frac|<sqrt|1-sin
+      <around*|(|<frac|<sqrt|3>|2>|)><rsup|2>>+1|sin
+      <around*|(|<frac|<sqrt|3>|2>|)>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>3) >
+      <with|color|red|(<with|math-font-family|rm|%i>6) >
     <|unfolded-io>
-      eq2:(1-alpha^2)/(1+alpha^2) = 1/2
+      value:float(value)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
-      >><frac|1-\<alpha\><rsup|2>|\<alpha\><rsup|2>+1>=<frac|1|2>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
+      >><around*|[|\<alpha\>=0.4622724529225485,\<alpha\>=2.16322645590899|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>4) >
+      <with|color|red|(<with|math-font-family|rm|%i>7) >
+    <|unfolded-io>
+      eq2:(1-alpha^2)/(1+alpha^2) = cos(sqrt(3)/2)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+      >><frac|1-\<alpha\><rsup|2>|\<alpha\><rsup|2>+1>=cos
+      <around*|(|<frac|<sqrt|3>|2>|)>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|unfolded-io>
       value2:solve([eq2],alpha)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
-      >><around*|[|\<alpha\>=-<frac|1|<sqrt|3>>,\<alpha\>=<frac|1|<sqrt|3>>|]>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
+      >><around*|[|\<alpha\>=-<frac|<sqrt|1-cos
+      <around*|(|<frac|<sqrt|3>|2>|)>>|<sqrt|cos
+      <around*|(|<frac|<sqrt|3>|2>|)>+1>>,\<alpha\>=<frac|<sqrt|1-cos
+      <around*|(|<frac|<sqrt|3>|2>|)>>|<sqrt|cos
+      <around*|(|<frac|<sqrt|3>|2>|)>+1>>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>9) >
+    <|unfolded-io>
+      value2:float(value)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
+      >><around*|[|\<alpha\>=0.4622724529225485,\<alpha\>=2.16322645590899|]>>>
     </unfolded-io>
 
     \;
@@ -67,16 +95,19 @@
     e=versore=[1/<sqrt|2>,1/<sqrt|2>,0]<math|<rsup|T>>.
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>5) >
+      <with|color|red|(<with|math-font-family|rm|%i>10) >
     <|unfolded-io>
-      vettore:(1/sqrt(3))*matrix([1/sqrt(2)],[1/sqrt(2)],[0])
+      vettore:(((sqrt(1-sin (((sqrt(3))/2))^2)+1)/(sin
+      (((sqrt(3))/2)))))*matrix([1],[0],[0])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|1|<sqrt|2>*<sqrt|3>>>>|<row|<cell|<frac|1|<sqrt|2>*<sqrt|3>>>>|<row|<cell|0>>>>>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
+      >><matrix|<tformat|<table|<row|<cell|<frac|<sqrt|1-sin
+      <around*|(|<frac|<sqrt|3>|2>|)><rsup|2>>+1|sin
+      <around*|(|<frac|<sqrt|3>|2>|)>>>>|<row|<cell|0>>|<row|<cell|0>>>>>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>6) >
+      <with|color|red|(<with|math-font-family|rm|%i>1) >
     <|input>
       calcoloR(vettore):=block(
 
@@ -116,21 +147,27 @@
 
       radR:float(R),
 
+      R:trigsimp(R),
+
       return([R,radR])
 
       )$
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>7) >
+      <with|color|red|(<with|math-font-family|rm|%i>2) >
     <|unfolded-io>
       R:calcoloR(vettore)
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|3|4>>|<cell|<frac|1|4>>|<cell|<frac|<sqrt|3>|2<rsup|<frac|3|2>>>>>|<row|<cell|<frac|1|4>>|<cell|<frac|3|4>>|<cell|-<frac|<sqrt|3>|2<rsup|<frac|3|2>>>>>|<row|<cell|-<frac|<sqrt|3>|2<rsup|<frac|3|2>>>>|<cell|<frac|<sqrt|3>|2<rsup|<frac|3|2>>>>|<cell|<frac|1|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0.75>|<cell|0.25>|<cell|0.6123724356957944>>|<row|<cell|0.25>|<cell|0.75>|<cell|-0.6123724356957944>>|<row|<cell|-0.6123724356957944>|<cell|0.6123724356957944>|<cell|0.5>>>>>|]>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|-<frac|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>-<math-up|vettore><rsub|1,1><rsup|2>-1|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1>>|<cell|-<frac|2*<math-up|vettore><rsub|3,1>-2*<math-up|vettore><rsub|1,1>*<math-up|vettore><rsub|2,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1>>|<cell|<frac|2*<math-up|vettore><rsub|1,1>*<math-up|vettore><rsub|3,1>+2*<math-up|vettore><rsub|2,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1>>>|<row|<cell|<frac|2*<math-up|vettore><rsub|3,1>+2*<math-up|vettore><rsub|1,1>*<math-up|vettore><rsub|2,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1>>|<cell|-<frac|<math-up|vettore><rsub|3,1><rsup|2>-<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>-1|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1>>|<cell|<frac|2*<math-up|vettore><rsub|2,1>*<math-up|vettore><rsub|3,1>-2*<math-up|vettore><rsub|1,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1>>>|<row|<cell|<frac|2*<math-up|vettore><rsub|1,1>*<math-up|vettore><rsub|3,1>-2*<math-up|vettore><rsub|2,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1>>|<cell|<frac|2*<math-up|vettore><rsub|2,1>*<math-up|vettore><rsub|3,1>+2*<math-up|vettore><rsub|1,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1>>|<cell|<frac|<math-up|vettore><rsub|3,1><rsup|2>-<math-up|vettore><rsub|2,1><rsup|2>-<math-up|vettore><rsub|1,1><rsup|2>+1|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1>>>>>>,<matrix|<tformat|<table|<row|<cell|-<frac|1.0*<math-up|vettore><rsub|3,1><rsup|2>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>-<frac|1.0*<math-up|vettore><rsub|2,1><rsup|2>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>+<frac|<math-up|vettore><rsub|1,1><rsup|2>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>+<frac|1|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>>|<cell|-2.0*<around*|(|<frac|<math-up|vettore><rsub|3,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>-<frac|1.0*<math-up|vettore><rsub|1,1>*<math-up|vettore><rsub|2,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>|)>>|<cell|2.0*<around*|(|<frac|<math-up|vettore><rsub|1,1>*<math-up|vettore><rsub|3,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>+<frac|<math-up|vettore><rsub|2,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>|)>>>|<row|<cell|2.0*<around*|(|<frac|<math-up|vettore><rsub|3,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>+<frac|<math-up|vettore><rsub|1,1>*<math-up|vettore><rsub|2,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>|)>>|<cell|-<frac|1.0*<math-up|vettore><rsub|3,1><rsup|2>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>+<frac|<math-up|vettore><rsub|2,1><rsup|2>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>-<frac|1.0*<math-up|vettore><rsub|1,1><rsup|2>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>+<frac|1|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>>|<cell|2.0*<around*|(|<frac|<math-up|vettore><rsub|2,1>*<math-up|vettore><rsub|3,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>-<frac|1.0*<math-up|vettore><rsub|1,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>|)>>>|<row|<cell|2.0*<around*|(|<frac|<math-up|vettore><rsub|1,1>*<math-up|vettore><rsub|3,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>-<frac|1.0*<math-up|vettore><rsub|2,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>|)>>|<cell|2.0*<around*|(|<frac|<math-up|vettore><rsub|2,1>*<math-up|vettore><rsub|3,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>+<frac|<math-up|vettore><rsub|1,1>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>|)>>|<cell|<frac|<math-up|vettore><rsub|3,1><rsup|2>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>-<frac|1.0*<math-up|vettore><rsub|2,1><rsup|2>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>-<frac|1.0*<math-up|vettore><rsub|1,1><rsup|2>|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>+<frac|1|<math-up|vettore><rsub|3,1><rsup|2>+<math-up|vettore><rsub|2,1><rsup|2>+<math-up|vettore><rsub|1,1><rsup|2>+1.0>>>>>>|]>>>
     </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>3) >
+    <|input>
+      \;
+    </input>
   </session>
 
   <\with|color|black>
@@ -258,32 +295,6 @@
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|1|<sqrt|2>>>>|<row|<cell|<frac|1|<sqrt|2>>>>|<row|<cell|0>>>>>,<frac|\<pi\>|3>|]>>>
     </unfolded-io>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>11) >
-    <|input>
-      \;
-    </input>
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
-
-    \;
   </session>
 
   \;

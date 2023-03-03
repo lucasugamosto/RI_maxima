@@ -243,33 +243,6 @@
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>10) >
-    <|unfolded-io>
-      matRotazione(matrix([a],[1],[0]),theta)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|cos
-      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>+a<rsup|2>|a<rsup|2>+1>>|<cell|-<frac|a*cos
-      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>-a|a<rsup|2>+1>>|<cell|<frac|sin
-      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>|<sqrt|a<rsup|2>+1>>>>|<row|<cell|-<frac|a*cos
-      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>-a|a<rsup|2>+1>>|<cell|<frac|a<rsup|2>*cos
-      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>+1|a<rsup|2>+1>>|<cell|-<frac|a*sin
-      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>|<sqrt|a<rsup|2>+1>>>>|<row|<cell|-<frac|sin
-      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>|<sqrt|a<rsup|2>+1>>>|<cell|<frac|a*sin
-      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>|<sqrt|a<rsup|2>+1>>>|<cell|cos
-      <around*|(|<sqrt|a<rsup|2>+1>*\<vartheta\>|)>>>>>>,<matrix|<tformat|<table|<row|<cell|<frac|cos
-      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>+a<rsup|2>|a<rsup|2>+1.0>>|<cell|-<frac|1.0*<around*|(|a*cos
-      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>-1.0*a|)>|a<rsup|2>+1.0>>|<cell|<frac|sin
-      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>|<sqrt|a<rsup|2>+1.0>>>>|<row|<cell|-<frac|1.0*<around*|(|a*cos
-      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>-1.0*a|)>|a<rsup|2>+1.0>>|<cell|<frac|a<rsup|2>*cos
-      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>+1.0|a<rsup|2>+1.0>>|<cell|-<frac|1.0*a*sin
-      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>|<sqrt|a<rsup|2>+1.0>>>>|<row|<cell|-<frac|1.0*sin
-      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>|<sqrt|a<rsup|2>+1.0>>>|<cell|<frac|a*sin
-      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>|<sqrt|a<rsup|2>+1.0>>>|<cell|cos
-      <around*|(|<sqrt|a<rsup|2>+1.0>*\<vartheta\>|)>>>>>>|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|unfolded-io>
       matRotazione(matrix([0],[0],[0]),theta)
